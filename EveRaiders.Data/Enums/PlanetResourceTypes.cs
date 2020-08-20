@@ -1,0 +1,40 @@
+﻿namespace EveRaiders.Data.Enums
+{
+    public enum PlanetResourceTypes
+    {
+        LusteringAlloy,
+        SheenCompound,
+        GleamingAlloy,
+        CondensedAlloy,
+        PreciousAlloy,
+        MottleyCompound,
+        FiberComposite,
+        LucentCompound,
+        OpulentCompound,
+        GlossyCompound,
+        CrystalCompound,
+        DarkCompound,
+        ReactiveGas,
+        NobleGas,
+        BaseMetals,
+        HeavyMetals,
+        NobleMetals,
+        ReactiveMetals,
+        ToxicMetals,
+        IndustrialFibers,
+        SupertensilePlastics,
+        Polyaramids,
+        Coolant,
+        Condensates,
+        ConstructionBlocks,
+        Nanites,
+        SilicateGlass,
+        SmartfabUnits,
+        HeavyWater,
+        SuspendedPlasma,
+        LiquidOzone,
+        IonicSolutions,
+        OxygenIsotopes,
+        Plasmoids
+    }
+}
