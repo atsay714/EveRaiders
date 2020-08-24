@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="flurl" Version="2.8.2" />
+    <PackageReference Include="flurl.http" Version="2.4.2" />
+    <PackageReference Include="Microsoft.OpenApi" Version="1.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EveRaiders.Data\EveRaiders.Data.csproj" />
+  </ItemGroup>
+
+</Project>

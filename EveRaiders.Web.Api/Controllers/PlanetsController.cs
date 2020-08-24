@@ -9,6 +9,7 @@ using EveRaiders.Data.Enums;
 using EveRaiders.Web.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace EveRaiders.Web.Api.Controllers
 {
@@ -26,6 +27,7 @@ namespace EveRaiders.Web.Api.Controllers
         }
 
         // GET: api/<PlanetsController>
+        [Produces("application/json")]
         [HttpGet]
         public async Task<IActionResult> Get(PlanetResourceTypes? resourceType,
             ResourceRichnessTypes? richness, string planetName, string system, string constellation, string region, PlanetTypes? planetType, int limit = 200)
@@ -38,16 +40,16 @@ namespace EveRaiders.Web.Api.Controllers
 
             if (!string.IsNullOrEmpty(planetName))
                 planets = planets.Where(s => s.Name.Contains(planetName));
-            
+
             if (!string.IsNullOrEmpty(system))
                 planets = planets.Where(s => s.System.Name.Contains(system));
-            
+
             if (!string.IsNullOrEmpty(constellation))
                 planets = planets.Where(s => s.System.Constellation.Name.Contains(constellation));
-            
+
             if (!string.IsNullOrEmpty(region))
                 planets = planets.Where(s => s.System.Constellation.Region.Name.Contains(region));
-            
+
             if (planetType.HasValue)
                 planets = planets.Where(s => s.Type == planetType);
 
@@ -70,7 +72,47 @@ namespace EveRaiders.Web.Api.Controllers
 
             var planetsList = await planets.Take(limit).ToListAsync();
 
-            return Ok(_mapper.Map<List<PlanetViewModel>>(planetsList));
+            var planetsResult = _mapper.Map<List<PlanetViewModel>>(planetsList);
+
+            return Ok(planetsResult.OrderBy(s => s.DistanceFromBase));
+        }
+
+        [Produces("application/json")]
+        [HttpGet("resources/{resourceType}/{richnessType}")]
+        public IActionResult GetPlanetsByResourceAndRichness(string resourceType, string richnessType, int? regionId)
+        {
+            if (Enum.TryParse(resourceType, out PlanetResourceTypes resource) && Enum.TryParse(richnessType, out ResourceRichnessTypes richness))
+            {
+                var resources = _db.PlanetResources.Include(s => s.Planet).ThenInclude(s => s.System).ThenInclude(s => s.Constellation)
+                    .ThenInclude(s => s.Region)
+                    .Where(s => s.Richness == richness && s.Type == resource);
+
+                if (regionId.HasValue && regionId != 0)
+                    resources = resources.Where(s => s.Planet.System.Constellation.Region.Id == regionId.Value);
+
+                var resourceResult = _mapper.Map<List<ResourceRichnessViewModel>>(resources.OrderBy(s => s.Planet.System.DistanceFromBase).ToList());
+
+                return Ok(resourceResult);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [Produces("application/json")]
+        [HttpGet("filters")]
+        public IActionResult GetFilters()
+        {
+            var filters = new FilterViewModel
+            {
+                Types = Enum.GetNames(typeof(PlanetResourceTypes)).ToList(),
+                Richness = Enum.GetNames(typeof(ResourceRichnessTypes)).ToList(),
+                PlanetTypes = Enum.GetNames(typeof(PlanetTypes)).ToList(),
+                Regions = _db.Regions.Select(x => new RegionViewModel() { Id = x.Id, Name = x.Name }).ToList(),
+                Constellations = _db.Constellations.Select(x => new ConstellationViewModel() { Id = x.Id, Name = x.Name }).ToList()
+            };
+            return Ok(filters);
         }
     }
 }

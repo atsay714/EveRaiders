@@ -4,14 +4,16 @@ using EveRaiders.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EveRaiders.Data.Migrations
 {
     [DbContext(typeof(EveRaidersContext))]
-    partial class EveRaidersContextModelSnapshot : ModelSnapshot
+    [Migration("20200823200438_NullableDistance")]
+    partial class NullableDistance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,10 +46,10 @@ namespace EveRaiders.Data.Migrations
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("EveOnlineId")
+                    b.Property<long?>("DistanceFromBase")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("EveOnlineTypeId")
+                    b.Property<long>("EveOnlineId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
@@ -112,9 +114,6 @@ namespace EveRaiders.Data.Migrations
                         .UseIdentityColumn();
 
                     b.Property<long?>("ConstellationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DistanceFromBase")
                         .HasColumnType("bigint");
 
                     b.Property<long>("EveOnlineId")

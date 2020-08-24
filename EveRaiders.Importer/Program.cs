@@ -41,8 +41,10 @@ namespace EveRaiders.Importer
         private static async Task CreateOrUpdateRegions(List<PlanetInfoCsv> planetInfo)
         {
             var dbRegions = new List<Region>();
+            var regionGroups = planetInfo.GroupBy(c => c.Region);
+            var regionGroupCount = regionGroups.Count();
 
-            foreach (var region in planetInfo.GroupBy(c => c.Region).Select(s => s.Key))
+            foreach (var region in regionGroups.Select(s => s.Key))
             {
                 var dbRegion = await _db.Regions.FirstOrDefaultAsync(s => s.Name == region);
 
@@ -63,8 +65,10 @@ namespace EveRaiders.Importer
         private static async Task CreateOrUpdateConstellations(List<PlanetInfoCsv> planetInfo)
         {
             var dbCostellations = new List<Constellation>();
+            var constellationGrousps = planetInfo.GroupBy(s => s.Constellation);
+            var constellationGrouspsCount = constellationGrousps.Count();
 
-            foreach (var constellationGroup in planetInfo.GroupBy(s => s.Constellation))
+            foreach (var constellationGroup in constellationGrousps)
             {
                 var constellation = constellationGroup.FirstOrDefault();
 
@@ -97,8 +101,10 @@ namespace EveRaiders.Importer
         {
             var dbSystems = new List<UniverseSystem>();
             var constellations = await _db.Constellations.ToListAsync();
+            var systemsGroups = planetInfo.GroupBy(s => s.System);
+            var systemsGroupCount = systemsGroups.Count();
 
-            Parallel.ForEach(planetInfo.GroupBy(s => s.System), async (systemGroup) =>
+            Parallel.ForEach(systemsGroups, (systemGroup) =>
             {
                 var system = systemGroup.FirstOrDefault();
 
@@ -137,7 +143,7 @@ namespace EveRaiders.Importer
 
             Console.WriteLine("Upserting Planets");
             int i = 1;
-            Parallel.ForEach(planetInfo.GroupBy(s => s.PlanetName), async (planetGroup) =>
+            Parallel.ForEach(planetInfo.GroupBy(s => s.PlanetName), (planetGroup) =>
             {
                 {
                     var planetGroupBase = planetGroup.FirstOrDefault();
@@ -147,7 +153,7 @@ namespace EveRaiders.Importer
 
                     Enum.TryParse(planetGroupBase.PlanetType.RemoveWhitespace(), out PlanetTypes planetEnum);
 
-                    var dbSystem =  systems.FirstOrDefault(s => s.Name == planetGroupBase.System);
+                    var dbSystem = systems.FirstOrDefault(s => s.Name == planetGroupBase.System);
                     if (dbSystem == null)
                         return;
 

@@ -4,14 +4,16 @@ using EveRaiders.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EveRaiders.Data.Migrations
 {
     [DbContext(typeof(EveRaidersContext))]
-    partial class EveRaidersContextModelSnapshot : ModelSnapshot
+    [Migration("20200823201515_AddingDistanceToSystemInsteadOfPLanet")]
+    partial class AddingDistanceToSystemInsteadOfPLanet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +47,6 @@ namespace EveRaiders.Data.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long>("EveOnlineId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("EveOnlineTypeId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")

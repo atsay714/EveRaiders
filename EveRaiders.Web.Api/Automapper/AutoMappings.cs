@@ -13,14 +13,24 @@ namespace EveRaiders.Web.Api.Automapper
     {
         public AutoMappings()
         {
+            CreateMap<Region, RegionViewModel>();
+
             CreateMap<PlanetResource, PlanetResourceViewModel>()
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString().SplitCamelCase()));
 
             CreateMap<Planet, PlanetViewModel>()
                 .ForMember(src => src.System, opt => opt.MapFrom(dest => dest.System.Name))
-                .ForMember(src => src.Constellation, opt => opt.MapFrom(dest => dest.System.Constellation.Name));                       
+                .ForMember(src => src.SystemId, opt => opt.MapFrom(dest => dest.System.Id))
+                .ForMember(src => src.Constellation, opt => opt.MapFrom(dest => dest.System.Constellation.Name))
+                .ForMember(src => src.SystemEveOnlineId, opt => opt.MapFrom(dest => dest.System.EveOnlineId))
+                .ForMember(src => src.DistanceFromBase, opt => opt.MapFrom(dest => dest.System.DistanceFromBase -1))
+                .ForMember(src => src.TypeId, opt => opt.MapFrom(dest => dest.EveOnlineTypeId));
 
-
+            CreateMap<PlanetResource, ResourceRichnessViewModel>()
+                .ForMember(src => src.ResourceType, opt => opt.MapFrom(dest => dest.Type))
+                .ForMember(src => src.PlanetName, opt => opt.MapFrom(dest => dest.Planet.Name))
+                .ForMember(src => src.DistanceFromBase, opt => opt.MapFrom(dest => dest.Planet.System.DistanceFromBase - 1))
+                .ForMember(src => src.PlanetType, opt => opt.MapFrom(dest => dest.Planet.EveOnlineTypeId));
         }
     }
 }

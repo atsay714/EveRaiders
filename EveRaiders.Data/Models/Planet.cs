@@ -10,6 +10,8 @@ namespace EveRaiders.Data.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required]
         public long Id { get; set; }
+        public long EveOnlineId { get; set; }
+        public long EveOnlineTypeId { get; set; }
         public string Name { get; set; }
         public PlanetTypes Type { get; set; }
         public virtual List<PlanetResource> Resources { get; set; }
