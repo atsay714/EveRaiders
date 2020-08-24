@@ -101,6 +101,7 @@ namespace EveRaiders.Importer
         {
             var dbSystems = new List<UniverseSystem>();
             var constellations = await _db.Constellations.ToListAsync();
+            var systems = await _db.Systems.ToListAsync();
             var systemsGroups = planetInfo.GroupBy(s => s.System);
             var systemsGroupCount = systemsGroups.Count();
 
@@ -116,7 +117,7 @@ namespace EveRaiders.Importer
                 if (dbConstellation == null)
                     return;
 
-                var dbSystem = constellations.FirstOrDefault(s => s.Name == system.System);
+                var dbSystem = systems.FirstOrDefault(s => s.Name == system.System);
 
                 if (dbSystem != null)
                     return;
@@ -174,6 +175,8 @@ namespace EveRaiders.Importer
 
                     foreach (var planet in planetGroup)
                     {
+                        if(planet.PlanetId == 40057813)
+                            Console.WriteLine("OMG");
                         Console.WriteLine($"{i} - {planet.PlanetName}");
                         i++;
                         Enum.TryParse(planet.Resource.RemoveWhitespace(), out PlanetResourceTypes resourceEnum);

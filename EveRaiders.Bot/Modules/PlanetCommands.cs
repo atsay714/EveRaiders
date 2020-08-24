@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EveRaiders.Bot.Modules
 {
-    public class ExampleCommands : ModuleBase
+    public class PlanetCommands : ModuleBase
     {
         private readonly EveRaidersContext _db = new EveRaidersContext(new DbContextOptionsBuilder<EveRaidersContext>()
             .UseSqlServer(@"Data Source = localhost; Initial Catalog = EveRaiders; Trusted_Connection=True;")
