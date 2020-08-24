@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace EveRaiders.Web.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class PlanetsController : ControllerBase
     {
