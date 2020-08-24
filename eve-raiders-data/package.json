@@ -1,0 +1,63 @@
+{
+  "name": "eve-raiders-data",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://cfhull.github.io/eve-raiders-data",
+  "dependencies": {
+    "@bit/davidhu2000.react-spinners.ring-loader": "^0.5.1",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.19.2",
+    "classnames": "^2.2.6",
+    "downshift": "^6.0.5",
+    "formik": "^2.1.5",
+    "gh-pages": "^3.1.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "match-sorter": "^4.2.0",
+    "msw": "^0.20.5",
+    "node-sass": "^4.14.1",
+    "prettier": "^2.0.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-icons": "^3.11.0",
+    "react-query": "^2.9.0",
+    "react-query-devtools": "^2.4.4",
+    "react-scripts": "3.4.3",
+    "react-table": "^7.5.0",
+    "yup": "^0.29.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "deploy": "gh-pages -d build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}

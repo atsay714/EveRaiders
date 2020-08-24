@@ -1,0 +1,14 @@
+.dashboard {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: calc(100vh - 20px);
+  width: 100vw;
+  padding-bottom: 20px;
+}
+
+@media screen and (max-width: 672px) {
+  .dashboard {
+    padding-bottom: 0px;
+  }
+}

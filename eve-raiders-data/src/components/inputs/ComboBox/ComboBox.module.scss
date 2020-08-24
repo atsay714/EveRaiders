@@ -1,0 +1,61 @@
+.combobox {
+  width: 100%;
+}
+
+.input {
+  background-color: inherit;
+  border: 0;
+  width: 100%;
+  color: inherit;
+  outline: none;
+  padding: 0;
+}
+
+.menu {
+  background-color: var(--color-darkred-darker);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  width: 200px; /* Is there a way to not hardcode this? */
+  max-height: 300px;
+  overflow: hidden auto;
+  outline: none;
+  z-index: 1;
+}
+
+.menu.open {
+  border: 1px solid var(--color-darkred-lighter);
+  box-shadow: 0 0 10px 2px var(--color-darkred-lighter);
+}
+
+.dropdownIcon {
+  outline: none;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  right: 0;
+  top: 0;
+  height: 100%;
+  cursor: pointer;
+  z-index: 1;
+
+  &:hover {
+    background-color: var(--color-red-darker);
+  }
+
+  &:active {
+    background-color: var(--color-red);
+  }
+}
+
+.item {
+  text-align: left;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.item.highlighted {
+  background-color: var(--color-red-darker);
+}

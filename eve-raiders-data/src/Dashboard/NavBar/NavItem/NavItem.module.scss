@@ -1,0 +1,27 @@
+@import "../../../styles/mixins";
+
+.navItem {
+  position: relative;
+  height: 30px;
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin: 5px;
+  user-select: none;
+
+  @include box-shadow(
+    var(--box-shadow-red-hover),
+    var(--box-shadow-red-active)
+  );
+
+  .label {
+    margin-left: 5px;
+  }
+
+  @media screen and (max-width: 210px) {
+    .label {
+      display: none;
+    }
+  }
+}

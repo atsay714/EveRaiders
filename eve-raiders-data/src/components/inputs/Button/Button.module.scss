@@ -1,0 +1,17 @@
+@import "../../../styles/mixins";
+
+.button {
+  position: relative;
+  height: 40px;
+  outline: none;
+  background-color: var(--color-blue-lighter);
+  border: 0;
+  color: var(--color-text-white);
+  cursor: pointer;
+  user-select: none;
+
+  @include box-shadow(
+    var(--box-shadow-blue-hover),
+    var(--box-shadow-blue-active)
+  );
+}

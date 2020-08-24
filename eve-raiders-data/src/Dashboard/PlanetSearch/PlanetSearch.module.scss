@@ -1,0 +1,44 @@
+.planetSearch {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  height: 100%;
+
+  .header {
+    width: 100%;
+
+    .title {
+      text-align: center;
+      font-size: 26px;
+    }
+  }
+
+  .results {
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+    overflow: hidden;
+    z-index: 1;
+    margin: 20px 0;
+  }
+
+  @media screen and (max-width: 672px) {
+    .fields {
+      flex-direction: column;
+      width: calc(100% - 10px);
+      padding: 0 10px;
+      margin-top: 20px;
+    }
+
+    .field,
+    .submitBtn {
+      width: calc(100% - 24px);
+    }
+  }
+}
+
+.error {
+  margin-bottom: 20px;
+}
