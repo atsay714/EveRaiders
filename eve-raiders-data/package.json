@@ -2,7 +2,7 @@
   "name": "eve-raiders-data",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://cfhull.github.io/eve-raiders-data",
+  "homepage": "https://everaiders.azurewebsites.net/",
   "dependencies": {
     "@bit/davidhu2000.react-spinners.ring-loader": "^0.5.1",
     "@testing-library/jest-dom": "^4.2.4",
