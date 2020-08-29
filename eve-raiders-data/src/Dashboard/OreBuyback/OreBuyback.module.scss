@@ -1,0 +1,92 @@
+.oreBuyback {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  height: 100%;
+
+  .header {
+    width: 100%;
+
+    .title {
+      text-align: center;
+      font-size: 26px;
+    }
+  }
+
+  .results {
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+    overflow: hidden;
+    z-index: 1;
+    margin-top: 20px;
+  }
+
+  @media screen and (max-width: 672px) {
+    .submitBtn {
+      width: calc(100% - 24px);
+    }
+
+    .label {
+      flex-direction: column;
+
+      .equals {
+        margin: -3px;
+      }
+    }
+
+    .grandTotal {
+      margin: 0;
+    }
+  }
+}
+
+.grandTotal {
+  margin: 0 10px 0 auto;
+  font-size: 12px;
+}
+
+.currency {
+  margin-left: 5px;
+  word-break: keep-all;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  margin-left: 10px;
+  align-items: center;
+
+  .price {
+    display: flex;
+    white-space: nowrap;
+    width: 50px;
+    justify-content: center;
+  }
+
+  .equals {
+    // margin: 5px;
+  }
+
+  .total {
+    width: 75px;
+    margin: 0 5px;
+    word-break: break-all;
+    text-align: center;
+  }
+}
+
+.error {
+  margin-bottom: 20px;
+}
+
+.fieldArray {
+  width: auto;
+}
+
+.countField {
+  width: 70px;
+}

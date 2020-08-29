@@ -353,3 +353,13 @@ healthchecksdb
 MigrationBackup/
 
 # End of https://www.gitignore.io/api/visualstudio
+
+# production
+build/
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

@@ -1,3 +1,5 @@
+@import "../../styles/mixins";
+
 .navBar {
   display: flex;
   align-items: center;
@@ -5,9 +7,52 @@
   width: 100%;
   background-color: var(--color-darkred-darker);
   white-space: nowrap;
+  overflow: auto hidden;
 
   .logo {
     height: 100%;
     padding: 5px;
+  }
+
+  .navItems {
+    display: flex;
+  }
+
+  .hamburger {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px 0 auto;
+    cursor: pointer;
+
+    @include box-shadow(
+      var(--box-shadow-red-hover),
+      var(--box-shadow-red-active)
+    );
+  }
+
+  .menu {
+    position: absolute;
+    display: none;
+    right: 0;
+    top: 40px;
+    background-color: var(--color-darkred);
+    z-index: 2;
+    width: 100%;
+    padding: 0 5px;
+
+    &.isOpen {
+      display: block;
+    }
+  }
+
+  @media screen and (max-width: 672px) {
+    .navItems {
+      display: none;
+    }
+
+    .hamburger {
+      display: flex;
+    }
   }
 }

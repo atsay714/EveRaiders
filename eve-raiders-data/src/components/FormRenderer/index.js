@@ -2,19 +2,11 @@ import React, { useMemo } from "react";
 import classNames from "classnames";
 import Button from "../inputs/Button";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import Input from "../../components/inputs/Input";
-import ComboBox from "../inputs/ComboBox";
-import Select from "../inputs/Select";
 import RingLoader from "@bit/davidhu2000.react-spinners.ring-loader";
+import inputTypes from "./inputTypes";
 import styles from "./FormRenderer.module.scss";
 
-const inputTypes = {
-  select: Select,
-  combobox: ComboBox,
-  "*": Input,
-};
-
-const FormRenderer = ({ config, onSubmit, loading }) => {
+const FormRenderer = ({ config, onSubmit, loading, children = () => {} }) => {
   const initialValues = useMemo(
     () =>
       config.fields.reduce((acc, field) => {
@@ -30,7 +22,7 @@ const FormRenderer = ({ config, onSubmit, loading }) => {
       initialValues={initialValues}
       onSubmit={onSubmit}
     >
-      {({ setFieldValue, errors, touched }) => (
+      {({ values, setFieldValue, errors, touched }) => (
         <Form className={classNames(styles.form, config.className)}>
           <div className={styles.fields}>
             {config.fields.map(({ className, name, type, ...inputProps }) => (
@@ -53,13 +45,14 @@ const FormRenderer = ({ config, onSubmit, loading }) => {
               </div>
             ))}
           </div>
+          {children(values)}
           <Button
             className={classNames(styles.submitBtn, config.btnClassName)}
             type="submit"
             disabled={loading}
           >
             <span style={{ visibility: loading ? "hidden" : "visible" }}>
-              Search
+              {config.btnLabel || "Submit"}
             </span>
             {loading && (
               <div
