@@ -9,28 +9,26 @@ const BaseInput = React.forwardRef(
     const childRef = useRef();
 
     useEffect(() => {
-      if (childRef.current) {
-        childRef.current.addEventListener("focus", () => {
-          setHasFocus(true);
-        });
-
-        childRef.current.addEventListener("blur", () => {
-          setHasFocus(false);
-        });
-      }
-
-      return setHasFocus;
+      // if (childRef.current) {
+      //   childRef.current.addEventListener("focus", () => {
+      //     setHasFocus(true);
+      //   });
+      //   childRef.current.addEventListener("blur", () => {
+      //     setHasFocus(false);
+      //   });
+      // }
+      // return setHasFocus;
     }, []);
 
     return (
       <div
         ref={ref}
         className={classNames(className, styles.inputWrapper, {
-          [styles.active]: hasFocus || active,
-          [styles.hasError]: error,
+          // [styles.active]: hasFocus || active,
+          // [styles.hasError]: error,
         })}
         onClick={() => {
-          childRef.current.focus();
+          //childRef.current.focus();
         }}
         {...props}
       >

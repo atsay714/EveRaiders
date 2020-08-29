@@ -1,0 +1,34 @@
+@import "../../../styles/mixins";
+
+.field {
+  margin: 10px;
+}
+
+.record {
+  display: flex;
+  align-items: center;
+}
+
+.remove {
+  visibility: hidden;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-red);
+  padding: 2px 1px;
+
+  &:hover {
+    color: var(--color-red-lighter);
+  }
+
+  @include box-shadow(
+    var(--box-shadow-red-hover),
+    var(--box-shadow-blue-active)
+  );
+
+  &.removeable {
+    visibility: visible;
+  }
+}
