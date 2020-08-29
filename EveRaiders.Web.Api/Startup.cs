@@ -183,7 +183,6 @@ namespace EveRaiders.Web.Api
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "Raiders API V1");
-                c.RoutePrefix = string.Empty;
             });
 
             if (env.IsDevelopment())

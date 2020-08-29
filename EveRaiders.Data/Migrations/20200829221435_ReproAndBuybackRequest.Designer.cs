@@ -4,14 +4,16 @@ using EveRaiders.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EveRaiders.Data.Migrations
 {
     [DbContext(typeof(EveRaidersContext))]
-    partial class EveRaidersContextModelSnapshot : ModelSnapshot
+    [Migration("20200829221435_ReproAndBuybackRequest")]
+    partial class ReproAndBuybackRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,29 +95,6 @@ namespace EveRaiders.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("EveRaiders.Data.Models.BuybackRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("RequestedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("BuyBackRequests");
-                });
-
             modelBuilder.Entity("EveRaiders.Data.Models.Constellation", b =>
                 {
                     b.Property<long>("Id")
@@ -170,9 +149,6 @@ namespace EveRaiders.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("BuybackRequestId")
-                        .HasColumnType("int");
-
                     b.Property<long?>("PlanetId")
                         .HasColumnType("bigint");
 
@@ -184,29 +160,9 @@ namespace EveRaiders.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BuybackRequestId");
-
                     b.HasIndex("PlanetId");
 
                     b.ToTable("PlanetResources");
-                });
-
-            modelBuilder.Entity("EveRaiders.Data.Models.PlanetaryResource", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PlanetaryResources");
                 });
 
             modelBuilder.Entity("EveRaiders.Data.Models.RawOre", b =>
@@ -216,23 +172,13 @@ namespace EveRaiders.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("BuybackRequestId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int?>("ReprocessingRequestId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("BuybackRequestId");
-
-                    b.HasIndex("ReprocessingRequestId");
 
                     b.ToTable("RawOres");
                 });
@@ -250,29 +196,6 @@ namespace EveRaiders.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Regions");
-                });
-
-            modelBuilder.Entity("EveRaiders.Data.Models.ReprocessingRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("RequestedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ReprocessingRequests");
                 });
 
             modelBuilder.Entity("EveRaiders.Data.Models.UniverseSystem", b =>
@@ -432,13 +355,6 @@ namespace EveRaiders.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("EveRaiders.Data.Models.BuybackRequest", b =>
-                {
-                    b.HasOne("EveRaiders.Data.Authentication.RaiderUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("EveRaiders.Data.Models.Constellation", b =>
                 {
                     b.HasOne("EveRaiders.Data.Models.Region", "Region")
@@ -455,31 +371,9 @@ namespace EveRaiders.Data.Migrations
 
             modelBuilder.Entity("EveRaiders.Data.Models.PlanetResource", b =>
                 {
-                    b.HasOne("EveRaiders.Data.Models.BuybackRequest", null)
-                        .WithMany("PlanetaryResources")
-                        .HasForeignKey("BuybackRequestId");
-
                     b.HasOne("EveRaiders.Data.Models.Planet", "Planet")
                         .WithMany("Resources")
                         .HasForeignKey("PlanetId");
-                });
-
-            modelBuilder.Entity("EveRaiders.Data.Models.RawOre", b =>
-                {
-                    b.HasOne("EveRaiders.Data.Models.BuybackRequest", null)
-                        .WithMany("RawOres")
-                        .HasForeignKey("BuybackRequestId");
-
-                    b.HasOne("EveRaiders.Data.Models.ReprocessingRequest", null)
-                        .WithMany("RawOres")
-                        .HasForeignKey("ReprocessingRequestId");
-                });
-
-            modelBuilder.Entity("EveRaiders.Data.Models.ReprocessingRequest", b =>
-                {
-                    b.HasOne("EveRaiders.Data.Authentication.RaiderUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("EveRaiders.Data.Models.UniverseSystem", b =>

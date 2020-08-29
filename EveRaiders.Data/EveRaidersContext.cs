@@ -16,7 +16,11 @@ namespace EveRaiders.Data
         public DbSet<UniverseSystem> Systems { get; set; }
         public DbSet<Planet> Planets { get; set; }
         public DbSet<PlanetResource> PlanetResources { get; set; }
-        
+        public DbSet<RawOre> RawOres { get; set; }
+        public DbSet<ReprocessingRequest> ReprocessingRequests { get; set; }
+        public DbSet<PlanetaryResource> PlanetaryResources { get; set; }
+        public DbSet<BuybackRequest> BuyBackRequests { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer(@"Data Source=localhost;Initial Catalog=EveRaiders;Trusted_Connection=True;");
