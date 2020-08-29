@@ -7,12 +7,14 @@ using AutoMapper;
 using EveRaiders.Data;
 using EveRaiders.Data.Enums;
 using EveRaiders.Web.Api.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace EveRaiders.Web.Api.Controllers
 {
+    //[Authorize(Policy = "Members")]
     [Route("[controller]")]
     [ApiController]
     public class PlanetsController : ControllerBase
@@ -109,8 +111,8 @@ namespace EveRaiders.Web.Api.Controllers
                 Types = Enum.GetNames(typeof(PlanetResourceTypes)).ToList(),
                 Richness = Enum.GetNames(typeof(ResourceRichnessTypes)).ToList(),
                 PlanetTypes = Enum.GetNames(typeof(PlanetTypes)).ToList(),
-                Regions = _db.Regions.Select(x => new RegionViewModel() { Id = x.Id, Name = x.Name }).ToList(),
-                Constellations = _db.Constellations.Select(x => new ConstellationViewModel() { Id = x.Id, Name = x.Name }).ToList()
+                Regions = _db.Regions.AsQueryable().Select(x => new RegionViewModel() { Id = x.Id, Name = x.Name }).ToList(),
+                Constellations = _db.Constellations.AsQueryable().Select(x => new ConstellationViewModel() { Id = x.Id, Name = x.Name }).ToList()
             };
             return Ok(filters);
         }

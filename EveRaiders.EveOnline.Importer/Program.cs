@@ -18,7 +18,8 @@ namespace EveRaiders.EveOnline.Importer
 
         static async Task Main(string[] args)
         {
-            await GetPlanetInformation();
+            await GetDistancesFromBase();
+            //await GetPlanetInformation();
 
             //await MatchEveOnlineData();
             Console.Read(); 
