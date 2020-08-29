@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
@@ -47,6 +49,7 @@ namespace EveRaiders.Web.Api
         {
             services.AddSwaggerGen(c =>
             {
+                c.SwaggerGeneratorOptions.IgnoreObsoleteActions = true;
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",

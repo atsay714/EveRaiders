@@ -29,11 +29,13 @@ namespace EveRaiders.Web.Api.Controllers
             _userManager = userManager;
             _roleManager = roleManager;
         }
+        [HttpPost("buyback")]
         public async Task<IActionResult> BuyBackRequest()
         {
             throw new NotImplementedException();
         }
 
+        [HttpPost("reprocess")]
         public async Task<IActionResult> ReprocessingRequest()
         {
             throw new NotImplementedException();
