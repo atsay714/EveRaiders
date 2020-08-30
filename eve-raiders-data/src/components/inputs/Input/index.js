@@ -2,7 +2,7 @@ import React from "react";
 import BaseInput from "../BaseInput";
 import styles from "./Input.module.scss";
 
-const Input = ({ className, label, onChange, error, ...inputProps }) => (
+const Input = ({ className, label, error, ...inputProps }) => (
   <BaseInput
     className={className}
     label={label}
@@ -13,7 +13,6 @@ const Input = ({ className, label, onChange, error, ...inputProps }) => (
       <input
         ref={ref}
         className={styles.input}
-        onChange={(e) => onChange(e.currentTarget.value)}
         spellCheck="false"
         {...inputProps}
       />

@@ -36,7 +36,12 @@ const FormRenderer = ({ config, onSubmit, loading, children = () => {} }) => {
                         type={type}
                         {...field}
                         {...inputProps}
-                        onChange={(value) => setFieldValue(name, value)}
+                        onChange={(value) =>
+                          setFieldValue(
+                            name,
+                            value?.currentTarget?.value ?? value
+                          )
+                        }
                         error={touched[name] && errors[name]}
                       />
                     );

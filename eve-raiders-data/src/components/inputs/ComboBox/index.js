@@ -43,7 +43,7 @@ const ComboBox = ({
   });
 
   return (
-    <div className={className}>
+    <div className={classNames(className, styles.comboboxContainer)}>
       <BaseInput label={label} name={name} error={error}>
         {(ref) => (
           <div className={styles.combobox} {...getComboboxProps()}>
