@@ -20,11 +20,11 @@ const navItems = [
     label: "Planet Search",
     logo: IoMdPlanet,
   },
-  // {
-  //   path: "/ore-buyback",
-  //   label: "Ore Buyback",
-  //   logo: GiMining,
-  // },
+  {
+    path: "/ore-buyback",
+    label: "Ore Buyback",
+    logo: GiMining,
+  },
 ];
 
 const NavBar = () => {

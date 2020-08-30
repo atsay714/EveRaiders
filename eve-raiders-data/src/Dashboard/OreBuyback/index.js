@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from "react";
 import FormRenderer from "../../components/FormRenderer";
-import { getFilters, getResources } from "../../api";
+import { getFilters } from "../../api";
+import { getResources } from "../../api/resources";
+import { buyback } from "../../api/oreBuyback";
 import { useQuery } from "react-query";
 import * as Yup from "yup";
 import Table from "../../components/Table";
@@ -26,11 +28,11 @@ const orePrices = {
 };
 
 const prices = {
-  "Lustering Alloy": 167.0,
-  "Sheen Compound": 23776.5,
-  "Gleaming Alloy": 582.5,
-  "Condensed Alloy": 11573.5,
-  "Precious Alloy": 12094.0,
+  LusteringAlloy: 167.0,
+  SheenCompound: 23776.5,
+  GleamingAlloy: 582.5,
+  CondensedAlloy: 11573.5,
+  PreciousAlloy: 12094.0,
 };
 
 const OreBuybackSchema = Yup.object().shape({
@@ -43,17 +45,17 @@ const OreBuyback = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
 
-  // const getData = (values) => {
-  //   setLoading(true);
-  //   getResources(values)
-  //     .then(({ data }) => {
-  //       setData(data);
-  //     })
-  //     .catch((e) => {
-  //       setError(e);
-  //     })
-  //     .finally(() => setLoading(false));
-  // };
+  const handleSubmit = async (values) => {
+    setLoading(true);
+    const { success, error, data: res } = await buyback(
+      values.resources.map(({ resourceType, count }) => ({
+        id: resourceType.id,
+        quantity: +count,
+      }))
+    );
+    setData(res);
+    setLoading(false);
+  };
 
   const {
     loading: filtersLoading,
@@ -61,15 +63,11 @@ const OreBuyback = () => {
     data: filtersTypesData,
   } = useQuery("filters", getFilters);
 
-  const { regions = [], richness = [], types = [] } = useMemo(
-    () => (filtersTypesData ? filtersTypesData.data : []),
-    [filtersTypesData]
-  );
-
-  const resourceTypeOptions = useMemo(
-    () => types.map((type) => type.replace(/([A-Z])/g, " $1").trim()),
-    [types]
-  );
+  const {
+    loading: resourcesLoading,
+    error: resourcesError,
+    data: resourcesData,
+  } = useQuery("resources", getResources);
 
   const columns = useMemo(
     () => [
@@ -96,16 +94,17 @@ const OreBuyback = () => {
           textAlign: "right",
         },
         Cell: ({ value }) => {
-          const total = value.reduce((total, { resourceType, count = 0 }) => {
-            total += prices[resourceType] * count;
-            return total;
-          }, 0);
-          return (
-            <div>
-              {total.toLocaleString({ style: "currency" })}
-              <span className={styles.currency}>ISK</span>
-            </div>
-          );
+          return "placeholder";
+          //   const total = value.reduce((total, { resourceType, count = 0 }) => {
+          //     total += prices[resourceType] * count;
+          //     return total;
+          //   }, 0);
+          //   return (
+          //     <div>
+          //       {total.toLocaleString({ style: "currency" })}
+          //       <span className={styles.currency}>ISK</span>
+          //     </div>
+          //   );
         },
       },
       {
@@ -168,7 +167,8 @@ const OreBuyback = () => {
             label: "Resource Type",
             placeholder: "resource type",
             type: "combobox",
-            items: resourceTypeOptions,
+            items: resourcesData,
+            itemToString: (item) => item?.name ?? "",
             className: styles.field,
             initialValue: "",
           },
@@ -203,9 +203,7 @@ const OreBuyback = () => {
         <h1 className={styles.title}>Ore Buyback</h1>
         <FormRenderer
           config={formConfig}
-          onSubmit={(values) => {
-            setData([values]);
-          }}
+          onSubmit={handleSubmit}
           loading={loading}
         >
           {(values) => {
