@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace EveRaiders.Web.Api.Controllers
 {
+    [Authorize(Policy = "SuperAdmin")]
     [Route("administration")]
     [ApiController]
     public class AdministrationController : ControllerBase
@@ -28,7 +29,6 @@ namespace EveRaiders.Web.Api.Controllers
 
         [HttpPost]
         [Route("approve")]
-        [Authorize(Policy = "SuperAdmin")]
         public async Task<IActionResult> Approve(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);
@@ -48,7 +48,6 @@ namespace EveRaiders.Web.Api.Controllers
 
         [HttpPost]
         [Route("promote")]
-        [Authorize(Policy = "SuperAdmin")]
         public async Task<IActionResult> Promote(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);

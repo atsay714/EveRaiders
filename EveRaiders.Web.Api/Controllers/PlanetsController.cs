@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace EveRaiders.Web.Api.Controllers
 {
-    //[Authorize(Policy = "Members")]
+    [Authorize(Policy = "Members")]
     [Route("planets")]
     [ApiController]
     public class PlanetsController : ControllerBase
