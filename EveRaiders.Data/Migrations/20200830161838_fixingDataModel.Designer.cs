@@ -4,14 +4,16 @@ using EveRaiders.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EveRaiders.Data.Migrations
 {
     [DbContext(typeof(EveRaidersContext))]
-    partial class EveRaidersContextModelSnapshot : ModelSnapshot
+    [Migration("20200830161838_fixingDataModel")]
+    partial class fixingDataModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,13 +233,23 @@ namespace EveRaiders.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int?>("BuybackRequestId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
+                    b.Property<int?>("ReprocessingRequestId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("BuybackRequestId");
+
+                    b.HasIndex("ReprocessingRequestId");
 
                     b.ToTable("Resources");
 
@@ -544,39 +556,6 @@ namespace EveRaiders.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EveRaiders.Data.Models.ResourceOrder", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("BuybackRequestId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Quantity")
-                        .HasColumnType("float");
-
-                    b.Property<int>("ReprocessingRequestId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ResourceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BuybackRequestId");
-
-                    b.HasIndex("ReprocessingRequestId");
-
-                    b.HasIndex("ResourceId");
-
-                    b.ToTable("ResourceOrders");
-                });
-
             modelBuilder.Entity("EveRaiders.Data.Models.UniverseSystem", b =>
                 {
                     b.Property<long>("Id")
@@ -769,25 +748,15 @@ namespace EveRaiders.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("EveRaiders.Data.Models.ResourceOrder", b =>
+            modelBuilder.Entity("EveRaiders.Data.Models.Resource", b =>
                 {
-                    b.HasOne("EveRaiders.Data.Models.BuybackRequest", "BuybackRequest")
+                    b.HasOne("EveRaiders.Data.Models.BuybackRequest", null)
                         .WithMany("Resources")
-                        .HasForeignKey("BuybackRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BuybackRequestId");
 
-                    b.HasOne("EveRaiders.Data.Models.ReprocessingRequest", "ReprocessingRequest")
+                    b.HasOne("EveRaiders.Data.Models.ReprocessingRequest", null)
                         .WithMany("RawOres")
-                        .HasForeignKey("ReprocessingRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EveRaiders.Data.Models.Resource", "Resource")
-                        .WithMany("Orders")
-                        .HasForeignKey("ResourceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReprocessingRequestId");
                 });
 
             modelBuilder.Entity("EveRaiders.Data.Models.UniverseSystem", b =>

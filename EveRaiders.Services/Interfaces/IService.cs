@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace EveRaiders.Services.Interfaces
 {
-    public interface IPlanetService
+    public interface IService<T>
     {
-        Task<List<Planet>> Get();
+        Task<List<T>> Get();
         //Task<List<Planet>> GetList(int? pageNumber, string sortField, string sortOrder);
-        Task<Planet> Get(int id);
+        Task<T> Get(int id);
     }
 }

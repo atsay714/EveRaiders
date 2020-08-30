@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EveRaiders.Services
 {
-    public class PlanetService : IPlanetService
+    public class PlanetService : IService<Planet>
     {
         private readonly EveRaidersContext _context;
 
