@@ -1,15 +1,8 @@
-import axios from "axios";
-
-const baseURL = "https://everaiders.azurewebsites.net/";
-
-const instance = axios.create({
-  baseURL,
-  timeout: 30000,
-});
+import instance from "./base";
 
 export const getPlanets = ({
   region,
-  constellatin,
+  constellation,
   system,
   planetName,
   planetType,
@@ -17,7 +10,7 @@ export const getPlanets = ({
   instance.get("/api/planets", {
     params: {
       region: region.name,
-      constellatin,
+      constellation,
       system,
       planetName,
       planetType,

@@ -1,9 +1,9 @@
 .register {
   display: flex;
   align-items: center;
-  justify-content: center;
   height: 75%;
   flex-direction: column;
+  margin-top: 15%;
 }
 
 .field {
@@ -32,12 +32,12 @@
 .logo {
   height: 160px;
   width: 160px;
-  margin: 20px 50px 0 0;
+  margin-right: 50px;
 }
 
 .formContainer {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .form {
