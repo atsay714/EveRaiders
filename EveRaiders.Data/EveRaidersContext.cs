@@ -78,7 +78,15 @@ namespace EveRaiders.Data
                 new Resource { Id = 47, Name = "Spodanium" },
                 new Resource { Id = 48, Name = "Bistot" },
                 new Resource { Id = 49, Name = "Arkonor" },
-                new Resource { Id = 50, Name = "Mercoxit" });
+                new Resource { Id = 50, Name = "Mercoxit" },
+                new Resource { Id = 51, Name = "Tritanium" },
+                new Resource { Id = 52, Name = "Pyerite" },
+                new Resource { Id = 53, Name = "Mexallon" },
+                new Resource { Id = 54, Name = "Isogen" },
+                new Resource { Id = 55, Name = "Nocxium" },
+                new Resource { Id = 56, Name = "Zydrine" },
+                new Resource { Id = 57, Name = "Megacyte" },
+                new Resource { Id = 58, Name = "Morphite" });
 
             base.OnModelCreating(modelBuilder);
         }

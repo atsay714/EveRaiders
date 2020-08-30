@@ -15,7 +15,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace EveRaiders.Web.Api.Controllers
 {
-    [Authorize(Policy = "Members")]
+    //[Authorize(Policy = "Members")]
     [Route("services")]
     [ApiController]
     public class CorporationServicesController : ControllerBase
@@ -50,7 +50,8 @@ namespace EveRaiders.Web.Api.Controllers
         {
             var resources = await _db.Resources.ToListAsync();
 
-            return Ok(_mapper.Map<ResourceViewModel>(resources));
+            var mappedResources = _mapper.Map<List<ResourceViewModel>>(resources);
+            return Ok(mappedResources);
         }
     }
 }
