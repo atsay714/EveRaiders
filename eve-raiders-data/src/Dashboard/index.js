@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -68,20 +68,23 @@ const Dashboard = () => {
 
 export default Dashboard;
 
-const PrivateRoute = ({ children, ...rest }) => (
-  <Route
-    {...rest}
-    render={({ location }) =>
-      window.localStorage.token ? (
-        children
-      ) : (
-        <Redirect
-          to={{
-            pathname: "/login",
-            state: { from: location },
-          }}
-        />
-      )
-    }
-  />
-);
+const PrivateRoute = ({ children, ...rest }) => {
+  const [token, setToken] = useContext(TokenContext);
+
+  return (
+    <Route>
+      {({ location }) =>
+        token ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    </Route>
+  );
+};

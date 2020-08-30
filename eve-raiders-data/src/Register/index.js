@@ -8,13 +8,6 @@ import { useHistory, useLocation } from "react-router-dom";
 import * as Yup from "yup";
 import styles from "./Register.module.scss";
 
-// const
-// Passwords must be at least 6 characters
-// Passwords must have at least one lowercase ('a'-'z')
-// Passwords must have at least one uppercase ('A'-'Z')
-// Passwords must have at least one digit ('0'-'9')
-// Passwords must have at least one non alphanumeric character
-
 const Register = () => {
   const [registerErrors, setRegisterErrors] = useState([]);
   let history = useHistory();
