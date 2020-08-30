@@ -1,3 +1,7 @@
+.comboboxContainer {
+  position: relative;
+}
+
 .combobox {
   width: 100%;
 }
@@ -8,15 +12,15 @@
   width: 100%;
   color: inherit;
   outline: none;
-  padding: 18px 5px 6px;
+  padding: 18px 5px 5px;
 }
 
 .menu {
   background-color: var(--color-darkred-darker);
   list-style: none;
   padding: 0;
-  margin: 0;
   position: absolute;
+  top: 25px;
   width: 200px; /* Is there a way to not hardcode this? */
   max-height: 300px;
   overflow: hidden auto;

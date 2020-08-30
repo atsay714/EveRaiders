@@ -1,6 +1,11 @@
 @import "../../../styles/mixins";
 
 .inputWrapper {
+  // width: 100%;
+  padding-bottom: 20px;
+}
+
+.inputContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -13,7 +18,7 @@
 
   @include box-shadow(
     var(--box-shadow-red-hover),
-    var(--box-shadow-blue-active)
+    var(--box-shadow-red-active)
   );
 
   &.hasError {
@@ -27,13 +32,15 @@
   left: 5px;
   cursor: inherit;
   font-size: 10px;
+  pointer-events: none;
 }
 
 .errorMsg {
   display: flex;
-  align-items: center;
   font-size: 12px;
   color: var(--color-red-lighter);
-  position: absolute;
-  bottom: -20px;
+
+  .logo {
+    margin: 2px 3px 0 0;
+  }
 }

@@ -1,33 +1,36 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import classNames from "classnames";
 import { GiMining } from "react-icons/gi";
 import { IoMdPlanet } from "react-icons/io";
 import { MdMenu } from "react-icons/md";
 import useClickAway from "../../hooks/useClickAway";
 import NavItem from "./NavItem";
+import Settings from "./Settings";
+import { TokenContext } from "../../contexts";
 import styles from "./NavBar.module.scss";
 
 const navItems = [
   {
-    name: "resource-search",
+    path: "/resource-search",
     label: "Resource Search",
     logo: GiMining,
   },
   {
-    name: "planet-search",
+    path: "/planet-search",
     label: "Planet Search",
     logo: IoMdPlanet,
   },
   // {
-  //   name: "ore-buyback",
+  //   path: "/ore-buyback",
   //   label: "Ore Buyback",
   //   logo: GiMining,
   // },
 ];
 
-const NavBar = ({ route, setRoute }) => {
+const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef();
+  const [token, setToken] = useContext(TokenContext);
 
   useClickAway(ref, () => isOpen && setIsOpen(false));
 
@@ -41,9 +44,8 @@ const NavBar = ({ route, setRoute }) => {
       <div className={styles.navItems}>
         {navItems.map((item) => (
           <NavItem
-            key={item.name}
-            selected={route === item.name}
-            onClick={() => setRoute(item.name)}
+            key={item.path}
+            path={item.path}
             logo={item.logo}
             label={item.label}
           />
@@ -62,14 +64,17 @@ const NavBar = ({ route, setRoute }) => {
       >
         {navItems.map((item) => (
           <NavItem
-            key={item.name}
-            selected={route === item.name}
-            onClick={() => setRoute(item.name)}
+            key={item.path}
+            path={item.path}
             logo={item.logo}
             label={item.label}
           />
         ))}
+        <div onClick={() => setToken("")}>
+          <NavItem label={"Logout"} />
+        </div>
       </div>
+      <Settings />
     </div>
   );
 };

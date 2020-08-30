@@ -12,8 +12,6 @@ import inputTypes from "../../FormRenderer/inputTypes";
 const FieldArray = ({ fields = [], name, Label }) => {
   const { values, touched, errors, setFieldValue } = useFormikContext();
 
-  console.log(values);
-
   return (
     <div className={styles.fieldArray}>
       <FieldArrayFormik name={name}>
@@ -89,12 +87,10 @@ const Record = ({
                   {...field}
                   {...inputProps}
                   onChange={(value) => {
-                    console.log(
-                      "setValue:",
+                    setFieldValue(
                       `${rootName}[${index}].${name}`,
-                      value
+                      value?.currentTarget?.value ?? value
                     );
-                    setFieldValue(`${rootName}[${index}].${name}`, value);
                   }}
                   value={values?.[index]?.[name] ?? initialValue}
                   error={touched[name] && errors[name]}
