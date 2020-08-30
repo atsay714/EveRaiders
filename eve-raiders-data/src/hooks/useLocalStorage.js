@@ -1,32 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 
-const useLocalStorage = (key, initialValue) => {
-  const [storedValue, setStoredValue] = useState(() => {
-    try {
-      const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
-    } catch (error) {
-      console.log(error);
-      return initialValue;
-    }
-  });
-  const setValue = (value) => {
-    try {
-      const valueToStore =
-        value instanceof Function ? value(storedValue) : value;
-      setStoredValue(valueToStore);
-      window.localStorage.setItem(
-        key,
-        typeof valueToStore === "string"
-          ? valueToStore
-          : JSON.stringify(valueToStore)
-      );
-    } catch (error) {
-      console.log(error);
-    }
+const useLocalStorage = (key, initialValue = "") => {
+  const [value, setValue] = useState(
+    () => window.localStorage.getItem(key) || initialValue
+  );
+
+  const setItem = (newValue) => {
+    setValue(newValue);
+    window.localStorage.setItem(key, newValue);
   };
 
-  return [storedValue, setValue];
+  useEffect(() => {
+    const newValue = window.localStorage.getItem(key);
+    if (value !== newValue) {
+      setValue(newValue || initialValue);
+    }
+  });
+
+  const handleStorage = useCallback(
+    (event) => {
+      if (event.key === key && event.newValue !== value) {
+        setValue(event.newValue || initialValue);
+      }
+    },
+    [value]
+  );
+
+  useEffect(() => {
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, [handleStorage]);
+
+  return [value, setItem];
 };
 
 export default useLocalStorage;

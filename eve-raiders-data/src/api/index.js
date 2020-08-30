@@ -2,7 +2,7 @@ import instance from "./base";
 
 export const getPlanets = ({
   region,
-  constellatin,
+  constellation,
   system,
   planetName,
   planetType,
@@ -10,7 +10,7 @@ export const getPlanets = ({
   instance.get("/api/planets", {
     params: {
       region: region.name,
-      constellatin,
+      constellation,
       system,
       planetName,
       planetType,
