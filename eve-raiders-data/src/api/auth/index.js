@@ -1,11 +1,4 @@
-import axios from "axios";
-
-const baseURL = "https://everaiders.azurewebsites.net/";
-
-const instance = axios.create({
-  baseURL,
-  timeout: 30000,
-});
+import instance from "../base";
 
 export const login = async ({ username, password }) => {
   try {
@@ -30,11 +23,9 @@ export const register = async ({ username, email, password, discordUser }) => {
       password,
       discordUser,
     });
-    debugger;
 
     return { success: res?.data?.status === "Success" };
   } catch (e) {
-    debugger;
     return {
       errors: Object.values(e.response.data) ||
         e.response.data.value || ["An unknown error occured"],

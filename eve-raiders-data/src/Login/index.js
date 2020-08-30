@@ -25,7 +25,6 @@ const Login = () => {
     const { success, error, data } = await login({ username, password });
     setLoading(false);
 
-    console.log(success, from);
     if (success) {
       setToken(data);
       history.replace(from || "/");
