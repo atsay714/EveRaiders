@@ -102,6 +102,7 @@ namespace EveRaiders.Web.Api.Controllers
             }
         }
 
+        [AllowAnonymous]
         [Produces("application/json")]
         [HttpGet("filters")]
         public IActionResult GetFilters()
