@@ -28,6 +28,10 @@ namespace EveRaiders.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ResourceOrder>()
+                .Property(p => p.Id)
+                .ValueGeneratedOnAdd();
+
             modelBuilder.Entity<Resource>().HasData(
                 new Resource { Id = 1, Name = "Lustering Alloy" },
                 new Resource { Id = 2, Name = "Sheen Compound" },

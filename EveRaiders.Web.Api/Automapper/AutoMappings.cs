@@ -33,6 +33,10 @@ namespace EveRaiders.Web.Api.Automapper
                 .ForMember(src => src.PlanetType, opt => opt.MapFrom(dest => dest.Planet.EveOnlineTypeId));
 
             CreateMap<Resource, ResourceViewModel>();
+
+            CreateMap<BuybackOrReprocessResourceViewModel, ResourceOrder>()
+                .ForMember(src => src.ResourceId, opt => opt.MapFrom(dest => dest.Id))
+                .ForMember(src => src.Id, opt => opt.Ignore());
         }
     }
 }
