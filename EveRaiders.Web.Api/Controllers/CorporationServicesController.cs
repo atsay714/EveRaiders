@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EveRaiders.Data;
 using EveRaiders.Data.Authentication;
+using EveRaiders.Web.Api.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace EveRaiders.Web.Api.Controllers
 {
+    [Authorize(Policy = "Members")]
     [Route("services")]
     [ApiController]
     public class CorporationServicesController : ControllerBase
@@ -30,15 +33,15 @@ namespace EveRaiders.Web.Api.Controllers
             _roleManager = roleManager;
         }
         [HttpPost("buyback")]
-        public async Task<IActionResult> BuyBackRequest()
+        public async Task<IActionResult> BuyBackRequest([FromBody] List<BuybackOrReprocessResourceViewModel> model)
         {
-            throw new NotImplementedException();
+            return Ok(model);
         }
 
         [HttpPost("reprocess")]
-        public async Task<IActionResult> ReprocessingRequest()
+        public async Task<IActionResult> ReprocessingRequest([FromBody] List<BuybackOrReprocessResourceViewModel> model)
         {
-            throw new NotImplementedException();
+            return Ok(model);
         }
     }
 }

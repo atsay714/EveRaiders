@@ -133,45 +133,5 @@ namespace EveRaiders.Web.Api.Controllers
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
-
-        [HttpPost]
-        [Route("approve")]
-        [Authorize(Policy = "SuperAdmin")]
-        public async Task<IActionResult> Approve(string userName)
-        {
-            var user = await _userManager.FindByNameAsync(userName);
-            if (user == null)
-                return NotFound();
-
-            user.Approved = true;
-
-            var result = await _userManager.UpdateAsync(user);
-
-
-            if (result.Succeeded)
-                return Ok();
-            else
-                return Conflict(result);
-        }
-
-        [HttpPost]
-        [Route("promote")]
-        [Authorize(Policy = "SuperAdmin")]
-        public async Task<IActionResult> Promote(string userName)
-        {
-            var user = await _userManager.FindByNameAsync(userName);
-            if (user == null)
-                return NotFound();
-
-            user.SuperAdmin = true;
-
-            var result = await _userManager.UpdateAsync(user);
-
-
-            if (result.Succeeded)
-                return Ok();
-            else
-                return Conflict(result);
-        }
     }
 }
