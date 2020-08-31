@@ -1,0 +1,30 @@
+.rowPrice {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  margin-left: 10px;
+  align-items: center;
+
+  .price {
+    display: flex;
+    white-space: nowrap;
+    width: 50px;
+    justify-content: center;
+  }
+
+  .equals {
+    margin: 10px;
+  }
+
+  .total {
+    width: 75px;
+    margin: 0 5px;
+    word-break: break-all;
+    text-align: center;
+  }
+
+  .currency {
+    margin-left: 5px;
+    word-break: keep-all;
+  }
+}
