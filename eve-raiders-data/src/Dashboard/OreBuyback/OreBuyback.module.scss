@@ -43,42 +43,6 @@
   }
 }
 
-.grandTotal {
-  margin: 0 10px 0 auto;
-  font-size: 12px;
-}
-
-.currency {
-  margin-left: 5px;
-  word-break: keep-all;
-}
-
-.label {
-  display: flex;
-  align-items: center;
-  font-size: 12px;
-  margin-left: 10px;
-  align-items: center;
-
-  .price {
-    display: flex;
-    white-space: nowrap;
-    width: 50px;
-    justify-content: center;
-  }
-
-  .equals {
-    margin: 10px;
-  }
-
-  .total {
-    width: 75px;
-    margin: 0 5px;
-    word-break: break-all;
-    text-align: center;
-  }
-}
-
 .error {
   margin-bottom: 20px;
 }

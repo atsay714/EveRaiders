@@ -7,7 +7,7 @@ export const buyback = async (resources) => {
     return { success: res?.data?.status === "Success", data: res.data };
   } catch (e) {
     return {
-      errors: Object.values(e.response.data) ||
+      error: Object.values(e.response.data) ||
         e.response.data.value || ["An unknown error occured"],
     };
   }
