@@ -2,23 +2,23 @@
 
 namespace EveRaiders.Data.Migrations
 {
-    public partial class AddingEveOnlineTypeId : Migration
+    public partial class RemovingStupidId : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<long>(
-                name: "EveOnlineTypeId",
-                table: "Planets",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
+            migrationBuilder.DropColumn(
+                name: "EveEchoesId",
+                table: "Planets");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "EveOnlineTypeId",
-                table: "Planets");
+            migrationBuilder.AddColumn<long>(
+                name: "EveEchoesId",
+                table: "Planets",
+                type: "bigint",
+                nullable: false,
+                defaultValue: 0L);
         }
     }
 }

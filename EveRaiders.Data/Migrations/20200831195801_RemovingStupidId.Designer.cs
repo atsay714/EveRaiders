@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EveRaiders.Data.Migrations
 {
     [DbContext(typeof(EveRaidersContext))]
-    [Migration("20200830163257_FixingQuantity")]
-    partial class FixingQuantity
+    [Migration("20200831195801_RemovingStupidId")]
+    partial class RemovingStupidId
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -171,6 +171,9 @@ namespace EveRaiders.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<double>("Output")
+                        .HasColumnType("float");
 
                     b.Property<long?>("PlanetId")
                         .HasColumnType("bigint");
@@ -543,6 +546,54 @@ namespace EveRaiders.Data.Migrations
                             Id = 50,
                             Name = "Mercoxit",
                             Price = 0.0
+                        },
+                        new
+                        {
+                            Id = 51,
+                            Name = "Tritanium",
+                            Price = 0.0
+                        },
+                        new
+                        {
+                            Id = 52,
+                            Name = "Pyerite",
+                            Price = 0.0
+                        },
+                        new
+                        {
+                            Id = 53,
+                            Name = "Mexallon",
+                            Price = 0.0
+                        },
+                        new
+                        {
+                            Id = 54,
+                            Name = "Isogen",
+                            Price = 0.0
+                        },
+                        new
+                        {
+                            Id = 55,
+                            Name = "Nocxium",
+                            Price = 0.0
+                        },
+                        new
+                        {
+                            Id = 56,
+                            Name = "Zydrine",
+                            Price = 0.0
+                        },
+                        new
+                        {
+                            Id = 57,
+                            Name = "Megacyte",
+                            Price = 0.0
+                        },
+                        new
+                        {
+                            Id = 58,
+                            Name = "Morphite",
+                            Price = 0.0
                         });
                 });
 
@@ -553,7 +604,7 @@ namespace EveRaiders.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("BuybackRequestId")
+                    b.Property<int?>("BuybackRequestId")
                         .HasColumnType("int");
 
                     b.Property<double>("Price")
@@ -562,7 +613,7 @@ namespace EveRaiders.Data.Migrations
                     b.Property<double>("Quantity")
                         .HasColumnType("float");
 
-                    b.Property<int>("ReprocessingRequestId")
+                    b.Property<int?>("ReprocessingRequestId")
                         .HasColumnType("int");
 
                     b.Property<int>("ResourceId")
@@ -775,15 +826,11 @@ namespace EveRaiders.Data.Migrations
                 {
                     b.HasOne("EveRaiders.Data.Models.BuybackRequest", "BuybackRequest")
                         .WithMany("Resources")
-                        .HasForeignKey("BuybackRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BuybackRequestId");
 
                     b.HasOne("EveRaiders.Data.Models.ReprocessingRequest", "ReprocessingRequest")
                         .WithMany("RawOres")
-                        .HasForeignKey("ReprocessingRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReprocessingRequestId");
 
                     b.HasOne("EveRaiders.Data.Models.Resource", "Resource")
                         .WithMany("Orders")

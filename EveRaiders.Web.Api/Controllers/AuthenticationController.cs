@@ -93,7 +93,8 @@ namespace EveRaiders.Web.Api.Controllers
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username
+                UserName = model.Username,
+                DiscordUser = model.DiscordUser
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)

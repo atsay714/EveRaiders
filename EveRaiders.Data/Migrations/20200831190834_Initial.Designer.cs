@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EveRaiders.Data.Migrations
 {
     [DbContext(typeof(EveRaidersContext))]
-    [Migration("20200830161838_fixingDataModel")]
-    partial class fixingDataModel
+    [Migration("20200831190834_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -143,6 +143,9 @@ namespace EveRaiders.Data.Migrations
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("EveEchoesId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("EveOnlineId")
                         .HasColumnType("bigint");
 
@@ -171,6 +174,9 @@ namespace EveRaiders.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<double>("Output")
+                        .HasColumnType("float");
 
                     b.Property<long?>("PlanetId")
                         .HasColumnType("bigint");
@@ -233,23 +239,13 @@ namespace EveRaiders.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("BuybackRequestId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int?>("ReprocessingRequestId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("BuybackRequestId");
-
-                    b.HasIndex("ReprocessingRequestId");
 
                     b.ToTable("Resources");
 
@@ -553,7 +549,88 @@ namespace EveRaiders.Data.Migrations
                             Id = 50,
                             Name = "Mercoxit",
                             Price = 0.0
+                        },
+                        new
+                        {
+                            Id = 51,
+                            Name = "Tritanium",
+                            Price = 0.0
+                        },
+                        new
+                        {
+                            Id = 52,
+                            Name = "Pyerite",
+                            Price = 0.0
+                        },
+                        new
+                        {
+                            Id = 53,
+                            Name = "Mexallon",
+                            Price = 0.0
+                        },
+                        new
+                        {
+                            Id = 54,
+                            Name = "Isogen",
+                            Price = 0.0
+                        },
+                        new
+                        {
+                            Id = 55,
+                            Name = "Nocxium",
+                            Price = 0.0
+                        },
+                        new
+                        {
+                            Id = 56,
+                            Name = "Zydrine",
+                            Price = 0.0
+                        },
+                        new
+                        {
+                            Id = 57,
+                            Name = "Megacyte",
+                            Price = 0.0
+                        },
+                        new
+                        {
+                            Id = 58,
+                            Name = "Morphite",
+                            Price = 0.0
                         });
+                });
+
+            modelBuilder.Entity("EveRaiders.Data.Models.ResourceOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int?>("BuybackRequestId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("ReprocessingRequestId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResourceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BuybackRequestId");
+
+                    b.HasIndex("ReprocessingRequestId");
+
+                    b.HasIndex("ResourceId");
+
+                    b.ToTable("ResourceOrders");
                 });
 
             modelBuilder.Entity("EveRaiders.Data.Models.UniverseSystem", b =>
@@ -748,15 +825,21 @@ namespace EveRaiders.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("EveRaiders.Data.Models.Resource", b =>
+            modelBuilder.Entity("EveRaiders.Data.Models.ResourceOrder", b =>
                 {
-                    b.HasOne("EveRaiders.Data.Models.BuybackRequest", null)
+                    b.HasOne("EveRaiders.Data.Models.BuybackRequest", "BuybackRequest")
                         .WithMany("Resources")
                         .HasForeignKey("BuybackRequestId");
 
-                    b.HasOne("EveRaiders.Data.Models.ReprocessingRequest", null)
+                    b.HasOne("EveRaiders.Data.Models.ReprocessingRequest", "ReprocessingRequest")
                         .WithMany("RawOres")
                         .HasForeignKey("ReprocessingRequestId");
+
+                    b.HasOne("EveRaiders.Data.Models.Resource", "Resource")
+                        .WithMany("Orders")
+                        .HasForeignKey("ResourceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EveRaiders.Data.Models.UniverseSystem", b =>
