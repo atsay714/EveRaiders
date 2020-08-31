@@ -23,34 +23,4 @@
     z-index: 1;
     margin-top: 20px;
   }
-
-  @media screen and (max-width: 672px) {
-    .submitBtn {
-      width: calc(100% - 24px);
-    }
-
-    .label {
-      flex-direction: column;
-
-      .equals {
-        margin: -3px;
-      }
-    }
-
-    .grandTotal {
-      margin: 0;
-    }
-  }
-}
-
-.error {
-  margin-bottom: 20px;
-}
-
-.fieldArray {
-  width: auto;
-}
-
-.countField {
-  width: 70px;
 }

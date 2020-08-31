@@ -13,8 +13,8 @@ import styles from "./OreBuybackForm.module.scss";
 const oreBuybackSchema = Yup.object().shape({
   resources: Yup.array().of(
     Yup.object().shape({
-      resourceType: Yup.object().required("Resource Type is required"),
-      count: Yup.string().required("Count is required"),
+      resourceName: Yup.object().required("Resource name is required"),
+      quantity: Yup.string().required("Quantity is required"),
     })
   ),
 });
@@ -24,23 +24,34 @@ const OreBuybackForm = ({ handleSubmit, loading }) => {
     <Formik
       validationSchema={oreBuybackSchema}
       initialValues={{
-        resources: [],
+        resources: [
+          {
+            resourceName: "",
+            quantity: "0",
+          },
+        ],
       }}
       onSubmit={handleSubmit}
     >
-      {({ values, errors, touched }) => (
+      {({ values }) => (
         <Form className={styles.form}>
-          <FieldArray>
-            {({ arrayHelpers }) => (
+          <FieldArray name={"resources"}>
+            {(arrayHelpers) => (
               <div>
                 {values.resources.map((value, i) => (
-                  <Record handleRemove={() => arrayHelpers.remove(i)} />
+                  <Record
+                    key={i}
+                    handleRemove={() => arrayHelpers.remove(i)}
+                    index={i}
+                  />
                 ))}
               </div>
             )}
           </FieldArray>
           {(values["resources"][values["resources"].length - 1]?.resourceName ||
-            values["resources"].length === 0) && <Record />}
+            values["resources"].length === 0) && (
+            <Record index={values.resources.length} />
+          )}
           <GrandTotal values={values} />
           <Button className={styles.submitBtn} type="submit" disabled={loading}>
             Submit

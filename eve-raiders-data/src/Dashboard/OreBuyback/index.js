@@ -12,11 +12,12 @@ const OreBuyback = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (values) => {
+    console.log(values);
     setLoading(true);
     const { success, error, data: res } = await buyback(
-      values.resources.map(({ resourceType, count }) => ({
-        id: resourceType.id,
-        quantity: +count,
+      values.resources.map(({ resourceName, quantity }) => ({
+        id: resourceName.id,
+        quantity: +quantity,
       }))
     );
     setLoading(false);
