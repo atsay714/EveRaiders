@@ -28,10 +28,10 @@ const Settings = () => {
         onClick={() => setIsOpen(false)}
       >
         <div onClick={() => setToken("")}>
-          <NavItem label={"Logout"} />
           {user?.superAdmin && (
             <NavItem label={"User Admin"} path={"/admin/users"} />
           )}
+          <NavItem label={"Logout"} />
         </div>
       </div>
     </>
