@@ -4,18 +4,18 @@ import { getResources } from "../../../../api/resources";
 import styles from "./GrandTotal.module.scss";
 
 const GrandTotal = ({ values }) => {
-  const getPrice = (resourceType, resourcesData) =>
-    resourcesData.find(({ name }) => name === resourceType)?.price || 0;
+  const getPrice = (resourceName, resourcesData) =>
+    resourcesData.find(({ name }) => name === resourceName)?.price || 0;
 
   const {
     loading: resourcesLoading,
     error: resourcesError,
-    data: resourcesData,
+    data: resourcesData = [],
   } = useQuery("resources", getResources);
 
   const total = values.resources.reduce(
-    (total, { resourceType, count = 0 } = {}) => {
-      total += getPrice(resourceType, resourcesData) * count;
+    (total, { resourceName, quantity = 0 } = {}) => {
+      total += getPrice(resourceName, resourcesData) * quantity;
       return total;
     },
     0

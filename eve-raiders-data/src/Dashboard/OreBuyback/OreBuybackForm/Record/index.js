@@ -9,7 +9,7 @@ import ComboBox from "../../../../components/inputs/ComboBox";
 import RowPrice from "./RowPrice";
 import styles from "./Record.module.scss";
 
-const Record = ({ handleRemove }) => {
+const Record = ({ handleRemove, index }) => {
   const {
     loading: resourcesLoading,
     error: resourcesError,
@@ -27,33 +27,32 @@ const Record = ({ handleRemove }) => {
             placeholder="resource name"
             items={resourcesData}
             itemToString={(item) => item?.name ?? ""}
-            // className={styles.field}
+            className={styles.field}
             {...field}
+            value={values["resources"]?.[index]?.["resourceName"] || ""}
             onChange={(value) =>
-              setFieldValue(
-                "resourceName",
-                value?.currentTarget?.value ?? value
-              )
+              setFieldValue(`resources[${index}].resourceName`, value)
             }
-            error={touched["resourceName"] && errors["resourceName"]}
+            error={errors["resources"]?.[index]?.["resourceName"]}
           />
         )}
       </Field>
       <Field name={"quantity"}>
         {({ field }) => (
           <Input
-            label="Count"
-            placeholder="count"
-            // className={styles.countField}
+            label="Quantity"
+            placeholder="quantity"
+            className={styles.countField}
             type={"number"}
             {...field}
-            // onChange={(value) =>
-            //   setFieldValue(
-            //     name,
-            //     value?.currentTarget?.value ?? value
-            //   )
-            // }
-            error={touched["quantity"] && errors["quantity"]}
+            value={values["resources"]?.[index]?.["quantity"] || ""}
+            onChange={(e) =>
+              setFieldValue(
+                `resources[${index}].quantity`,
+                e.currentTarget.value
+              )
+            }
+            error={errors["resources"]?.[index]?.["quantity"]}
           />
         )}
       </Field>

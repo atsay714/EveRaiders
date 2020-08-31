@@ -1,0 +1,35 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  max-width: 672px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+@media screen and (max-width: 672px) {
+  .submitBtn {
+    width: calc(100% - 24px);
+  }
+
+  .label {
+    flex-direction: column;
+
+    .equals {
+      margin: -3px;
+    }
+  }
+
+  .grandTotal {
+    margin: 0;
+  }
+}
+
+.submitBtn {
+  margin: 20px 12px 0;
+  min-width: 100px;
+  align-self: flex-end;
+}
+
+.error {
+  margin-bottom: 20px;
+}

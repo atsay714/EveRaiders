@@ -21,7 +21,7 @@ const BaseInput = React.forwardRef(
     }, []);
 
     return (
-      <div className={classNames(styles.inputWrapper)}>
+      <div className={classNames(className, styles.inputWrapper)}>
         <div
           ref={ref}
           className={classNames(styles.inputContainer, {

@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import styles from "./ResourceSearch.module.scss";
 
 const ResourceSearchSchema = Yup.object().shape({
-  resourceType: Yup.string().required("Resource Type is required"),
+  resourceName: Yup.string().required("Resource Name is required"),
   richness: Yup.string().required("Richness is required"),
 });
 
@@ -46,7 +46,7 @@ const ResourceSearch = () => {
       },
       {
         Header: "Resource Type",
-        accessor: "resourceType",
+        accessor: "resourceName",
         Cell: ({ value }) => value.replace(/([A-Z])/g, " $1").trim(),
         style: {
           textAlign: "left",
@@ -74,7 +74,7 @@ const ResourceSearch = () => {
     [filtersTypesData]
   );
 
-  const resourceTypeOptions = useMemo(
+  const resourceNameOptions = useMemo(
     () => types.map((type) => type.replace(/([A-Z])/g, " $1").trim()),
     [types]
   );
@@ -90,11 +90,11 @@ const ResourceSearch = () => {
     btnClassName: styles.submitBtn,
     fields: [
       {
-        name: "resourceType",
+        name: "resourceName",
         label: "Resource Type",
         placeholder: "resource type",
         type: "combobox",
-        items: resourceTypeOptions,
+        items: resourceNameOptions,
         className: styles.field,
       },
       {

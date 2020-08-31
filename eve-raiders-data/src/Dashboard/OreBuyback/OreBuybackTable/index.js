@@ -28,8 +28,8 @@ const OreBuybackTable = ({ data = [] }) => {
         },
         Cell: ({ value }) => {
           return "placeholder";
-          //   const total = value.reduce((total, { resourceType, count = 0 }) => {
-          //     total += prices[resourceType] * count;
+          //   const total = value.reduce((total, { resourceName, count = 0 }) => {
+          //     total += prices[resourceName] * count;
           //     return total;
           //   }, 0);
           //   return (
