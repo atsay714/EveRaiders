@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using EveRaiders.Data;
 using EveRaiders.Data.Authentication;
+using EveRaiders.Web.Api.ViewModels.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -11,20 +14,31 @@ using Microsoft.Extensions.Configuration;
 
 namespace EveRaiders.Web.Api.Controllers
 {
-    [Authorize(Policy = "SuperAdmin")]
+    //[Authorize(Policy = "SuperAdmin")]
     [Route("administration")]
     [ApiController]
     public class AdministrationController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
         private readonly UserManager<RaiderUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly EveRaidersContext _db;
 
-        public AdministrationController(UserManager<RaiderUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AdministrationController(EveRaidersContext db,IMapper mapper, UserManager<RaiderUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _db = db;
+            _mapper = mapper;
+        }
+
+        [HttpGet("users")]
+        public async Task<IActionResult> GetUsers()
+        {
+            var users = await _db.Users.ToListAsync();
+            return Ok(_mapper.Map<List<UserViewModel>>(users));
         }
 
         [HttpPost]
