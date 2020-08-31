@@ -15,7 +15,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace EveRaiders.Web.Api.Controllers
 {
-    //[Authorize(Policy = "SuperAdmin")]
+    [Authorize(Policy = "SuperAdmin")]
     [Route("administration")]
     [ApiController]
     public class AdministrationController : ControllerBase
