@@ -1,5 +1,5 @@
 import axios from "axios";
-import { history } from "../Dashboard";
+import { history } from "../App";
 
 const baseURL = "https://everaiders.azurewebsites.net/";
 
@@ -24,7 +24,6 @@ instance.interceptors.response.use(
         pathname: "/login",
         state: { message: "You have been logged out" },
       });
-      window.location.reload();
     } else if (
       error.request.responseURL === `${baseURL}api/auth/login` &&
       error.response.status === 401

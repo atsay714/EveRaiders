@@ -21,16 +21,16 @@ const Settings = () => {
         className={styles.settings}
         onClick={() => setIsOpen((prevIsOpen) => !prevIsOpen)}
       >
-        <FaEllipsisV size={24} />
+        <FaEllipsisV size={16} />
       </div>
       <div
         className={classNames(styles.menu, { [styles.isOpen]: isOpen })}
         onClick={() => setIsOpen(false)}
       >
-        <div onClick={() => setToken("")}>
-          {user?.superAdmin && (
-            <NavItem label={"User Admin"} path={"/admin/users"} />
-          )}
+        {user?.superAdmin && (
+          <NavItem label={"User Admin"} path={"/dashboard/admin/users"} />
+        )}
+        <div onClick={() => setToken()}>
           <NavItem label={"Logout"} />
         </div>
       </div>
