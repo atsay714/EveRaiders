@@ -1,11 +1,5 @@
-import React, { useState, useEffect, createContext, useContext } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-  withRouter,
-} from "react-router-dom";
+import React, { useContext } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getCurrentUser } from "../api/admin";
 

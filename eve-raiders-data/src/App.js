@@ -28,8 +28,6 @@ function App() {
       history.push("/login", {
         state: { message: "You have been logged out" },
       });
-      // force refresh the page since history.push isn't changing components for us
-      window.location.reload();
     }
   }, [token]);
 
