@@ -6,7 +6,7 @@ import { MdMenu } from "react-icons/md";
 import useClickAway from "../../hooks/useClickAway";
 import NavItem from "./NavItem";
 import Settings from "./Settings";
-import { TokenContext } from "../../contexts";
+import { TokenContext, UserContext } from "../../contexts";
 import styles from "./NavBar.module.scss";
 
 const navItems = [
@@ -31,6 +31,8 @@ const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef();
   const [token, setToken] = useContext(TokenContext);
+
+  const user = useContext(UserContext);
 
   useClickAway(ref, () => isOpen && setIsOpen(false));
 
@@ -70,6 +72,9 @@ const NavBar = () => {
             label={item.label}
           />
         ))}
+        {user?.superAdmin && (
+          <NavItem label={"User Admin"} path={"/admin/users"} />
+        )}
         <div onClick={() => setToken("")}>
           <NavItem label={"Logout"} />
         </div>

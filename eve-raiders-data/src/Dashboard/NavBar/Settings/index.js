@@ -3,13 +3,14 @@ import classNames from "classnames";
 import { FaEllipsisV } from "react-icons/fa";
 import useClickAway from "../../../hooks/useClickAway";
 import NavItem from "../NavItem";
-import { TokenContext } from "../../../contexts";
+import { TokenContext, UserContext } from "../../../contexts";
 import styles from "./Settings.module.scss";
 
 const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef();
 
+  const user = useContext(UserContext);
   const [token, setToken] = useContext(TokenContext);
 
   useClickAway(ref, () => isOpen && setIsOpen(false));
@@ -28,6 +29,9 @@ const Settings = () => {
       >
         <div onClick={() => setToken("")}>
           <NavItem label={"Logout"} />
+          {user?.superAdmin && (
+            <NavItem label={"User Admin"} path={"/admin/users"} />
+          )}
         </div>
       </div>
     </>
