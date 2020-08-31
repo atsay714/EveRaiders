@@ -6,6 +6,7 @@ import styles from "./NavItem.module.scss";
 const NavItem = ({ path, logo: Logo, label }) => {
   const history = useHistory();
   const location = useLocation();
+
   return (
     <div
       to={path}

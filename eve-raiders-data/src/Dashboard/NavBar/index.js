@@ -24,6 +24,7 @@ const navItems = [
     path: "/ore-buyback",
     label: "Ore Buyback",
     logo: GiMining,
+    requiresSuperAdmin: true,
   },
 ];
 
@@ -44,14 +45,11 @@ const NavBar = () => {
         alt="raiders logo"
       />
       <div className={styles.navItems}>
-        {navItems.map((item) => (
-          <NavItem
-            key={item.path}
-            path={item.path}
-            logo={item.logo}
-            label={item.label}
-          />
-        ))}
+        {navItems
+          .filter((x) => user?.superAdmin || !x.requiresSuperAdmin)
+          .map((item) => (
+            <NavItem key={item.path} {...item} />
+          ))}
       </div>
 
       <div
@@ -64,14 +62,11 @@ const NavBar = () => {
         className={classNames(styles.menu, { [styles.isOpen]: isOpen })}
         onClick={() => setIsOpen(false)}
       >
-        {navItems.map((item) => (
-          <NavItem
-            key={item.path}
-            path={item.path}
-            logo={item.logo}
-            label={item.label}
-          />
-        ))}
+        {navItems
+          .filter((x) => user?.superAdmin || !x.requiresSuperAdmin)
+          .map((item) => (
+            <NavItem key={item.path} {...item} />
+          ))}
         {user?.superAdmin && (
           <NavItem label={"User Admin"} path={"/admin/users"} />
         )}
