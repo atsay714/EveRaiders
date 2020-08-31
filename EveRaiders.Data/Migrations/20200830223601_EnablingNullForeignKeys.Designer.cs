@@ -4,14 +4,16 @@ using EveRaiders.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EveRaiders.Data.Migrations
 {
     [DbContext(typeof(EveRaidersContext))]
-    partial class EveRaidersContextModelSnapshot : ModelSnapshot
+    [Migration("20200830223601_EnablingNullForeignKeys")]
+    partial class EnablingNullForeignKeys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,15 +108,12 @@ namespace EveRaiders.Data.Migrations
                     b.Property<double>("TotalPrice")
                         .HasColumnType("float");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("BuyBackRequests");
                 });
@@ -789,7 +788,7 @@ namespace EveRaiders.Data.Migrations
                 {
                     b.HasOne("EveRaiders.Data.Authentication.RaiderUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("EveRaiders.Data.Models.Constellation", b =>

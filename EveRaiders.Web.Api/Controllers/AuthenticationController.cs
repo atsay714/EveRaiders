@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AspNet.Security.OAuth.Discord;
+using AutoMapper;
 using Discord;
 using Discord.Rest;
 using EveRaiders.Data.Authentication;
@@ -31,46 +32,12 @@ namespace EveRaiders.Web.Api.Controllers
         private readonly UserManager<RaiderUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AuthenticationController(UserManager<RaiderUser> userManager, RoleManager<IdentityRole> roleManager,IConfiguration configuration)
+        public AuthenticationController(UserManager<RaiderUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
         }
-
-        //[Authorize(AuthenticationSchemes = DiscordAuthenticationDefaults.AuthenticationScheme)]
-        //public async Task<IActionResult> Authorize()
-        //{
-        //    var userAuthToken = User.Claims.FirstOrDefault(s => s.Type == "access_token")?.Value;
-
-        //    var discordClient = new DiscordRestClient();
-        //    await discordClient.LoginAsync(TokenType.Bearer, userAuthToken, false);
-
-        //    var guilds = discordClient.CurrentUser;
-
-        //    var userId = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-
-        //    string key = _configuration["Jwt:EncryptionKey"];
-        //    string issuer = _configuration["Jwt:Issuer"];
-        //    string audience = _configuration["Jwt:Audience"];
-
-        //    var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
-
-        //    var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-        //    var permClaims = new List<Claim>()
-        //    {
-        //        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        //        new Claim("discordUserId", userId)
-        //    };
-
-        //    var token = new JwtSecurityToken(
-        //        issuer, audience, permClaims, expires: DateTime.Now.AddDays(7), signingCredentials: credentials);
-
-        //    var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
-
-        //    return Ok(jwtToken);
-        //}
 
         [HttpPost]
         [Route("login")]
@@ -84,6 +51,7 @@ namespace EveRaiders.Web.Api.Controllers
                 var authClaims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim("Approved", user.Approved.ToString()),
                     new Claim("SuperAdmin", user.SuperAdmin.ToString())

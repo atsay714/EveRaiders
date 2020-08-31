@@ -11,10 +11,10 @@ namespace EveRaiders.Data.Models
         public int ResourceId { get; set; }
         public virtual Resource Resource { get; set; }
 
-        public int BuybackRequestId { get; set; }
+        public int? BuybackRequestId { get; set; }
         public virtual BuybackRequest BuybackRequest { get; set; }
 
-        public int ReprocessingRequestId { get; set; }
+        public int? ReprocessingRequestId { get; set; }
         public virtual ReprocessingRequest ReprocessingRequest { get; set; }
 
         public double Quantity { get; set; }

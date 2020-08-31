@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EveRaiders.Data.Authentication;
+using EveRaiders.Web.Api.ViewModels.Authentication;
 
 namespace EveRaiders.Web.Api.Automapper
 {
@@ -33,6 +35,12 @@ namespace EveRaiders.Web.Api.Automapper
                 .ForMember(src => src.PlanetType, opt => opt.MapFrom(dest => dest.Planet.EveOnlineTypeId));
 
             CreateMap<Resource, ResourceViewModel>();
+
+            CreateMap<BuybackOrReprocessResourceViewModel, ResourceOrder>()
+                .ForMember(src => src.ResourceId, opt => opt.MapFrom(dest => dest.Id))
+                .ForMember(src => src.Id, opt => opt.Ignore());
+
+            CreateMap<RaiderUser, UserViewModel>();
         }
     }
 }

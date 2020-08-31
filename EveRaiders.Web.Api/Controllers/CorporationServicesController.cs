@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using EveRaiders.Data;
@@ -15,7 +16,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace EveRaiders.Web.Api.Controllers
 {
-    //[Authorize(Policy = "Members")]
+    [Authorize(Policy = "Members")]
     [Route("services")]
     [ApiController]
     public class CorporationServicesController : ControllerBase
@@ -36,7 +37,19 @@ namespace EveRaiders.Web.Api.Controllers
         [HttpPost("buyback")]
         public async Task<IActionResult> BuyBackRequest([FromBody] List<BuybackOrReprocessResourceViewModel> model)
         {
-            return Ok(model);
+            var user = await _userManager.FindByIdAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var resources = _mapper.Map<List<ResourceOrder>>(model);
+
+            var order = new BuybackRequest()
+            {
+                User = user,
+                Resources = resources
+            };
+
+            var savedOrder = await _db.BuyBackRequests.AddAsync(order);
+            await _db.SaveChangesAsync();
+            return Ok(savedOrder);
         }
 
         [HttpPost("reprocess")]
