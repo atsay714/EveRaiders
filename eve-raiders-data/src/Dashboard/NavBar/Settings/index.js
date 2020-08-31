@@ -27,10 +27,10 @@ const Settings = () => {
         className={classNames(styles.menu, { [styles.isOpen]: isOpen })}
         onClick={() => setIsOpen(false)}
       >
+        {user?.superAdmin && (
+          <NavItem label={"User Admin"} path={"/dashboard/admin/users"} />
+        )}
         <div onClick={() => setToken("")}>
-          {user?.superAdmin && (
-            <NavItem label={"User Admin"} path={"/admin/users"} />
-          )}
           <NavItem label={"Logout"} />
         </div>
       </div>

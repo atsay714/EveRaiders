@@ -11,17 +11,17 @@ import styles from "./NavBar.module.scss";
 
 const navItems = [
   {
-    path: "/resource-search",
+    path: "/dashboard/resource-search",
     label: "Resource Search",
     logo: GiMining,
   },
   {
-    path: "/planet-search",
+    path: "/dashboard/planet-search",
     label: "Planet Search",
     logo: IoMdPlanet,
   },
   {
-    path: "/ore-buyback",
+    path: "/dashboard/ore-buyback",
     label: "Ore Buyback",
     logo: GiMining,
     requiresSuperAdmin: true,
@@ -68,7 +68,7 @@ const NavBar = () => {
             <NavItem key={item.path} {...item} />
           ))}
         {user?.superAdmin && (
-          <NavItem label={"User Admin"} path={"/admin/users"} />
+          <NavItem label={"User Admin"} path={"/dashboard/admin/users"} />
         )}
         <div onClick={() => setToken("")}>
           <NavItem label={"Logout"} />

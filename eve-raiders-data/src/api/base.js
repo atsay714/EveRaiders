@@ -1,5 +1,5 @@
 import axios from "axios";
-import { history } from "../Dashboard";
+import { history } from "../App";
 
 const baseURL = "https://everaiders.azurewebsites.net/";
 
