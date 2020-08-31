@@ -63,9 +63,8 @@ namespace EveRaiders.Web.Api.Controllers
 
             var result = await _userManager.UpdateAsync(user);
 
-
             if (result.Succeeded)
-                return Ok();
+                return Ok(_mapper.Map<UserViewModel>(user));
             else
                 return Conflict(result);
         }
