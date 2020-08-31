@@ -11,5 +11,6 @@ namespace EveRaiders.Web.Api.ViewModels.Authentication
         public string Username { get; set; }
         public string DiscordUser { get; set; }
         public bool Approved { get; set; }
+        public bool SuperAdmin { get; set; }
     }
 }

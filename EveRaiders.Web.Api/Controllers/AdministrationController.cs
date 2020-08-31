@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using EveRaiders.Data;
@@ -32,6 +33,15 @@ namespace EveRaiders.Web.Api.Controllers
             _configuration = configuration;
             _db = db;
             _mapper = mapper;
+        }
+
+
+        [HttpGet("user")]
+        public async Task<IActionResult> GetUserInformation()
+        {
+            var user = await _userManager.FindByIdAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            return Ok(_mapper.Map<UserViewModel>(user));
         }
 
         [HttpGet("users")]
