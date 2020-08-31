@@ -6,12 +6,7 @@ import { ReactQueryDevtools } from "react-query-devtools";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { createBrowserHistory } from "history";
 import { TokenContext } from "./contexts";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { Router, Switch, Route, Redirect } from "react-router-dom";
 import "./App.scss";
 
 export const history = createBrowserHistory();
@@ -22,6 +17,7 @@ function App() {
   useEffect(() => {
     if (
       !token &&
+      window.location.pathname !== "/" &&
       window.location.pathname !== "/login" &&
       window.location.pathname !== "/register"
     ) {
