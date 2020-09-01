@@ -7,7 +7,7 @@
         GleamingAlloy,
         CondensedAlloy,
         PreciousAlloy,
-        MottleyCompound,
+        MotleyCompound,
         FiberComposite,
         LucentCompound,
         OpulentCompound,

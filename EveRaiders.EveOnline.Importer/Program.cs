@@ -8,12 +8,13 @@ using Flurl;
 using Flurl.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
 
 namespace EveRaiders.EveOnline.Importer
 {
     class Program
     {
-        private static readonly EveRaidersContext _db = new EveRaidersContext(new DbContextOptionsBuilder<EveRaidersContext>().UseSqlServer("Server=everaider.database.windows.net;Initial Catalog=everaider;Persist Security Info=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;User ID=raider;Password=NUE1zu53qOG4;").Options);
+        private static readonly EveRaidersContext _db = new EveRaidersContext(new DbContextOptionsBuilder<EveRaidersContext>().UseSqlServer("Server=localhost;Database=everaiders;Trusted_Connection=True;").Options);
         private static readonly int HomeSystemId = 30000904;
 
         static async Task Main(string[] args)
@@ -22,6 +23,8 @@ namespace EveRaiders.EveOnline.Importer
             //await GetPlanetInformation();
 
             //await MatchEveOnlineData();
+
+            Console.WriteLine("Tasks Complete");
             Console.Read(); 
         }
 
@@ -100,39 +103,29 @@ namespace EveRaiders.EveOnline.Importer
             Console.WriteLine("Matching with Eve Online data");
             var echoesSolarSystem = await _db.Systems.ToListAsync();
 
-            List<long> solarSystemIds = await "https://esi.evetech.net/latest/universe/systems/?datasource=tranquility".GetJsonAsync<List<long>>();
-
-            solarSystemIds = solarSystemIds.Where(i => !echoesSolarSystem.Select(s => s.EveOnlineId).Contains(i))
-                .ToList();
-
-            foreach (var solarSystemId in solarSystemIds)
+            foreach (var system in echoesSolarSystem)
             {
-                try
-                {
-                    var solarSystem =
-                        await
-                            $"https://esi.evetech.net/latest/universe/systems/{solarSystemId}/?datasource=tranquility&language=en-us"
-                                .GetJsonAsync<ViewModels.System>();
+                Console.WriteLine($"Searching for {system.Name}");
+                EOSearch solarSystemIds =
+                    await
+                        $"https://esi.evetech.net/latest/search/?categories=solar_system&datasource=tranquility&language=en-us&search={system.Name}&strict=true"
+                            .GetJsonAsync<EOSearch>();
 
-                    //Console.WriteLine($"Checking {solarSystem.Name}");
+                if(solarSystemIds.SolarSystem.Count == 0)
+                    continue;
 
-                    var dbSolarSystem = echoesSolarSystem.FirstOrDefault(s => s.Name.Contains(solarSystem.Name));
-                    if (dbSolarSystem == null)
-                        continue;
+                system.EveOnlineId = solarSystemIds.SolarSystem.FirstOrDefault();
 
-                    Console.WriteLine($"Found {solarSystem.Name}");
-
-                    dbSolarSystem.EveOnlineId = solarSystemId;
-                    _db.Entry(dbSolarSystem).State = EntityState.Modified;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-
+                _db.Entry(system).State = EntityState.Modified;
             }
 
             await _db.SaveChangesAsync();
         }
+    }
+
+    public class EOSearch
+    {
+        [JsonProperty("solar_system")]
+        public List<int> SolarSystem;
     }
 }
