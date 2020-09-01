@@ -39,7 +39,7 @@ const Settings = () => {
           <NavItem label={"Logout"} />
         </div>
       </div>
-      {isModalOpen && <AboutModal handleClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && <AboutModal onClose={() => setIsModalOpen(false)} />}
     </>
   );
 };

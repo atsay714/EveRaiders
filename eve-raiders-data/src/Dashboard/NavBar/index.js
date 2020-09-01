@@ -84,7 +84,7 @@ const NavBar = () => {
         </div>
       </div>
       <Settings />
-      {isModalOpen && <AboutModal handleClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && <AboutModal onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 };
