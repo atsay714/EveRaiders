@@ -41,6 +41,9 @@ namespace EveRaiders.Web.Api.Automapper
                 .ForMember(src => src.Id, opt => opt.Ignore());
 
             CreateMap<RaiderUser, UserViewModel>();
+
+            CreateMap<BuybackRequest, BuyBackRequestViewModel>()
+                .ForMember(src => src.Total, opt => opt.MapFrom(dest => dest.TotalPrice));
         }
     }
 }

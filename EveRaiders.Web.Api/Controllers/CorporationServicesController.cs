@@ -7,7 +7,9 @@ using AutoMapper;
 using EveRaiders.Data;
 using EveRaiders.Data.Authentication;
 using EveRaiders.Data.Models;
+using EveRaiders.Services;
 using EveRaiders.Web.Api.ViewModels;
+using EveRaiders.Web.Api.ViewModels.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -25,31 +27,27 @@ namespace EveRaiders.Web.Api.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<RaiderUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly CorporationServices _corporationServices;
 
 
-        public CorporationServicesController(EveRaidersContext db, IMapper mapper, UserManager<RaiderUser> userManager, RoleManager<IdentityRole> roleManager)
+        public CorporationServicesController(EveRaidersContext db, IMapper mapper, UserManager<RaiderUser> userManager, RoleManager<IdentityRole> roleManager, CorporationServices corporationServices)
         {
             _db = db;
             _mapper = mapper;
             _userManager = userManager;
             _roleManager = roleManager;
+            _corporationServices = corporationServices;
         }
+
         [HttpPost("buyback")]
         public async Task<IActionResult> BuyBackRequest([FromBody] List<BuybackOrReprocessResourceViewModel> model)
         {
             var user = await _userManager.FindByIdAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
             var resources = _mapper.Map<List<ResourceOrder>>(model);
 
-            var order = new BuybackRequest()
-            {
-                User = user,
-                Resources = resources
-            };
+            var savedOrder = await _corporationServices.CreateBuyBackRequest(resources, user);
 
-            var savedOrder = await _db.BuyBackRequests.AddAsync(order);
-            await _db.SaveChangesAsync();
-            return Ok(savedOrder);
+            return Ok(_mapper.Map<BuyBackRequestViewModel>(savedOrder));
         }
 
         [HttpPost("reprocess")]

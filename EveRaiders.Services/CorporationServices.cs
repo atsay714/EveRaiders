@@ -1,23 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using EveRaiders.Data;
+using EveRaiders.Data.Authentication;
 using EveRaiders.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EveRaiders.Services
 {
     public class CorporationServices
     {
-        private readonly EveRaidersContext _context;
+        private readonly EveRaidersContext _db;
 
-        public CorporationServices(EveRaidersContext context)
+        public CorporationServices(EveRaidersContext db)
         {
-            _context = context;
+            _db = db;
         }
 
-        public List<BuybackRequest> CreateBuyBackRequest(List<Resource> resources, Guid userId)
+        public async Task<BuybackRequest> CreateBuyBackRequest(List<ResourceOrder> resources, RaiderUser user)
         {
-            throw new NotImplementedException();
+            double total = 0;
+            foreach (var resource in resources)
+            {
+                var dbResource = await _db.Resources.FirstOrDefaultAsync(s => s.Id == resource.ResourceId);
+                if (dbResource == null)
+                    continue;
+
+                total += resource.Quantity * dbResource.Price;
+            }
+
+            var order = new BuybackRequest()
+            {
+                User = user,
+                Resources = resources,
+                TotalPrice = total
+            };
+
+            var savedOrder = await _db.BuyBackRequests.AddAsync(order);
+            await _db.SaveChangesAsync();
+
+
+            return order;
         }
     }
 }

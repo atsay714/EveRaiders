@@ -15,6 +15,7 @@ using AutoMapper;
 using EveRaiders.Data;
 using EveRaiders.Data.Authentication;
 using EveRaiders.Data.Models;
+using EveRaiders.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth;
@@ -159,7 +160,7 @@ namespace EveRaiders.Web.Api
             //    };
 
 
-
+            services.AddScoped<CorporationServices>();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers().AddJsonOptions(options =>
                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
