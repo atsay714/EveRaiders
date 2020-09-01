@@ -21,8 +21,8 @@ const OreBuyback = () => {
       }))
     );
     setLoading(false);
-    if (error) return;
-    setData(res);
+    if (error) return setError(error);
+    setData((prevData) => [...prevData, res]);
   };
 
   const {
@@ -43,7 +43,7 @@ const OreBuyback = () => {
             An error occured. Please try again.
           </div>
         )}
-        <OreBuybackTable />
+        <OreBuybackTable data={data} />
       </div>
       <header className={styles.header}>
         <h1 className={styles.title}>Ore Buyback</h1>

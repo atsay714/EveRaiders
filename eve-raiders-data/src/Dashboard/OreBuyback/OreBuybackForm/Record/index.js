@@ -34,6 +34,7 @@ const Record = ({ handleRemove, index }) => {
               setFieldValue(`resources[${index}].resourceName`, value)
             }
             error={errors["resources"]?.[index]?.["resourceName"]}
+            loading={resourcesLoading}
           />
         )}
       </Field>
@@ -56,7 +57,7 @@ const Record = ({ handleRemove, index }) => {
           />
         )}
       </Field>
-      <RowPrice value={values} />
+      <RowPrice value={values["resources"]?.[index]} />
       <div
         className={classNames(styles.remove, {
           [styles.removeable]: handleRemove,

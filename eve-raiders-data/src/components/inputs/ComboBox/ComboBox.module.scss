@@ -64,3 +64,10 @@
 .item.highlighted {
   background-color: var(--color-red-darker);
 }
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}

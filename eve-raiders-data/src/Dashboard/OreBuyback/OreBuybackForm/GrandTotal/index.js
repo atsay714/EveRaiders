@@ -5,7 +5,7 @@ import styles from "./GrandTotal.module.scss";
 
 const GrandTotal = ({ values }) => {
   const getPrice = (resourceName, resourcesData) =>
-    resourcesData.find(({ name }) => name === resourceName)?.price || 0;
+    resourcesData.find(({ name }) => name === resourceName.name)?.price || 0;
 
   const {
     loading: resourcesLoading,
@@ -20,6 +20,7 @@ const GrandTotal = ({ values }) => {
     },
     0
   );
+
   return (
     <div className={styles.grandTotal}>
       Total ={" "}
