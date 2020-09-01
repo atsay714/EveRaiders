@@ -15,7 +15,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace EveRaiders.Web.Api.Controllers
 {
-    [Authorize(Policy = "SuperAdmin")]
+    //[Authorize(Policy = "SuperAdmin")]
     [Route("administration")]
     [ApiController]
     public class AdministrationController : ControllerBase
@@ -49,6 +49,16 @@ namespace EveRaiders.Web.Api.Controllers
         {
             var users = await _db.Users.ToListAsync();
             return Ok(_mapper.Map<List<UserViewModel>>(users));
+        }
+
+        [HttpGet("orders/buyback")]
+        public async Task<IActionResult> GetBuybackRequest()
+        {
+            var request = await _db.BuyBackRequests.ToListAsync();
+
+            var mappedRequest = _mapper.Map<List<BuyBackRequestViewModel>>(request);
+
+            return Ok(mappedRequest);
         }
 
         [HttpPost]
