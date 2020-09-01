@@ -46,7 +46,9 @@ const NavBar = () => {
       />
       <div className={styles.navItems}>
         {navItems
-          .filter((x) => user?.superAdmin || !x.requiresSuperAdmin)
+          .filter(
+            (x) => user?.approved && (user?.superAdmin || !x.requiresSuperAdmin)
+          )
           .map((item) => (
             <NavItem key={item.path} {...item} />
           ))}
@@ -63,7 +65,9 @@ const NavBar = () => {
         onClick={() => setIsOpen(false)}
       >
         {navItems
-          .filter((x) => user?.superAdmin || !x.requiresSuperAdmin)
+          .filter(
+            (x) => user?.approved && (user?.superAdmin || !x.requiresSuperAdmin)
+          )
           .map((item) => (
             <NavItem key={item.path} {...item} />
           ))}

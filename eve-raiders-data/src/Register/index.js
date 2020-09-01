@@ -48,7 +48,9 @@ const Register = () => {
         /(?=.*\W)/,
         "Password must contain at least one non alphanumeric character (!@#$% etc.)"
       ),
-    discordUser: Yup.string().required("Discord User is required"),
+    discordUser: Yup.string()
+      .required("Discord User is required")
+      .matches(/^((.+?)#\d{4})/, "Must be a valid Discord username"),
   });
 
   return (
@@ -119,6 +121,7 @@ const Register = () => {
                       className={styles.field}
                       label={"Discord User"}
                       type={"text"}
+                      placeholder={"user#1234"}
                       error={touched["discordUser"] && errors["discordUser"]}
                       {...field}
                     />

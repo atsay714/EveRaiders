@@ -20,10 +20,16 @@ const Dashboard = () => {
 
   const token = useContext(TokenContext);
 
+  useEffect(() => {
+    if (currentUser?.approved === false) {
+      history.push("/awaiting-approval");
+    }
+  }, [currentUser?.approved]);
+
   return (
     <div className={styles.dashboard}>
       <UserContext.Provider value={currentUser}>
-        {token && currentUser?.approved && <NavBar />}
+        {token && <NavBar />}
         <Switch>
           <Route path="/dashboard/awaiting-approval">
             <AwaitingApproval />
