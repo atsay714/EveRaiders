@@ -1,7 +1,7 @@
 import axios from "axios";
 import { history } from "../App";
 
-const baseURL = "https://everaiders.azurewebsites.net/";
+export const baseURL = "https://everaiders.azurewebsites.net/";
 
 const instance = axios.create({
   baseURL,
@@ -18,17 +18,18 @@ instance.interceptors.response.use(
   (error) => {
     if (
       !(error?.request?.responseURL === `${baseURL}api/auth/login`) &&
-      error.response.status === 401
+      error?.response?.status === 401
     ) {
       history.push({
         pathname: "/login",
         state: { message: "You have been logged out" },
       });
     } else if (
-      error.request.responseURL === `${baseURL}api/auth/login` &&
-      error.response.status === 401
+      error?.request?.responseURL === `${baseURL}api/auth/login` &&
+      error?.response?.status === 401
     ) {
-      return Promise.reject("Invalid username or password");
+      error.message = "Invalid username or password";
+      return Promise.reject(error);
     } else {
       return Promise.reject(error);
     }

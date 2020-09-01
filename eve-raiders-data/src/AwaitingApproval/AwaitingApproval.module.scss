@@ -1,0 +1,22 @@
+.awaitingApproval {
+  margin-top: 50px;
+}
+
+.adminList {
+  list-style-type: none;
+  padding: 0;
+}
+
+%admin {
+  padding: 5px 0;
+}
+
+.adminPrimary {
+  @extend %admin;
+  font-weight: bold;
+}
+
+.adminSecondary {
+  @extend %admin;
+  font-style: italic;
+}

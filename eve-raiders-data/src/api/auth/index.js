@@ -11,7 +11,10 @@ export const login = async ({ username, password }) => {
     }
     return { success: false };
   } catch (e) {
-    return { error: e };
+    return {
+      error: e.response?.data?.message ||
+        e.message || ["An unknown error occured. Please try again."],
+    };
   }
 };
 
@@ -27,8 +30,8 @@ export const register = async ({ username, email, password, discordUser }) => {
     return { success: res?.data?.status === "Success" };
   } catch (e) {
     return {
-      errors: Object.values(e.response.data) ||
-        e.response.data.value || ["An unknown error occured"],
+      error: e.response?.data?.message ||
+        e.message || ["An unknown error occured. Please try again."],
     };
   }
 };

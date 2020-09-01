@@ -5,18 +5,19 @@ import Password from "../components/inputs/Password";
 import Button from "../components/inputs/Button";
 import { Formik, Form, Field } from "formik";
 import { useHistory, useLocation } from "react-router-dom";
+import { MdErrorOutline } from "react-icons/md";
 import * as Yup from "yup";
 import styles from "./Register.module.scss";
 
 const Register = () => {
-  const [registerErrors, setRegisterErrors] = useState([]);
+  const [registerError, setRegisterError] = useState();
   let history = useHistory();
   let location = useLocation();
 
   const handleRegister = async (values) => {
-    const { success, errors: errs } = await register(values);
+    const { success, error } = await register(values);
 
-    if (errs) return setRegisterErrors(errs);
+    if (error) return setRegisterError(error);
 
     if (success) {
       history.push("/login");
@@ -67,6 +68,12 @@ const Register = () => {
         >
           {({ errors, touched }) => (
             <Form className={styles.form}>
+              {registerError && (
+                <div className={styles.errorMessage}>
+                  <MdErrorOutline style={{ marginRight: 5, minWidth: "1em" }} />{" "}
+                  {registerError}
+                </div>
+              )}
               <Field name={"username"}>
                 {({ field }) => {
                   return (

@@ -12,7 +12,7 @@ import styles from "./Login.module.scss";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
-  const [loginErrors, setLoginErrors] = useState([]);
+  const [loginError, setLoginError] = useState();
   let history = useHistory();
   let location = useLocation();
 
@@ -29,9 +29,9 @@ const Login = () => {
       setToken(data);
       history.replace(from || "/");
     } else if (error) {
-      setLoginErrors([error]);
+      setLoginError(error);
     } else {
-      setLoginErrors(["Unable to login"]);
+      setLoginError("Unable to login");
     }
   };
 
@@ -59,11 +59,12 @@ const Login = () => {
         >
           {({ errors, touched }) => (
             <Form className={styles.form}>
-              {loginErrors.map((error) => (
-                <div key={error} className={styles.errorMessage}>
-                  <MdErrorOutline style={{ marginRight: 5 }} /> {error}
+              {loginError && (
+                <div className={styles.errorMessage}>
+                  <MdErrorOutline style={{ marginRight: 5, minWidth: "1em" }} />
+                  {loginError}
                 </div>
-              ))}
+              )}
               <Field name={"username"}>
                 {({ field }) => {
                   return (
