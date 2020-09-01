@@ -37,9 +37,18 @@
   box-shadow: var(--box-shadow-red-active);
 }
 
-.closeBtn {
+.buttons {
+  display: flex;
+}
+
+.closeBtn,
+.submitBtn {
   margin: 10px 0 0 auto;
   width: 100px;
+}
+
+.submitBtn {
+  margin-left: 10px;
 }
 
 @media screen and (max-width: 672px) {

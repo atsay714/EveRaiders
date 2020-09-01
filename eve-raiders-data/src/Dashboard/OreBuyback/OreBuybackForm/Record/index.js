@@ -23,11 +23,11 @@ const Record = ({ handleRemove, index }) => {
       <Field name={"resourceName"}>
         {({ field }) => (
           <ComboBox
+            className={styles.resourceField}
             label="Resource Name"
             placeholder="resource name"
             items={resourcesData}
             itemToString={(item) => item?.name ?? ""}
-            className={styles.field}
             {...field}
             value={values["resources"]?.[index]?.["resourceName"] || ""}
             onChange={(value) =>

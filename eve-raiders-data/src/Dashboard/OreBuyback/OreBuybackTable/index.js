@@ -2,11 +2,10 @@ import React, { useMemo, useContext } from "react";
 import { UserContext } from "../../../contexts";
 import Select from "../../../components/inputs/Select";
 import Table from "../../../components/Table";
+import styles from "./OreBuybackTable.module.scss";
 
 const OreBuybackTable = ({ data = [] }) => {
   const user = useContext(UserContext);
-
-  console.log(user);
 
   const columns = useMemo(
     () => [
@@ -54,7 +53,11 @@ const OreBuybackTable = ({ data = [] }) => {
           ];
 
           return (
-            <Select items={user?.superAdmin ? items : items.slice(0, 2)} />
+            <Select
+              className={styles.statusSelect}
+              items={user?.superAdmin ? items : items.slice(0, 2)}
+              onChange={() => console.log("update status placeholder")}
+            />
           );
         },
       },

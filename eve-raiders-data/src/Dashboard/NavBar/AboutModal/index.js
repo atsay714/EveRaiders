@@ -3,7 +3,7 @@ import Modal from "../../../components/Modal";
 import styles from "./AboutModal.module.scss";
 
 const AboutModal = ({ onClose }) => (
-  <Modal onClose={onClose}>
+  <Modal onClose={onClose} hideSubmit>
     <span>This app was created by:</span>
     <ul>
       <li className={styles.author}>Band#2556 (Hans Anmaicok)</li>

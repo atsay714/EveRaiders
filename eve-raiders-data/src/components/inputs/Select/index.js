@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelect } from "downshift";
 import BaseInput from "../BaseInput";
 import classNames from "classnames";
 import { MdExpandMore } from "react-icons/md";
 import styles from "./Select.module.scss";
+import ReactDOM from "react-dom";
 
 const Select = ({
   className,
@@ -32,8 +33,17 @@ const Select = ({
     },
   });
 
+  const [boundingRect, setBoundingRect] = useState({});
+  const ref = useRef();
+
+  useEffect(() => {
+    if (ref.current) {
+      setBoundingRect(ref.current.getBoundingClientRect());
+    }
+  }, [ref.current]);
+
   return (
-    <div className={className}>
+    <div ref={ref} className={className}>
       <BaseInput
         className={styles.inputWrapper}
         active={isOpen}
@@ -51,26 +61,35 @@ const Select = ({
           </button>
         )}
       </BaseInput>
-      <ul
-        {...getMenuProps()}
-        className={classNames(styles.menu, { [styles.open]: isOpen })}
-      >
-        {isOpen &&
-          items.map((item, index) => (
-            <li
-              className={classNames(styles.item, {
-                [styles.highlighted]: highlightedIndex === index,
-              })}
-              key={`${item}${index}`}
-              {...getItemProps({
-                item,
-                index,
-              })}
-            >
-              {item}
-            </li>
-          ))}
-      </ul>
+      {ReactDOM.createPortal(
+        <ul
+          {...getMenuProps()}
+          className={classNames(styles.menu, { [styles.open]: isOpen })}
+          style={{
+            left: boundingRect.x,
+            top:
+              boundingRect.y + boundingRect.height + boundingRect.height / 2 ||
+              undefined,
+          }}
+        >
+          {isOpen &&
+            items.map((item, index) => (
+              <li
+                className={classNames(styles.item, {
+                  [styles.highlighted]: highlightedIndex === index,
+                })}
+                key={`${item}${index}`}
+                {...getItemProps({
+                  item,
+                  index,
+                })}
+              >
+                {item}
+              </li>
+            ))}
+        </ul>,
+        document.querySelector("#root")
+      )}
     </div>
   );
 };

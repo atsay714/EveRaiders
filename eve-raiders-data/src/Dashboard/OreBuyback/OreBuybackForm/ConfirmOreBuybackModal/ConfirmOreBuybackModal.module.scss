@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.stopIcon {
+  float: left;
+  color: var(--color-red);
+  margin-right: 15px;
+}
+
+.table {
+  margin: 20px;
+  width: 75%;
+}
+
+.grandTotal {
+  font-size: 16px;
+}

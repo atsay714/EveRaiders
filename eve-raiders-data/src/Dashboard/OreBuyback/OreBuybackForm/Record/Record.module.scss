@@ -1,8 +1,12 @@
 @import "../../../../styles/mixins";
 
-.field,
+.resourceField,
 .countField {
   margin: 10px;
+}
+
+.resourceField {
+  width: 175px;
 }
 
 .countField {

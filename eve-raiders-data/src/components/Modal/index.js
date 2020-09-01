@@ -21,7 +21,16 @@ export const ModalProvider = ({ children }) => {
   );
 };
 
-const Modal = ({ onClose, children, ...props }) => {
+const Modal = ({
+  onClose,
+  onSubmit,
+  closeLabel = "Close",
+  submitLabel = "Submit",
+  hideClose,
+  hideSubmit,
+  children,
+  ...props
+}) => {
   const modalNode = useContext(Context);
 
   return modalNode
@@ -29,9 +38,18 @@ const Modal = ({ onClose, children, ...props }) => {
         <div className={styles.overlay}>
           <div className={styles.dialog} {...props}>
             {children}
-            <Button className={styles.closeBtn} onClick={onClose}>
-              Dismiss
-            </Button>
+            <div className={styles.buttons}>
+              {!hideClose && (
+                <Button className={styles.closeBtn} onClick={onClose}>
+                  {closeLabel}
+                </Button>
+              )}
+              {!hideSubmit && (
+                <Button className={styles.submitBtn} onClick={onSubmit}>
+                  {submitLabel}
+                </Button>
+              )}
+            </div>
           </div>
         </div>,
         modalNode
