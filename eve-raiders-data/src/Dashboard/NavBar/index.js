@@ -7,6 +7,7 @@ import useClickAway from "../../hooks/useClickAway";
 import NavItem from "./NavItem";
 import Settings from "./Settings";
 import { TokenContext, UserContext } from "../../contexts";
+import AboutModal from "./AboutModal";
 import styles from "./NavBar.module.scss";
 
 const navItems = [
@@ -30,6 +31,7 @@ const navItems = [
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const ref = useRef();
   const [token, setToken] = useContext(TokenContext);
 
@@ -74,11 +76,15 @@ const NavBar = () => {
         {user?.superAdmin && (
           <NavItem label={"User Admin"} path={"/dashboard/admin/users"} />
         )}
+        <div onClick={() => setIsModalOpen(true)}>
+          <NavItem label={"About"} />
+        </div>
         <div onClick={() => setToken("")}>
           <NavItem label={"Logout"} />
         </div>
       </div>
       <Settings />
+      {isModalOpen && <AboutModal handleClose={() => setIsModalOpen(false)} />}
     </div>
   );
 };
