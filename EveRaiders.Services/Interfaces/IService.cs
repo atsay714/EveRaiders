@@ -10,7 +10,6 @@ namespace EveRaiders.Services.Interfaces
     public interface IService<T>
     {
         Task<List<T>> Get();
-        //Task<List<Planet>> GetList(int? pageNumber, string sortField, string sortOrder);
         Task<T> Get(int id);
     }
 }

@@ -20,13 +20,12 @@ namespace EveRaiders.Services
         }
         public async Task<List<Planet>> Get()
         {
-            return await _context.Planets.Include(i => i.Resources).Include(i => i.System).ToListAsync();
+            throw new NotImplementedException();
         }
 
         public async Task<Planet> Get(int id)
         {
-            var planet = await _context.Planets.FindAsync(id);
-            return planet;
+            throw new NotImplementedException();
         }
     }
 }
