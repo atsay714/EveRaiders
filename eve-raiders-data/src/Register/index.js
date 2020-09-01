@@ -24,7 +24,12 @@ const Register = () => {
   };
 
   const RegisterSchema = Yup.object().shape({
-    username: Yup.string().required("Username is required"),
+    username: Yup.string()
+      .required("Username is required")
+      .matches(
+        /^([a-zA-Z])[a-zA-Z_-]*[\w_-]*[\S]$|^([a-zA-Z])[0-9_-]*[\S]$|^[a-zA-Z]*[\S]$/,
+        "Username can only be a comination of alphanumeric characters, underscores, and hyphens. (Examples: 'user123', 'user-123', 'user_123)'"
+      ),
     email: Yup.string().email().required("Email is required"),
     password: Yup.string()
       .required("Password is required")
