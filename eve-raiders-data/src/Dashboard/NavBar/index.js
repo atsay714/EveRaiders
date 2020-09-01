@@ -7,6 +7,7 @@ import useClickAway from "../../hooks/useClickAway";
 import NavItem from "./NavItem";
 import Settings from "./Settings";
 import { TokenContext, UserContext } from "../../contexts";
+import AboutModal from "./AboutModal";
 import styles from "./NavBar.module.scss";
 
 const navItems = [
@@ -30,6 +31,7 @@ const navItems = [
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const ref = useRef();
   const [token, setToken] = useContext(TokenContext);
 
@@ -46,7 +48,9 @@ const NavBar = () => {
       />
       <div className={styles.navItems}>
         {navItems
-          .filter((x) => user?.superAdmin || !x.requiresSuperAdmin)
+          .filter(
+            (x) => user?.approved && (user?.superAdmin || !x.requiresSuperAdmin)
+          )
           .map((item) => (
             <NavItem key={item.path} {...item} />
           ))}
@@ -63,18 +67,24 @@ const NavBar = () => {
         onClick={() => setIsOpen(false)}
       >
         {navItems
-          .filter((x) => user?.superAdmin || !x.requiresSuperAdmin)
+          .filter(
+            (x) => user?.approved && (user?.superAdmin || !x.requiresSuperAdmin)
+          )
           .map((item) => (
             <NavItem key={item.path} {...item} />
           ))}
         {user?.superAdmin && (
           <NavItem label={"User Admin"} path={"/dashboard/admin/users"} />
         )}
+        <div onClick={() => setIsModalOpen(true)}>
+          <NavItem label={"About"} />
+        </div>
         <div onClick={() => setToken("")}>
           <NavItem label={"Logout"} />
         </div>
       </div>
       <Settings />
+      {isModalOpen && <AboutModal onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 };

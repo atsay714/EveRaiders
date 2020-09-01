@@ -1,4 +1,5 @@
 import React, { useState, useRef, useContext } from "react";
+import AboutModal from "../AboutModal";
 import classNames from "classnames";
 import { FaEllipsisV } from "react-icons/fa";
 import useClickAway from "../../../hooks/useClickAway";
@@ -8,6 +9,7 @@ import styles from "./Settings.module.scss";
 
 const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const ref = useRef();
 
   const user = useContext(UserContext);
@@ -30,10 +32,14 @@ const Settings = () => {
         {user?.superAdmin && (
           <NavItem label={"User Admin"} path={"/dashboard/admin/users"} />
         )}
+        <div onClick={() => setIsModalOpen(true)}>
+          <NavItem label={"About"} />
+        </div>
         <div onClick={() => setToken()}>
           <NavItem label={"Logout"} />
         </div>
       </div>
+      {isModalOpen && <AboutModal onClose={() => setIsModalOpen(false)} />}
     </>
   );
 };

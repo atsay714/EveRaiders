@@ -1,4 +1,19 @@
-import instance from "../base";
+import instance, { baseURL } from "../base";
+import { history } from "../../App";
+
+instance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (
+      error?.request?.responseURL === `${baseURL}api/administration/user` &&
+      error?.response?.status === 403
+    ) {
+      history.push("/dashboard/awaiting-approval");
+    } else {
+      return Promise.reject(error);
+    }
+  }
+);
 
 export const getUsers = async () => {
   try {

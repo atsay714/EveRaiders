@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Dashboard from "./Dashboard";
 import Login from "./Login";
 import Register from "./Register";
+import { ModalProvider } from "./components/Modal";
 import { ReactQueryDevtools } from "react-query-devtools";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { createBrowserHistory } from "history";
@@ -30,21 +31,23 @@ function App() {
   return (
     <div className="App">
       <TokenContext.Provider value={[token, setToken]}>
-        <Router history={history}>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <Switch>
-            <Route path="/login">
-              {(props) => <Login {...props} onLogin={setToken} />}
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/dashboard">
-              <Dashboard />
-            </Route>
-            <Redirect from="/" to="/dashboard/resource-search" exact />
-          </Switch>
-        </Router>
+        <ModalProvider>
+          <Router history={history}>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <Switch>
+              <Route path="/login">
+                {(props) => <Login {...props} onLogin={setToken} />}
+              </Route>
+              <Route path="/register">
+                <Register />
+              </Route>
+              <Route path="/dashboard">
+                <Dashboard />
+              </Route>
+              <Redirect from="/" to="/dashboard/resource-search" exact />
+            </Switch>
+          </Router>
+        </ModalProvider>
       </TokenContext.Provider>
     </div>
   );
