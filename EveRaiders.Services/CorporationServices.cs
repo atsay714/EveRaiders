@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EveRaiders.Data;
 using EveRaiders.Data.Authentication;
+using EveRaiders.Data.Enums;
 using EveRaiders.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,6 +43,20 @@ namespace EveRaiders.Services
 
 
             return order;
+        }
+
+        public async Task<BuybackRequest> UpdatBuyBackRequestStatus(int buyBackId, RequestStatus status)
+        {
+            var request = await _db.BuyBackRequests.FirstOrDefaultAsync(s => s.Id == buyBackId);
+
+            if (request == null)
+                return null;
+
+            request.Status = status;
+
+            await _db.SaveChangesAsync();
+
+            return request;
         }
     }
 }

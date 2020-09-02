@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EveRaiders.Data;
 using EveRaiders.Data.Authentication;
+using EveRaiders.Data.Enums;
+using EveRaiders.Services;
 using EveRaiders.Web.Api.ViewModels.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
@@ -25,15 +27,17 @@ namespace EveRaiders.Web.Api.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<RaiderUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly CorporationServices _corporationServices;
         private readonly EveRaidersContext _db;
 
-        public AdministrationController(EveRaidersContext db,IMapper mapper, UserManager<RaiderUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AdministrationController(EveRaidersContext db,IMapper mapper, UserManager<RaiderUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, CorporationServices corporationService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
             _db = db;
             _mapper = mapper;
+            _corporationServices = corporationService;
         }
 
         [HttpGet("users")]
@@ -51,6 +55,17 @@ namespace EveRaiders.Web.Api.Controllers
             var mappedRequest = _mapper.Map<List<BuyBackRequestViewModel>>(request);
 
             return Ok(mappedRequest);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateBuybackRequestStatus(int buyBackRequestId, RequestStatus status)
+        {
+            var request = await _corporationServices.UpdatBuyBackRequestStatus(buyBackRequestId, status);
+
+            if (request == null)
+                return NotFound();
+
+            return Ok(_mapper.Map<BuyBackRequestViewModel>(request));
         }
 
         [HttpPost]
