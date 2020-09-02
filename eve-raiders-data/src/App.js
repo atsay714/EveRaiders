@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import Dashboard from "./Dashboard";
 import Login from "./Login";
-import Register from "./Register";
 import { ModalProvider } from "./components/Modal";
 import { ReactQueryDevtools } from "react-query-devtools";
 import useLocalStorage from "./hooks/useLocalStorage";
@@ -19,8 +18,7 @@ function App() {
     if (
       !token &&
       window.location.pathname !== "/" &&
-      window.location.pathname !== "/login" &&
-      window.location.pathname !== "/register"
+      window.location.pathname !== "/login"
     ) {
       history.push("/login", {
         state: { message: "You have been logged out" },
@@ -36,15 +34,17 @@ function App() {
             <ReactQueryDevtools initialIsOpen={false} />
             <Switch>
               <Route path="/login">
-                {(props) => <Login {...props} onLogin={setToken} />}
-              </Route>
-              <Route path="/register">
-                <Register />
+                <Login />
               </Route>
               <Route path="/dashboard">
                 <Dashboard />
               </Route>
-              <Redirect from="/" to="/dashboard/resource-search" exact />
+
+              {token ? (
+                <Redirect from="/" to="/dashboard/resource-search" exact />
+              ) : (
+                <Redirect from="/" to="/login" exact />
+              )}
             </Switch>
           </Router>
         </ModalProvider>

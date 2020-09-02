@@ -14,16 +14,12 @@
 .logo {
   height: 160px;
   width: 160px;
-  margin-right: 50px;
+  margin: 40px 50px 0 0;
 }
 
 .formContainer {
   display: flex;
   align-items: flex-start;
-}
-
-.form {
-  width: 250px;
 }
 
 @media screen and (max-width: 672px) {
@@ -39,29 +35,4 @@
   .logo {
     margin: 0 0 20px 0;
   }
-}
-
-.field {
-  margin: 20px 0;
-}
-
-.buttons {
-  display: flex;
-  justify-content: space-between;
-
-  .button {
-    width: 100%;
-
-    &:first-child {
-      margin-right: 10px;
-    }
-  }
-}
-
-.errorMessage {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-red-lighter);
-  margin-bottom: 5px;
 }

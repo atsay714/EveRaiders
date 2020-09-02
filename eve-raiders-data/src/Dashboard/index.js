@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getCurrentUser } from "../api/admin";
+import { getCurrentUser } from "../api/users";
 import AwaitingApproval from "../AwaitingApproval";
 import ResourceSearch from "./ResourceSearch";
 import PlanetSearch from "./PlanetSearch";
