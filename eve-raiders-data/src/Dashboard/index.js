@@ -49,7 +49,7 @@ const Dashboard = () => {
             <Users />
           </PrivateRoute>
           <PrivateRoute path="/dashboard/admin/ore-buyback">
-            <OreBuybacklist />
+            <OreBuybackList />
           </PrivateRoute>
         </Switch>
       </UserContext.Provider>
