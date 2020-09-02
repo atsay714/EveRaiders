@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-import Landing from "./Landing";
 import Dashboard from "./Dashboard";
 import Login from "./Login";
-import Register from "./Login/RegistrationForm";
 import { ModalProvider } from "./components/Modal";
 import { ReactQueryDevtools } from "react-query-devtools";
 import useLocalStorage from "./hooks/useLocalStorage";
