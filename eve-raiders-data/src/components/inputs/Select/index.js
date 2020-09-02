@@ -16,6 +16,7 @@ const Select = ({
   onChange,
   error,
   itemToString = (item) => item,
+  scrollRef,
 }) => {
   const {
     isOpen,
@@ -40,6 +41,19 @@ const Select = ({
     if (ref.current) {
       setBoundingRect(ref.current.getBoundingClientRect());
     }
+  }, [ref.current]);
+
+  useEffect(() => {
+    const resizeListener = () => {
+      if (ref.current) {
+        setBoundingRect(ref.current.getBoundingClientRect());
+      }
+    };
+    window.addEventListener("resize", resizeListener);
+
+    return () => {
+      window.removeEventListener("resize", resizeListener);
+    };
   }, [ref.current]);
 
   return (
@@ -68,8 +82,10 @@ const Select = ({
           style={{
             left: boundingRect.x,
             top:
-              boundingRect.y + boundingRect.height + boundingRect.height / 2 ||
-              undefined,
+              boundingRect.y +
+                boundingRect.height +
+                boundingRect.height / 2 -
+                (scrollRef?.current?.scrollTop || 0) || undefined,
           }}
         >
           {isOpen &&

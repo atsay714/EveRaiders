@@ -12,3 +12,29 @@ export const buyback = async (resources) => {
     };
   }
 };
+
+export const getUserOrders = async () => {
+  try {
+    const res = await instance.get("/api/users/orders");
+
+    return res.data;
+  } catch (e) {
+    return {
+      error: e.response?.data?.message ||
+        e.message || ["An unknown error occured. Please try again."],
+    };
+  }
+};
+
+export const getOrders = async () => {
+  try {
+    const res = await instance.get("/api/administration​/orders​/buyback");
+
+    return { success: res?.data?.status === "Success", data: res.data };
+  } catch (e) {
+    return {
+      error: e.response?.data?.message ||
+        e.message || ["An unknown error occured. Please try again."],
+    };
+  }
+};

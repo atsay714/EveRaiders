@@ -1,19 +1,13 @@
 import React, { useState, useMemo } from "react";
 import { getFilters } from "../../api";
-import { buyback } from "../../api/oreBuyback";
+import { buyback, getUserOrders } from "../../api/oreBuyback";
 import { useQuery } from "react-query";
 import styles from "./OreBuyback.module.scss";
 import OreBuybackForm from "./OreBuybackForm";
 import OreBuybackTable from "./OreBuybackTable";
 
 const OreBuyback = () => {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState();
-  const [loading, setLoading] = useState(false);
-
   const handleSubmit = async (values) => {
-    console.log(values);
-    setLoading(true);
     const { success, error, data: res } = await buyback(
       values.resources
         .filter(({ resourceName }) => resourceName)
@@ -22,10 +16,9 @@ const OreBuyback = () => {
           quantity: +quantity,
         }))
     );
-    setLoading(false);
-    if (error) return setError(error);
-    setData((prevData) => [...prevData, res]);
   };
+
+  const { loading, error, data = [] } = useQuery("userOrders", getUserOrders);
 
   const {
     loading: filtersLoading,

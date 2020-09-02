@@ -1,4 +1,4 @@
-import React, { useMemo, useContext } from "react";
+import React, { useMemo, useContext, useRef } from "react";
 import { UserContext } from "../../../contexts";
 import Select from "../../../components/inputs/Select";
 import Table from "../../../components/Table";
@@ -6,6 +6,7 @@ import styles from "./OreBuybackTable.module.scss";
 
 const OreBuybackTable = ({ data = [] }) => {
   const user = useContext(UserContext);
+  const scrollRef = useRef();
 
   const columns = useMemo(
     () => [
@@ -44,25 +45,23 @@ const OreBuybackTable = ({ data = [] }) => {
           textAlign: "left",
         },
         Cell: ({ value }) => {
-          const items = [
-            "Pending",
-            "Contracted",
-            "Accepted",
-            "Rejected",
-            "On Hold",
-          ];
+          const items = ["Created", "Accepted", "Rejected", "On Hold"];
 
-          return (
+          return user?.superAdmin ? (
             <Select
               className={styles.statusSelect}
-              items={user?.superAdmin ? items : items.slice(0, 2)}
+              items={items}
+              value={value}
               onChange={() => console.log("update status placeholder")}
+              scrollRef={scrollRef}
             />
+          ) : (
+            <div>{value}</div>
           );
         },
       },
     ],
-    []
+    [user, scrollRef]
   );
 
   return (
@@ -70,6 +69,7 @@ const OreBuybackTable = ({ data = [] }) => {
       data={data}
       columns={columns}
       placeholder="No data for selected filters"
+      scrollRef={scrollRef}
     />
   );
 };

@@ -2,7 +2,7 @@ import React from "react";
 import { useTable } from "react-table";
 import styles from "./Table.module.scss";
 
-const Table = ({ data, columns, placeholder }) => {
+const Table = ({ data, columns, placeholder, scrollRef }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -15,7 +15,7 @@ const Table = ({ data, columns, placeholder }) => {
   });
 
   return (
-    <div className={styles.tableWrapper}>
+    <div ref={scrollRef} className={styles.tableWrapper}>
       <table className={styles.table} {...getTableProps()}>
         <thead className={styles.headers}>
           {headerGroups.map((headerGroup) => (
