@@ -12,6 +12,6 @@ namespace EveRaiders.Web.Api.ViewModels.Authentication
         public string RequestedAt { get; set; }
         public string Status { get; set; }
         public double Total { get; set; }
-        public string User { get; set; }
+        public string Pilot { get; set; }
     }
 }

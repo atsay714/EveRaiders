@@ -58,7 +58,7 @@ namespace EveRaiders.Web.Api.Controllers
 
             foreach (var pilotName in raidUser.PilotNames)
             {
-                if (user.PilotNames.Contains(pilotName.Name))
+                if (user.PilotNames.Select(s => s.Name).Contains(pilotName.Name))
                     continue;
 
                 _db.PilotNames.Remove(pilotName);
@@ -66,13 +66,13 @@ namespace EveRaiders.Web.Api.Controllers
 
             foreach (var pilotName in user.PilotNames)
             {
-                if (raidUser.PilotNames.Select(s => s.Name).Contains(pilotName))
+                if (raidUser.PilotNames.Select(s => s.Name).Contains(pilotName.Name))
                     continue;
 
                 await _db.PilotNames.AddAsync(new PilotName()
                 {
                     User = raidUser,
-                    Name = pilotName
+                    Name = pilotName.Name
                 });
             }
 
@@ -86,7 +86,7 @@ namespace EveRaiders.Web.Api.Controllers
         {
             var user = await _userManager.FindByIdAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            var request = await _db.BuyBackRequests.Include(i => i.User).Where(s => s.User.Id == user.Id)
+            var request = await _db.BuyBackRequests.Include(i => i.Pilot).ThenInclude(i => i.User).Where(s => s.Pilot.User.Id == user.Id)
                 .AsAsyncEnumerable().ToListAsync();
 
             var mappedRequest = _mapper.Map<List<BuyBackRequestViewModel>>(request);

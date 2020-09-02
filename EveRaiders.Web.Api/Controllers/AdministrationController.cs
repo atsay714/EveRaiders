@@ -50,7 +50,7 @@ namespace EveRaiders.Web.Api.Controllers
         [HttpGet("orders/buyback")]
         public async Task<IActionResult> GetBuybackRequests()
         {
-            var request = await _db.BuyBackRequests.Include(i => i.User).ToListAsync();
+            var request = await _db.BuyBackRequests.Include(i => i.Pilot).ToListAsync();
 
             var mappedRequest = _mapper.Map<List<BuyBackRequestViewModel>>(request);
 

@@ -16,6 +16,6 @@ namespace EveRaiders.Data.Models
         public DateTime RequestedAt { get; set; }
         public double TotalPrice { get; set; }
         public virtual List<ResourceOrder> RawOres { get; set; }
-        public virtual RaiderUser User { get; set; }
+        public virtual PilotName Pilot { get; set; }
     }
 }

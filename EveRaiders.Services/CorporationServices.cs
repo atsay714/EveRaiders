@@ -19,7 +19,7 @@ namespace EveRaiders.Services
             _db = db;
         }
 
-        public async Task<BuybackRequest> CreateBuyBackRequest(List<ResourceOrder> resources, RaiderUser user)
+        public async Task<BuybackRequest> CreateBuyBackRequest(List<ResourceOrder> resources, int pilotId)
         {
             double total = 0;
             foreach (var resource in resources)
@@ -31,9 +31,11 @@ namespace EveRaiders.Services
                 total += resource.Quantity * dbResource.Price;
             }
 
+            var pilot = await _db.PilotNames.FirstOrDefaultAsync(s => s.Id == pilotId);
+
             var order = new BuybackRequest()
             {
-                User = user,
+                Pilot = pilot,
                 Resources = resources,
                 TotalPrice = total
             };

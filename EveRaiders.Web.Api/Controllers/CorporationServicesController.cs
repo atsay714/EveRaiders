@@ -40,12 +40,11 @@ namespace EveRaiders.Web.Api.Controllers
         }
 
         [HttpPost("buyback")]
-        public async Task<IActionResult> BuyBackRequest([FromBody] List<BuybackOrReprocessResourceViewModel> model)
+        public async Task<IActionResult> BuyBackRequest([FromBody] BuybackOrReprocessResourceViewModel model)
         {
-            var user = await _userManager.FindByIdAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            var resources = _mapper.Map<List<ResourceOrder>>(model);
+            var resources = _mapper.Map<List<ResourceOrder>>(model.Resources);
 
-            var savedOrder = await _corporationServices.CreateBuyBackRequest(resources, user);
+            var savedOrder = await _corporationServices.CreateBuyBackRequest(resources, model.PilotNameId);
 
             return Ok(_mapper.Map<BuyBackRequestViewModel>(savedOrder));
         }
