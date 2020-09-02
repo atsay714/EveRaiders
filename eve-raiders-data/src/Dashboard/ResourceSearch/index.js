@@ -46,7 +46,7 @@ const ResourceSearch = () => {
       },
       {
         Header: "Resource Type",
-        accessor: "resourceName",
+        accessor: "resourceType",
         Cell: ({ value }) => value.replace(/([A-Z])/g, " $1").trim(),
         style: {
           textAlign: "left",
@@ -55,6 +55,13 @@ const ResourceSearch = () => {
       {
         Header: "Richness",
         accessor: "richness",
+        style: {
+          textAlign: "left",
+        },
+      },
+      {
+        Header: "Output",
+        accessor: "output",
         style: {
           textAlign: "left",
         },

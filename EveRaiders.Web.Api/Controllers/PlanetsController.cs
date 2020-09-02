@@ -76,7 +76,7 @@ namespace EveRaiders.Web.Api.Controllers
 
             var planetsResult = _mapper.Map<List<PlanetViewModel>>(planetsList);
 
-            return Ok(planetsResult.OrderBy(s => s.DistanceFromBase).ThenByDescending(s => s.Resources.Select(c => c.Output)));
+            return Ok(planetsResult.OrderBy(s => s.DistanceFromBase));
         }
 
         [Produces("application/json")]
@@ -92,7 +92,7 @@ namespace EveRaiders.Web.Api.Controllers
                 if (regionId.HasValue && regionId != 0)
                     resources = resources.Where(s => s.Planet.System.Constellation.Region.Id == regionId.Value);
 
-                var resourceResult = _mapper.Map<List<ResourceRichnessViewModel>>(resources.OrderBy(s => s.Planet.System.DistanceFromBase).ToList());
+                var resourceResult = _mapper.Map<List<ResourceRichnessViewModel>>(resources.OrderBy(s => s.Planet.System.DistanceFromBase).ThenByDescending(s => s.Output).ToList());
 
                 return Ok(resourceResult);
             }
