@@ -23,5 +23,6 @@ namespace EveRaiders.Web.Api.ViewModels
     {
         public string Type { get; set; }
         public string Richness { get; set; }
+        public double Output { get; set; }
     }
 }

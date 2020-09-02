@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace EveRaiders.Web.Api.Controllers
 {
-    [Authorize(Policy = "Members")]
+    //[Authorize(Policy = "Members")]
     [Route("planets")]
     [ApiController]
     public class PlanetsController : ControllerBase
@@ -92,7 +92,7 @@ namespace EveRaiders.Web.Api.Controllers
                 if (regionId.HasValue && regionId != 0)
                     resources = resources.Where(s => s.Planet.System.Constellation.Region.Id == regionId.Value);
 
-                var resourceResult = _mapper.Map<List<ResourceRichnessViewModel>>(resources.OrderBy(s => s.Planet.System.DistanceFromBase).ToList());
+                var resourceResult = _mapper.Map<List<ResourceRichnessViewModel>>(resources.OrderBy(s => s.Planet.System.DistanceFromBase).ThenByDescending(s => s.Output).ToList());
 
                 return Ok(resourceResult);
             }

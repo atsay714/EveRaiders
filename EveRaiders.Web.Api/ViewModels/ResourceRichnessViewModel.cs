@@ -13,5 +13,6 @@ namespace EveRaiders.Web.Api.ViewModels
         public string PlanetName { get; set; }
         public int PlanetType { get; set; }
         public int DistanceFromBase { get; set; }
+        public double Output { get; set; }
     }
 }
