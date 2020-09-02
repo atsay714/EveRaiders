@@ -9,7 +9,9 @@ namespace EveRaiders.Web.Api.ViewModels.Authentication
     public class BuyBackRequestViewModel
     {
         public int Id { get; set; }
+        public string RequestedAt { get; set; }
         public string Status { get; set; }
         public double Total { get; set; }
+        public string User { get; set; }
     }
 }
