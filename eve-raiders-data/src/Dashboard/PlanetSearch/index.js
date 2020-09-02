@@ -69,7 +69,7 @@ const PlanetSearch = () => {
         },
       },
       {
-        id: "resourceType",
+        id: "resourceName",
         Header: "Resource",
         accessor: (row) => row.resources.map(({ type }) => type).join(", "),
         Cell: (v) =>

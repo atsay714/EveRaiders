@@ -1,23 +1,33 @@
-@import "../../../styles/mixins";
+@import "../../../../styles/mixins";
 
-.field {
+.resourceField,
+.countField {
   margin: 10px;
+}
+
+.resourceField {
+  width: 175px;
+}
+
+.countField {
+  width: 70px;
 }
 
 .record {
   display: flex;
-  align-items: center;
 }
 
 .remove {
   visibility: hidden;
   width: auto;
+  height: 18px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   cursor: pointer;
   color: var(--color-red);
   padding: 2px 1px;
+  margin-top: 22px;
 
   &:hover {
     color: var(--color-red-lighter);

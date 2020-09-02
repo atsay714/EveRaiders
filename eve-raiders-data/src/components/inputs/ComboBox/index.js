@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useCombobox } from "downshift";
+import RingLoader from "@bit/davidhu2000.react-spinners.ring-loader";
 import BaseInput from "../BaseInput";
 import classNames from "classnames";
 import styles from "./ComboBox.module.scss";
@@ -15,6 +16,7 @@ const ComboBox = ({
   onChange,
   error,
   itemToString = (item) => item,
+  loading,
 }) => {
   const [inputItems, setInputItems] = useState(items);
 
@@ -72,21 +74,37 @@ const ComboBox = ({
         {...getMenuProps()}
         className={classNames(styles.menu, { [styles.open]: isOpen })}
       >
-        {isOpen &&
-          inputItems.map((item, index) => (
-            <li
-              className={classNames(styles.item, {
-                [styles.highlighted]: highlightedIndex === index,
-              })}
-              key={`${itemToString(item)}${index}`}
-              {...getItemProps({
-                item: itemToString(item),
-                index,
-              })}
-            >
-              {itemToString(item)}
-            </li>
-          ))}
+        {isOpen && (
+          <>
+            {loading ? (
+              <div className={styles.loader}>
+                <RingLoader
+                  size={26}
+                  color={getComputedStyle(
+                    document.documentElement
+                  ).getPropertyValue("--color-text-white")}
+                />
+              </div>
+            ) : (
+              <>
+                {inputItems.map((item, index) => (
+                  <li
+                    className={classNames(styles.item, {
+                      [styles.highlighted]: highlightedIndex === index,
+                    })}
+                    key={`${itemToString(item)}${index}`}
+                    {...getItemProps({
+                      item: itemToString(item),
+                      index,
+                    })}
+                  >
+                    {itemToString(item)}
+                  </li>
+                ))}
+              </>
+            )}
+          </>
+        )}
       </ul>
     </div>
   );
