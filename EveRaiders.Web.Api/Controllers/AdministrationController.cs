@@ -35,15 +35,6 @@ namespace EveRaiders.Web.Api.Controllers
             _mapper = mapper;
         }
 
-
-        [HttpGet("user")]
-        public async Task<IActionResult> GetUserInformation()
-        {
-            var user = await _userManager.FindByIdAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
-            return Ok(_mapper.Map<UserViewModel>(user));
-        }
-
         [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
         {

@@ -37,6 +37,13 @@ namespace EveRaiders.Web.Api.Controllers
             _corporationServices = corporationServices;
         }
 
+        [HttpGet("profile")]
+        public async Task<IActionResult> GetProfile()
+        {
+            var user = await _userManager.FindByIdAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            return Ok(_mapper.Map<UserViewModel>(user));
+        }
+
         [HttpGet("orders")]
         public async Task<IActionResult> GetOrders()
         {
