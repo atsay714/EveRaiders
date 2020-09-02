@@ -44,6 +44,40 @@ namespace EveRaiders.Web.Api.Controllers
             return Ok(_mapper.Map<UserViewModel>(user));
         }
 
+        [HttpPost("profile")]
+        public async Task<IActionResult> UpdateProfile([FromBody] UserViewModel user)
+        {
+            var raidUser = await _userManager.Users.Include(s => s.PilotNames)
+                .SingleOrDefaultAsync(s => s.Id == user.Id.ToString());
+
+            if (raidUser == null)
+                return NotFound();
+
+            foreach (var pilotName in raidUser.PilotNames)
+            {
+                if (user.PilotNames.Contains(pilotName.Name))
+                    continue;
+
+                _db.PilotNames.Remove(pilotName);
+            }
+
+            foreach (var pilotName in user.PilotNames)
+            {
+                if (raidUser.PilotNames.Select(s => s.Name).Contains(pilotName))
+                    continue;
+
+                await _db.PilotNames.AddAsync(new PilotName()
+                {
+                    User = raidUser,
+                    Name = pilotName
+                });
+            }
+
+            await _db.SaveChangesAsync();
+
+            return Ok(_mapper.Map<UserViewModel>(raidUser));
+        }
+
         [HttpGet("orders")]
         public async Task<IActionResult> GetOrders()
         {

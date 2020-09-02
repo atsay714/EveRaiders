@@ -10,7 +10,7 @@ namespace EveRaiders.Data
         public EveRaidersContext() { }
         public EveRaidersContext(DbContextOptions<EveRaidersContext> options) : base(options) { }
 
-
+        public DbSet<PilotName> PilotNames { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Constellation> Constellations { get; set; }
         public DbSet<UniverseSystem> Systems { get; set; }

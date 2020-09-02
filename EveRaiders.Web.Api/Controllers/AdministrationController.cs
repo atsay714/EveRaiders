@@ -82,8 +82,8 @@ namespace EveRaiders.Web.Api.Controllers
 
             if (result.Succeeded)
                 return Ok(_mapper.Map<UserViewModel>(user));
-            else
-                return Conflict(result);
+
+            return Conflict(result);
         }
 
         [HttpPost]
