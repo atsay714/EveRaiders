@@ -60,7 +60,7 @@ const Record = ({ handleRemove, index }) => {
       <RowPrice value={values["resources"]?.[index]} />
       <div
         className={classNames(styles.remove, {
-          [styles.removeable]: handleRemove,
+          [styles.removeable]: handleRemove && index !== 0,
         })}
         onClick={handleRemove}
       >

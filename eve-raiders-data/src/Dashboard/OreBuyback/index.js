@@ -15,10 +15,12 @@ const OreBuyback = () => {
     console.log(values);
     setLoading(true);
     const { success, error, data: res } = await buyback(
-      values.resources.map(({ resourceName, quantity }) => ({
-        id: resourceName.id,
-        quantity: +quantity,
-      }))
+      values.resources
+        .filter(({ resourceName }) => resourceName)
+        .map(({ resourceName, quantity }) => ({
+          id: resourceName.id,
+          quantity: +quantity,
+        }))
     );
     setLoading(false);
     if (error) return setError(error);
