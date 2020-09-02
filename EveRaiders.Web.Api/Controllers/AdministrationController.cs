@@ -18,7 +18,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace EveRaiders.Web.Api.Controllers
 {
-    [Authorize(Policy = "SuperAdmin")]
+    //[Authorize(Policy = "SuperAdmin")]
     [Route("administration")]
     [ApiController]
     public class AdministrationController : ControllerBase
@@ -57,7 +57,7 @@ namespace EveRaiders.Web.Api.Controllers
             return Ok(mappedRequest);
         }
 
-        [HttpPost]
+        [HttpPut("buyback/{buyBackRequestId}/status/{status}")]
         public async Task<IActionResult> UpdateBuybackRequestStatus(int buyBackRequestId, RequestStatus status)
         {
             var request = await _corporationServices.UpdatBuyBackRequestStatus(buyBackRequestId, status);
