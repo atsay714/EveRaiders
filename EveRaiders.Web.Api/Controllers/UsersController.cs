@@ -50,6 +50,9 @@ namespace EveRaiders.Web.Api.Controllers
             var raidUser = await _userManager.Users.Include(s => s.PilotNames)
                 .SingleOrDefaultAsync(s => s.Id == user.Id.ToString());
 
+            if (!string.IsNullOrEmpty(user.DiscordUser))
+                raidUser.DiscordUser = user.DiscordUser;
+
             if (raidUser == null)
                 return NotFound();
 
