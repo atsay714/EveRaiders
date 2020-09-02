@@ -26,6 +26,7 @@ const Users = () => {
       return previousUsers;
     },
   });
+
   const columns = useMemo(
     () => [
       {

@@ -4,39 +4,36 @@ import Select from "../../../components/inputs/Select";
 import Table from "../../../components/Table";
 import styles from "./OreBuybackTable.module.scss";
 
-const OreBuybackTable = ({ data = [] }) => {
+const OreBuybackTable = ({ data = [], mutate, adminView }) => {
   const user = useContext(UserContext);
   const scrollRef = useRef();
 
   const columns = useMemo(
     () => [
       {
-        Header: "Timestamp",
-        accessor: "timestamp",
+        Header: "Requested At",
+        accessor: "requestedAt",
         style: {
           textAlign: "left",
         },
-        Cell: ({ value }) => <div>{new Date().toDateString()}</div>,
       },
+      ...(adminView
+        ? [
+            {
+              Header: "Discord User",
+              accessor: "user",
+              style: {
+                textAlign: "left",
+              },
+            },
+          ]
+        : []),
       {
         Header: "Total ISK",
         accessor: "total",
         style: {
           textAlign: "right",
         },
-        // Cell: ({ value }) => {
-        //   return "placeholder";
-        //   //   const total = value.reduce((total, { resourceName, count = 0 }) => {
-        //   //     total += prices[resourceName] * count;
-        //   //     return total;
-        //   //   }, 0);
-        //   //   return (
-        //   //     <div>
-        //   //       {total.toLocaleString({ style: "currency" })}
-        //   //       <span className={styles.currency}>ISK</span>
-        //   //     </div>
-        //   //   );
-        // },
       },
       {
         Header: "Status",
@@ -44,15 +41,19 @@ const OreBuybackTable = ({ data = [] }) => {
         style: {
           textAlign: "left",
         },
-        Cell: ({ value }) => {
-          const items = ["Created", "Accepted", "Rejected", "On Hold"];
-
-          return user?.superAdmin ? (
+        Cell: ({
+          value,
+          row: {
+            original: { id },
+          },
+        }) => {
+          const items = ["Created", "Approved", "Denied", "Paid", "Closed"];
+          return adminView && user?.superAdmin ? (
             <Select
               className={styles.statusSelect}
               items={items}
               value={value}
-              onChange={() => console.log("update status placeholder")}
+              onChange={(status) => mutate({ buyBackRequestId: id, status })}
               scrollRef={scrollRef}
             />
           ) : (

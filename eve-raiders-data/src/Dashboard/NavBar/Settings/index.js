@@ -30,7 +30,13 @@ const Settings = () => {
         onClick={() => setIsOpen(false)}
       >
         {user?.superAdmin && (
-          <NavItem label={"User Admin"} path={"/dashboard/admin/users"} />
+          <>
+            <NavItem label={"User Admin"} path={"/dashboard/admin/users"} />
+            <NavItem
+              label={"Ore Buyback Admin"}
+              path={"/dashboard/admin/ore-buyback"}
+            />
+          </>
         )}
         <div onClick={() => setIsModalOpen(true)}>
           <NavItem label={"About"} />
