@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace EveRaiders.Web.Api.Controllers
 {
-    [Authorize(Policy = "Members")]
+    //[Authorize(Policy = "Members")]
     [Route("planets")]
     [ApiController]
     public class PlanetsController : ControllerBase
@@ -76,7 +76,7 @@ namespace EveRaiders.Web.Api.Controllers
 
             var planetsResult = _mapper.Map<List<PlanetViewModel>>(planetsList);
 
-            return Ok(planetsResult.OrderBy(s => s.DistanceFromBase));
+            return Ok(planetsResult.OrderBy(s => s.DistanceFromBase).ThenByDescending(s => s.Resources.Select(c => c.Output)));
         }
 
         [Produces("application/json")]
