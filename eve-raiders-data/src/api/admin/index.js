@@ -1,19 +1,4 @@
-import instance, { baseURL } from "../base";
-import { history } from "../../App";
-
-instance.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (
-      error?.request?.responseURL === `${baseURL}api/administration/user` &&
-      error?.response?.status === 403
-    ) {
-      history.push("/dashboard/awaiting-approval");
-    } else {
-      return Promise.reject(error);
-    }
-  }
-);
+import instance from "../base";
 
 export const getUsers = async () => {
   try {
@@ -30,15 +15,6 @@ export const approveUser = async (userName) => {
       params: { userName },
     });
     return res.data;
-  } catch (e) {
-    return [];
-  }
-};
-
-export const getCurrentUser = async () => {
-  try {
-    const res = await instance.get("/api/administration/user");
-    return res?.data;
   } catch (e) {
     return [];
   }
