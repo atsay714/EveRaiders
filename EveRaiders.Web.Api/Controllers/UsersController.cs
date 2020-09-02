@@ -40,8 +40,9 @@ namespace EveRaiders.Web.Api.Controllers
         [HttpGet("profile")]
         public async Task<IActionResult> GetProfile()
         {
-            var user = await _userManager.FindByIdAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            return Ok(_mapper.Map<UserViewModel>(user));
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            return Ok(_mapper.Map<UserViewModel>(await _userManager.Users.Include(s => s.PilotNames).FirstOrDefaultAsync(s => s.Id == userId)));
         }
 
         [HttpPost("profile")]
