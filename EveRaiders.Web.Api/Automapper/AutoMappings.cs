@@ -4,6 +4,7 @@ using EveRaiders.Data.Extensions;
 using EveRaiders.Web.Api.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using EveRaiders.Data.Authentication;
@@ -44,7 +45,9 @@ namespace EveRaiders.Web.Api.Automapper
 
             CreateMap<BuybackRequest, BuyBackRequestViewModel>()
                 .ForMember(src => src.Total, opt => opt.MapFrom(dest => dest.TotalPrice))
-                .ForMember(src => src.Status, opt => opt.MapFrom(dest => dest.Status.ToString()));
+                .ForMember(src => src.Status, opt => opt.MapFrom(dest => dest.Status.ToString()))
+                .ForMember(src => src.RequestedAt, opt => opt.MapFrom(dest => dest.RequestedAt.ToString(CultureInfo.InvariantCulture)))
+                .ForMember(src => src.User, opt => opt.MapFrom(dest => dest.User.DiscordUser));
         }
     }
 }

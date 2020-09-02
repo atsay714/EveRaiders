@@ -7,6 +7,7 @@ using AutoMapper;
 using EveRaiders.Data;
 using EveRaiders.Data.Authentication;
 using EveRaiders.Web.Api.ViewModels.Authentication;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -38,14 +39,14 @@ namespace EveRaiders.Web.Api.Controllers
         [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
         {
-            var users = await _db.Users.ToListAsync();
+            var users = await _db.Users.AsAsyncEnumerable().ToListAsync();
             return Ok(_mapper.Map<List<UserViewModel>>(users));
         }
 
         [HttpGet("orders/buyback")]
-        public async Task<IActionResult> GetBuybackRequest()
+        public async Task<IActionResult> GetBuybackRequests()
         {
-            var request = await _db.BuyBackRequests.ToListAsync();
+            var request = await _db.BuyBackRequests.Include(i => i.User).ToListAsync();
 
             var mappedRequest = _mapper.Map<List<BuyBackRequestViewModel>>(request);
 
