@@ -1,0 +1,24 @@
+.form {
+  width: 250px;
+}
+
+.field {
+  margin-bottom: 20px;
+}
+
+.button {
+  width: 100%;
+}
+
+.or {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.errorMessage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-red-lighter);
+  margin-bottom: 5px;
+}

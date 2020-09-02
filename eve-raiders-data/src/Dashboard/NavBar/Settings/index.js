@@ -35,7 +35,7 @@ const Settings = () => {
         <div onClick={() => setIsModalOpen(true)}>
           <NavItem label={"About"} />
         </div>
-        <div onClick={() => setToken()}>
+        <div onClick={() => setToken("")}>
           <NavItem label={"Logout"} />
         </div>
       </div>

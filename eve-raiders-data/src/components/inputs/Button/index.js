@@ -7,11 +7,14 @@ const Button = ({
   className,
   type = "button",
   loading,
+  variant = "contained",
   children = "Submit",
   ...props
 }) => (
   <button
-    className={classNames(className, styles.button)}
+    className={classNames(className, styles.button, {
+      [styles[variant]]: variant !== "contained",
+    })}
     type={type}
     {...props}
   >

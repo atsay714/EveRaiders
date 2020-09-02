@@ -14,4 +14,9 @@
     var(--box-shadow-blue-hover),
     var(--box-shadow-blue-active)
   );
+
+  &.outlined {
+    background-color: transparent;
+    border: 1px solid var(--color-blue-lighter);
+  }
 }
