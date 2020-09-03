@@ -18,22 +18,22 @@ const Record = ({ index }) => {
 
   return (
     <div className={styles.record}>
-      <Field name={"resourceName"}>
+      <Field name={"resource"}>
         {({ field }) => (
           <ComboBox
             className={styles.resourceField}
-            label="Resource Name"
-            placeholder="resource name"
+            label="Resource"
+            placeholder="resource"
             items={resourcesData}
             itemToString={(item) => item?.name ?? ""}
             {...field}
-            value={values["resources"]?.[index]?.["resourceName"] || ""}
+            value={values["resources"]?.[index]?.["resource"] || ""}
             onChange={(value) =>
-              setFieldValue(`resources[${index}].resourceName`, value)
+              setFieldValue(`resources[${index}].resource`, value)
             }
             error={
-              touched["resources"]?.[index]?.["resourceName"] &&
-              errors["resources"]?.[index]?.["resourceName"]
+              touched["resources"]?.[index]?.["resource"] &&
+              errors["resources"]?.[index]?.["resource"]
             }
             loading={resourcesLoading}
           />

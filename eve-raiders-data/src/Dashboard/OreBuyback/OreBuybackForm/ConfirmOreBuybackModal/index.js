@@ -10,7 +10,7 @@ const ConfirmOreBuybackModal = ({ onSubmit, onClose, values }) => {
     () => [
       {
         Header: "Resource",
-        accessor: "resourceName.name",
+        accessor: "resource.name",
       },
       {
         Header: "Quantity",
