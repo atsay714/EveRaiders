@@ -15,21 +15,14 @@
   margin: 10px;
 }
 
+.record {
+  display: flex;
+  align-items: center;
+}
+
 @media screen and (max-width: 672px) {
   .submitBtn {
     width: calc(100% - 24px);
-  }
-
-  .label {
-    flex-direction: column;
-
-    .equals {
-      margin: -3px;
-    }
-  }
-
-  .grandTotal {
-    margin: 0;
   }
 }
 
@@ -37,12 +30,4 @@
   margin: 20px 12px 0;
   min-width: 100px;
   align-self: center;
-}
-
-.error {
-  margin-bottom: 20px;
-}
-
-.add {
-  margin: 0 auto;
 }
