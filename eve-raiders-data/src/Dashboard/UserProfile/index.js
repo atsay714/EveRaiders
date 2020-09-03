@@ -61,34 +61,32 @@ const UserProfile = ({ handleSubmit }) => {
               </Field>
               <FieldArray name={"pilotNames"}>
                 {(arrayHelpers) => (
-                  <>
-                    <InputArray
-                      btnLabel={"Add a pilot name"}
-                      handleRemove={(i) => arrayHelpers.remove(i)}
-                      handleAdd={() => arrayHelpers.push("")}
-                    >
-                      {values.pilotNames.map((value, index) => (
-                        <Field key={index} name={"pilotName"}>
-                          {({ field }) => (
-                            <Input
-                              label="Pilot Name"
-                              placeholder="name"
-                              className={styles.field}
-                              {...field}
-                              value={values["pilotNames"]?.[index].name || ""}
-                              onChange={(e) =>
-                                setFieldValue(`pilotNames[${index}]`, {
-                                  ...values["pilotNames"]?.[index],
-                                  name: e.currentTarget.value,
-                                })
-                              }
-                              error={errors["pilotNames"]?.[index]}
-                            />
-                          )}
-                        </Field>
-                      ))}
-                    </InputArray>
-                  </>
+                  <InputArray
+                    btnLabel={"Add a pilot name"}
+                    handleRemove={(i) => arrayHelpers.remove(i)}
+                    handleAdd={() => arrayHelpers.push("")}
+                  >
+                    {values.pilotNames.map((value, index) => (
+                      <Field key={index} name={"pilotName"}>
+                        {({ field }) => (
+                          <Input
+                            label="Pilot Name"
+                            placeholder="name"
+                            className={styles.field}
+                            {...field}
+                            value={values["pilotNames"]?.[index].name || ""}
+                            onChange={(e) =>
+                              setFieldValue(`pilotNames[${index}]`, {
+                                ...values["pilotNames"]?.[index],
+                                name: e.currentTarget.value,
+                              })
+                            }
+                            error={errors["pilotNames"]?.[index]}
+                          />
+                        )}
+                      </Field>
+                    ))}
+                  </InputArray>
                 )}
               </FieldArray>
               <Button

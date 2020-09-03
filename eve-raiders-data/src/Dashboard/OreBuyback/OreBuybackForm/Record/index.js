@@ -1,15 +1,13 @@
 import React from "react";
-import classNames from "classnames";
 import { Field, useFormikContext } from "formik";
 import { useQuery } from "react-query";
-import { FaTrashAlt } from "react-icons/fa";
 import { getResources } from "../../../../api/resources";
 import Input from "../../../../components/inputs/Input";
 import ComboBox from "../../../../components/inputs/ComboBox";
 import RowPrice from "./RowPrice";
 import styles from "./Record.module.scss";
 
-const Record = ({ handleRemove, index }) => {
+const Record = ({ index }) => {
   const {
     loading: resourcesLoading,
     error: resourcesError,
@@ -33,7 +31,10 @@ const Record = ({ handleRemove, index }) => {
             onChange={(value) =>
               setFieldValue(`resources[${index}].resourceName`, value)
             }
-            error={errors["resources"]?.[index]?.["resourceName"]}
+            error={
+              touched["resources"]?.[index]?.["resourceName"] &&
+              errors["resources"]?.[index]?.["resourceName"]
+            }
             loading={resourcesLoading}
           />
         )}
@@ -53,19 +54,14 @@ const Record = ({ handleRemove, index }) => {
                 e.currentTarget.value
               )
             }
-            error={errors["resources"]?.[index]?.["quantity"]}
+            error={
+              touched["resources"]?.[index]?.["quantity"] &&
+              errors["resources"]?.[index]?.["quantity"]
+            }
           />
         )}
       </Field>
       <RowPrice value={values["resources"]?.[index]} />
-      <div
-        className={classNames(styles.remove, {
-          [styles.removeable]: handleRemove && index !== 0,
-        })}
-        onClick={handleRemove}
-      >
-        <FaTrashAlt />
-      </div>
     </div>
   );
 };

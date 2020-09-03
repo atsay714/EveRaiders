@@ -4,6 +4,7 @@ import ConfirmOreBuybackModal from "./ConfirmOreBuybackModal";
 import { Formik, Form, Field, FieldArray } from "formik";
 import Button from "../../../components/inputs/Button";
 import Select from "../../../components/inputs/Select";
+import InputArray from "../../../components/inputs/InputArray";
 import Record from "./Record";
 import GrandTotal from "./GrandTotal";
 import { useQuery } from "react-query";
@@ -67,22 +68,19 @@ const OreBuybackForm = ({ handleSubmit, loading }) => {
               </Field>
               <FieldArray name={"resources"}>
                 {(arrayHelpers) => (
-                  <div>
+                  <InputArray
+                    btnLabel={"Add a resource"}
+                    handleRemove={(i) => arrayHelpers.remove(i)}
+                    handleAdd={() =>
+                      arrayHelpers.push({ resourceName: "", quantity: "0" })
+                    }
+                  >
                     {values.resources.map((value, i) => (
-                      <Record
-                        key={i}
-                        handleRemove={() => arrayHelpers.remove(i)}
-                        index={i}
-                      />
+                      <Record key={i} index={i} />
                     ))}
-                  </div>
+                  </InputArray>
                 )}
               </FieldArray>
-              {(values["resources"][values["resources"].length - 1]
-                ?.resourceName ||
-                values["resources"].length === 0) && (
-                <Record index={values.resources.length} />
-              )}
               <GrandTotal values={values} />
               <Button
                 className={styles.submitBtn}
