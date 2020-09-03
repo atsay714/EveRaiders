@@ -2,13 +2,19 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  height: calc(100vh - 20px);
+  height: 100vh;
   width: 100vw;
-  padding-bottom: 20px;
+}
+
+.content {
+  padding: 30px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 672px) {
-  .dashboard {
-    padding-bottom: 0px;
+  .content {
+    padding: 30px 0 0 0;
   }
 }

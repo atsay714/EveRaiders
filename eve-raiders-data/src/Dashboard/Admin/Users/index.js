@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import Table from "../../../components/Table";
 import Button from "../../../components/inputs/Button";
+import PageHeader from "../../../components/PageHeader";
 import { getUsers, approveUser } from "../../../api/admin";
 import { useQuery, useMutation, queryCache } from "react-query";
 import styles from "./Users.module.scss";
@@ -53,16 +54,10 @@ const Users = () => {
       {
         Header: "Username",
         accessor: "username",
-        style: {
-          textAlign: "left",
-        },
       },
       {
         Header: "Discord User",
         accessor: "discordUser",
-        style: {
-          textAlign: "left",
-        },
       },
     ],
     []
@@ -70,9 +65,7 @@ const Users = () => {
 
   return (
     <div className={styles.users}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>User Administration</h1>
-      </header>
+      <PageHeader>User Administration</PageHeader>
       <Table
         data={data}
         columns={columns}

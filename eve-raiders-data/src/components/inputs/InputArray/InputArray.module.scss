@@ -1,23 +1,15 @@
-@import "../../../../styles/mixins";
+@import "../../../styles/mixins";
 
-.resourceField {
-  margin: 10px 10px 10px 0;
-}
-
-.countField {
-  margin: 10px;
-}
-
-.resourceField {
-  width: 175px;
-}
-
-.countField {
-  width: 70px;
-}
-
-.record {
+.inputArray {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .remove {
@@ -30,7 +22,6 @@
   cursor: pointer;
   color: var(--color-red);
   padding: 2px 1px;
-  margin-top: 22px;
 
   &:hover {
     color: var(--color-red-lighter);
@@ -43,15 +34,5 @@
 
   &.removeable {
     visibility: visible;
-  }
-}
-
-@media screen and (max-width: 672px) {
-  .resourceField {
-    width: 125px;
-  }
-
-  .record {
-    // margin-right: 60px;
   }
 }

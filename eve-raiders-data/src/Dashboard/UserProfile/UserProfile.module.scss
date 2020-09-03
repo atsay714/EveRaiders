@@ -3,25 +3,16 @@
   flex-direction: column;
   max-width: 672px;
   margin: 0 auto;
-  align-items: center;
+  width: 210px;
 }
 
-.submitRow {
-  display: flex;
-  align-items: center;
-  margin: 10px 0 0;
-  justify-content: flex-end;
-  width: 100%;
-}
-
-.pilotName {
-  width: 200px;
-  margin-right: 20px;
+.field {
+  margin: 10px;
 }
 
 @media screen and (max-width: 672px) {
-  .pilotName {
-    width: 100%;
+  .submitBtn {
+    width: calc(100% - 24px);
   }
 
   .label {
@@ -38,9 +29,15 @@
 }
 
 .submitBtn {
+  margin: 20px 12px 0;
   min-width: 100px;
+  align-self: center;
 }
 
 .error {
   margin-bottom: 20px;
+}
+
+.add {
+  margin: 0 auto;
 }

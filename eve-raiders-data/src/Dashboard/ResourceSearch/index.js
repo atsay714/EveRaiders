@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from "react";
 import Table from "../../components/Table";
 import FormRenderer from "../../components/FormRenderer";
+import PageHeader from "../../components/PageHeader";
+import SlideDown from "../../components/SlideDown";
 import { getFilters, getResources } from "../../api";
 import { useQuery } from "react-query";
 import * as Yup from "yup";
@@ -40,30 +42,21 @@ const ResourceSearch = () => {
       {
         Header: "Planet Name",
         accessor: "planetName",
-        style: {
-          textAlign: "left",
-        },
       },
       {
         Header: "Resource Type",
         accessor: "resourceType",
         Cell: ({ value }) => value.replace(/([A-Z])/g, " $1").trim(),
-        style: {
-          textAlign: "left",
-        },
       },
       {
         Header: "Richness",
         accessor: "richness",
-        style: {
-          textAlign: "left",
-        },
       },
       {
         Header: "Output",
         accessor: "output",
         style: {
-          textAlign: "left",
+          textAlign: "right",
         },
       },
     ],
@@ -126,6 +119,14 @@ const ResourceSearch = () => {
 
   return (
     <div className={styles.resourceSearch}>
+      <PageHeader>Find Resources</PageHeader>
+      <SlideDown>
+        <FormRenderer
+          config={formConfig}
+          onSubmit={getData}
+          loading={loading}
+        />
+      </SlideDown>
       <div className={styles.results}>
         {error && (
           <div className={styles.error}>
@@ -138,14 +139,6 @@ const ResourceSearch = () => {
           placeholder="No data for selected filters"
         />
       </div>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Find Resources</h1>
-        <FormRenderer
-          config={formConfig}
-          onSubmit={getData}
-          loading={loading}
-        />
-      </header>
     </div>
   );
 };

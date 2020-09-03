@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from "react";
 import Table from "../../components/Table";
 import FormRenderer from "../../components/FormRenderer";
+import PageHeader from "../../components/PageHeader";
+import SlideDown from "../../components/SlideDown";
 import { getFilters, getPlanets } from "../../api";
 import { useQuery } from "react-query";
 import * as Yup from "yup";
@@ -43,30 +45,18 @@ const PlanetSearch = () => {
       {
         Header: "Constellation",
         accessor: "constellation",
-        style: {
-          textAlign: "left",
-        },
       },
       {
         Header: "System",
         accessor: "system",
-        style: {
-          textAlign: "left",
-        },
       },
       {
         Header: "Planet Name",
         accessor: "name",
-        style: {
-          textAlign: "left",
-        },
       },
       {
         Header: "Planet Type",
         accessor: "type",
-        style: {
-          textAlign: "left",
-        },
       },
       {
         id: "resourceName",
@@ -161,6 +151,14 @@ const PlanetSearch = () => {
 
   return (
     <div className={styles.planetSearch}>
+      <PageHeader>Find Planets</PageHeader>
+      <SlideDown>
+        <FormRenderer
+          config={formConfig}
+          onSubmit={getData}
+          loading={loading}
+        />
+      </SlideDown>
       <div className={styles.results}>
         {error && (
           <div className={styles.error}>
@@ -173,14 +171,6 @@ const PlanetSearch = () => {
           placeholder="No data for selected filters"
         />
       </div>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Find Planets</h1>
-        <FormRenderer
-          config={formConfig}
-          onSubmit={getData}
-          loading={loading}
-        />
-      </header>
     </div>
   );
 };

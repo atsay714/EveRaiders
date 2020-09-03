@@ -1,17 +1,8 @@
 .oreBuyback {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   align-items: center;
   height: 100%;
-
-  .header {
-    width: 100%;
-
-    .title {
-      text-align: center;
-      font-size: 26px;
-    }
-  }
 
   .results {
     height: 100%;
@@ -22,5 +13,14 @@
     overflow: hidden;
     z-index: 1;
     margin-top: 20px;
+  }
+}
+
+.noPilotNames {
+  margin-top: 50px;
+
+  button {
+    width: 50px;
+    margin-right: 10px;
   }
 }

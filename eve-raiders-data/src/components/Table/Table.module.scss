@@ -5,6 +5,7 @@
   flex-direction: column;
   overflow: auto;
   max-width: 100vw;
+  width: 100%;
   background-color: var(--color-darkred);
 }
 
@@ -33,9 +34,14 @@
   font-size: 12px;
 }
 
+.row {
+  border-bottom: 1px solid var(--color-darkred-darker);
+}
+
 .cell,
 .headerCell {
-  padding: 10px;
+  padding: 5px 10px;
+  text-align: left;
 }
 
 .placeholder {

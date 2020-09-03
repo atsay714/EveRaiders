@@ -8,11 +8,11 @@ import PlanetSearch from "./PlanetSearch";
 import OreBuyback from "./OreBuyback";
 import Users from "./Admin/Users";
 import OreBuybackList from "./Admin/OreBuybackList";
+import UserProfile from "./UserProfile";
 import NavBar from "./NavBar";
 import { TokenContext, UserContext } from "../contexts";
 import { history } from "../App";
 import styles from "./Dashboard.module.scss";
-import OreBuybacklist from "./Admin/OreBuybackList";
 
 const Dashboard = () => {
   const { loading, error, data: currentUser } = useQuery(
@@ -32,26 +32,31 @@ const Dashboard = () => {
     <div className={styles.dashboard}>
       <UserContext.Provider value={currentUser}>
         {token && <NavBar />}
-        <Switch>
-          <Route path="/dashboard/awaiting-approval">
-            <AwaitingApproval />
-          </Route>
-          <PrivateRoute path="/dashboard/resource-search">
-            <ResourceSearch />
-          </PrivateRoute>
-          <PrivateRoute path="/dashboard/planet-search">
-            <PlanetSearch />
-          </PrivateRoute>
-          <PrivateRoute path="/dashboard/ore-buyback">
-            <OreBuyback />
-          </PrivateRoute>
-          <PrivateRoute path="/dashboard/admin/users">
-            <Users />
-          </PrivateRoute>
-          <PrivateRoute path="/dashboard/admin/ore-buyback">
-            <OreBuybackList />
-          </PrivateRoute>
-        </Switch>
+        <div className={styles.content}>
+          <Switch>
+            <Route path="/dashboard/awaiting-approval">
+              <AwaitingApproval />
+            </Route>
+            <PrivateRoute path="/dashboard/resource-search">
+              <ResourceSearch />
+            </PrivateRoute>
+            <PrivateRoute path="/dashboard/planet-search">
+              <PlanetSearch />
+            </PrivateRoute>
+            <PrivateRoute path="/dashboard/ore-buyback">
+              <OreBuyback />
+            </PrivateRoute>
+            <PrivateRoute path="/dashboard/admin/users">
+              <Users />
+            </PrivateRoute>
+            <PrivateRoute path="/dashboard/admin/ore-buyback">
+              <OreBuybackList />
+            </PrivateRoute>
+            <PrivateRoute path="/dashboard/user-profile">
+              <UserProfile />
+            </PrivateRoute>
+          </Switch>
+        </div>
       </UserContext.Provider>
     </div>
   );

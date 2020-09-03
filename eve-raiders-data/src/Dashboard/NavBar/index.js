@@ -85,6 +85,9 @@ const NavBar = () => {
         <div onClick={() => setIsModalOpen(true)}>
           <NavItem label={"About"} />
         </div>
+        <div>
+          <NavItem label={"User Profile"} path={"/dashboard/user-profile"} />
+        </div>
         <div onClick={() => setToken("")}>
           <NavItem label={"Logout"} />
         </div>

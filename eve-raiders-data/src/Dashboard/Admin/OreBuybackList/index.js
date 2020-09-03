@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useMemo } from "react";
+import PageHeader from "../../../components/PageHeader";
 import OreBuybackTable from "../../OreBuyback/OreBuybackTable";
 import { getOrders, updateStatus } from "../../../api/oreBuyback";
 import { useQuery, useMutation, queryCache } from "react-query";
@@ -25,12 +26,15 @@ const OreBuybackList = () => {
     },
   });
 
+  const filteredData = useMemo(
+    () => data.filter((x) => x.pilot && x.total > 0 && x.status !== "Closed"),
+    [data]
+  );
+
   return (
     <div className={styles.users}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Ore Buyback Administration</h1>
-      </header>
-      <OreBuybackTable data={data} mutate={mutate} adminView />
+      <PageHeader>Ore Buyback Administration</PageHeader>
+      <OreBuybackTable data={filteredData} mutate={mutate} adminView />
     </div>
   );
 };
