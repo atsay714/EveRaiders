@@ -57,7 +57,8 @@ namespace EveRaiders.Web.Api.Automapper
                     {
                         Id = s.ResourceId,
                         Name = s.Resource.Name,
-                        Quantity = s.Quantity
+                        Quantity = s.Quantity,
+                        Price = (int)Math.Round(s.Price * ((float)(100 - s.Resource.Tax) / 100), 0)
                     })));
         }
     }
