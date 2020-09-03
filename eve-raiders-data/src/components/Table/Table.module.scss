@@ -34,9 +34,14 @@
   font-size: 12px;
 }
 
+.row {
+  border-bottom: 1px solid var(--color-darkred-darker);
+}
+
 .cell,
 .headerCell {
-  padding: 5px;
+  padding: 5px 10px;
+  text-align: left;
 }
 
 .placeholder {

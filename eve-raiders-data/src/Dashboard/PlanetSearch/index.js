@@ -45,30 +45,18 @@ const PlanetSearch = () => {
       {
         Header: "Constellation",
         accessor: "constellation",
-        style: {
-          textAlign: "left",
-        },
       },
       {
         Header: "System",
         accessor: "system",
-        style: {
-          textAlign: "left",
-        },
       },
       {
         Header: "Planet Name",
         accessor: "name",
-        style: {
-          textAlign: "left",
-        },
       },
       {
         Header: "Planet Type",
         accessor: "type",
-        style: {
-          textAlign: "left",
-        },
       },
       {
         id: "resourceName",

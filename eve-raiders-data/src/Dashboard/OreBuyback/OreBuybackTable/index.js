@@ -13,21 +13,12 @@ const OreBuybackTable = ({ data = [], mutate, adminView }) => {
       {
         Header: "Requested At",
         accessor: "requestedAt",
-        style: {
-          textAlign: "left",
-        },
       },
-      ...(adminView
-        ? [
-            {
-              Header: "Pilot Name",
-              accessor: "pilot",
-              style: {
-                textAlign: "left",
-              },
-            },
-          ]
-        : []),
+      {
+        Header: "Pilot Name",
+        accessor: "pilot",
+      },
+
       {
         Header: "Total ISK",
         accessor: "total",
@@ -38,9 +29,6 @@ const OreBuybackTable = ({ data = [], mutate, adminView }) => {
       {
         Header: "Status",
         accessor: "status",
-        style: {
-          textAlign: "left",
-        },
         Cell: ({
           value,
           row: {
@@ -69,7 +57,7 @@ const OreBuybackTable = ({ data = [], mutate, adminView }) => {
     <Table
       data={data}
       columns={columns}
-      placeholder="No data for selected filters"
+      placeholder="No buyback contracts available"
       scrollRef={scrollRef}
     />
   );

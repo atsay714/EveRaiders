@@ -54,16 +54,10 @@ const Users = () => {
       {
         Header: "Username",
         accessor: "username",
-        style: {
-          textAlign: "left",
-        },
       },
       {
         Header: "Discord User",
         accessor: "discordUser",
-        style: {
-          textAlign: "left",
-        },
       },
     ],
     []

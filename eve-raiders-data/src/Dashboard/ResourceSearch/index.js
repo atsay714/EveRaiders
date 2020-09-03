@@ -42,30 +42,21 @@ const ResourceSearch = () => {
       {
         Header: "Planet Name",
         accessor: "planetName",
-        style: {
-          textAlign: "left",
-        },
       },
       {
         Header: "Resource Type",
         accessor: "resourceType",
         Cell: ({ value }) => value.replace(/([A-Z])/g, " $1").trim(),
-        style: {
-          textAlign: "left",
-        },
       },
       {
         Header: "Richness",
         accessor: "richness",
-        style: {
-          textAlign: "left",
-        },
       },
       {
         Header: "Output",
         accessor: "output",
         style: {
-          textAlign: "left",
+          textAlign: "right",
         },
       },
     ],
