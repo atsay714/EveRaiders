@@ -1,0 +1,48 @@
+.prices {
+  overflow: auto;
+  height: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  max-width: 672px;
+  margin: 0 auto;
+  width: 210px;
+}
+
+.field {
+  margin: 10px;
+}
+
+@media screen and (max-width: 672px) {
+  .submitBtn {
+    width: calc(100% - 24px);
+  }
+
+  .label {
+    flex-direction: column;
+
+    .equals {
+      margin: -3px;
+    }
+  }
+
+  .grandTotal {
+    margin: 0;
+  }
+}
+
+.submitBtn {
+  margin: 20px 12px 0;
+  min-width: 100px;
+  align-self: center;
+}
+
+.error {
+  margin-bottom: 20px;
+}
+
+.add {
+  margin: 0 auto;
+}

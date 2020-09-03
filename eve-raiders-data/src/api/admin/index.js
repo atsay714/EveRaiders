@@ -19,3 +19,24 @@ export const approveUser = async (userName) => {
     return [];
   }
 };
+
+export const getPrices = async (userName) => {
+  try {
+    const res = await instance.get("/api/administration/prices/resources");
+    return res.data;
+  } catch (e) {
+    return [];
+  }
+};
+
+export const updatePrices = async (prices) => {
+  try {
+    const res = await instance.post(
+      "/api/administration/prices/resources",
+      prices
+    );
+    return res.data;
+  } catch (e) {
+    return [];
+  }
+};
