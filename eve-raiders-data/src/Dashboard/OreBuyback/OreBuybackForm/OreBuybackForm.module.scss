@@ -6,16 +6,22 @@
   align-items: center;
 }
 
+.submitRow {
+  display: flex;
+  align-items: center;
+  margin: 10px 0 0;
+  justify-content: flex-end;
+  width: 100%;
+}
+
 .pilotName {
   width: 200px;
-  align-self: flex-start;
-  margin-left: 10px;
-  margin-bottom: 20px;
+  margin-right: 20px;
 }
 
 @media screen and (max-width: 672px) {
-  .submitBtn {
-    width: calc(100% - 24px);
+  .pilotName {
+    width: 100%;
   }
 
   .label {
@@ -32,9 +38,7 @@
 }
 
 .submitBtn {
-  margin: 20px 12px 0;
   min-width: 100px;
-  align-self: flex-end;
 }
 
 .error {

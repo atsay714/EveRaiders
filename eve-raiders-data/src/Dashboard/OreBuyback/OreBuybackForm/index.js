@@ -47,25 +47,6 @@ const OreBuybackForm = ({ handleSubmit, loading }) => {
         >
           {({ values, setFieldValue }) => (
             <Form className={styles.form}>
-              <Field name={"pilotName"}>
-                {({ field }) => (
-                  <Select
-                    label={"Pilot Name"}
-                    className={styles.pilotName}
-                    items={currentUser.pilotNames.map(({ name }) => name) || []}
-                    {...field}
-                    value={values.pilotName.name}
-                    onChange={(value) => {
-                      setFieldValue(
-                        "pilotName",
-                        currentUser.pilotNames.find(
-                          (pilot) => pilot.name === value
-                        )
-                      );
-                    }}
-                  />
-                )}
-              </Field>
               <FieldArray name={"resources"}>
                 {(arrayHelpers) => (
                   <InputArray
@@ -82,13 +63,37 @@ const OreBuybackForm = ({ handleSubmit, loading }) => {
                 )}
               </FieldArray>
               <GrandTotal values={values} />
-              <Button
-                className={styles.submitBtn}
-                type="submit"
-                disabled={loading}
-              >
-                Submit
-              </Button>
+              <div className={styles.submitRow}>
+                <Field name={"pilotName"}>
+                  {({ field }) => (
+                    <Select
+                      label={"Pilot Name"}
+                      className={styles.pilotName}
+                      items={
+                        currentUser.pilotNames.map(({ name }) => name) || []
+                      }
+                      {...field}
+                      value={values.pilotName.name}
+                      onChange={(value) => {
+                        setFieldValue(
+                          "pilotName",
+                          currentUser.pilotNames.find(
+                            (pilot) => pilot.name === value
+                          )
+                        );
+                      }}
+                    />
+                  )}
+                </Field>
+                <Button
+                  className={styles.submitBtn}
+                  type="submit"
+                  disabled={loading}
+                >
+                  Submit
+                </Button>
+              </div>
+
               {modalIsOpen && (
                 <ConfirmOreBuybackModal
                   values={values}

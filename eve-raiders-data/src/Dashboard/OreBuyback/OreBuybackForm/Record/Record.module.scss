@@ -1,6 +1,9 @@
 @import "../../../../styles/mixins";
 
-.resourceField,
+.resourceField {
+  margin: 10px 10px 10px 0;
+}
+
 .countField {
   margin: 10px;
 }
@@ -40,5 +43,15 @@
 
   &.removeable {
     visibility: visible;
+  }
+}
+
+@media screen and (max-width: 672px) {
+  .resourceField {
+    width: 125px;
+  }
+
+  .record {
+    // margin-right: 60px;
   }
 }

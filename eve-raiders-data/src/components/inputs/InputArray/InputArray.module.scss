@@ -7,13 +7,12 @@
 }
 
 .item {
-  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .remove {
-  position: absolute;
-  right: -20px;
-  top: 0;
   visibility: hidden;
   width: auto;
   height: 18px;
@@ -23,7 +22,6 @@
   cursor: pointer;
   color: var(--color-red);
   padding: 2px 1px;
-  margin-top: 22px;
 
   &:hover {
     color: var(--color-red-lighter);

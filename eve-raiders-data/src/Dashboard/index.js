@@ -32,29 +32,31 @@ const Dashboard = () => {
     <div className={styles.dashboard}>
       <UserContext.Provider value={currentUser}>
         {token && <NavBar />}
-        <Switch>
-          <Route path="/dashboard/awaiting-approval">
-            <AwaitingApproval />
-          </Route>
-          <PrivateRoute path="/dashboard/resource-search">
-            <ResourceSearch />
-          </PrivateRoute>
-          <PrivateRoute path="/dashboard/planet-search">
-            <PlanetSearch />
-          </PrivateRoute>
-          <PrivateRoute path="/dashboard/ore-buyback">
-            <OreBuyback />
-          </PrivateRoute>
-          <PrivateRoute path="/dashboard/admin/users">
-            <Users />
-          </PrivateRoute>
-          <PrivateRoute path="/dashboard/admin/ore-buyback">
-            <OreBuybackList />
-          </PrivateRoute>
-          <PrivateRoute path="/dashboard/user-profile">
-            <UserProfile />
-          </PrivateRoute>
-        </Switch>
+        <div className={styles.content}>
+          <Switch>
+            <Route path="/dashboard/awaiting-approval">
+              <AwaitingApproval />
+            </Route>
+            <PrivateRoute path="/dashboard/resource-search">
+              <ResourceSearch />
+            </PrivateRoute>
+            <PrivateRoute path="/dashboard/planet-search">
+              <PlanetSearch />
+            </PrivateRoute>
+            <PrivateRoute path="/dashboard/ore-buyback">
+              <OreBuyback />
+            </PrivateRoute>
+            <PrivateRoute path="/dashboard/admin/users">
+              <Users />
+            </PrivateRoute>
+            <PrivateRoute path="/dashboard/admin/ore-buyback">
+              <OreBuybackList />
+            </PrivateRoute>
+            <PrivateRoute path="/dashboard/user-profile">
+              <UserProfile />
+            </PrivateRoute>
+          </Switch>
+        </div>
       </UserContext.Provider>
     </div>
   );

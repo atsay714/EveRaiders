@@ -5,6 +5,8 @@ import { useQuery, useMutation, queryCache } from "react-query";
 import styles from "./OreBuyback.module.scss";
 import OreBuybackForm from "./OreBuybackForm";
 import OreBuybackTable from "./OreBuybackTable";
+import PageHeader from "../../components/PageHeader";
+import SlideDown from "../../components/SlideDown";
 import Button from "../../components/inputs/Button";
 import { useHistory } from "react-router-dom";
 import { getCurrentUser } from "../../api/users";
@@ -63,6 +65,10 @@ const OreBuyback = () => {
 
   return (
     <div className={styles.oreBuyback}>
+      <PageHeader>Ore Buyback</PageHeader>
+      <SlideDown>
+        <OreBuybackForm handleSubmit={mutate} />
+      </SlideDown>
       <div className={styles.results}>
         {error && (
           <div className={styles.error}>
@@ -71,10 +77,6 @@ const OreBuyback = () => {
         )}
         <OreBuybackTable data={data} />
       </div>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Ore Buyback</h1>
-        <OreBuybackForm handleSubmit={mutate} />
-      </header>
     </div>
   );
 };

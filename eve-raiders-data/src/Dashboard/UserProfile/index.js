@@ -1,6 +1,7 @@
 import React from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field, FieldArray } from "formik";
+import PageHeader from "../../components/PageHeader";
 import Button from "../../components/inputs/Button";
 import Input from "../../components/inputs/Input";
 import InputArray from "../../components/inputs/InputArray";
@@ -29,7 +30,7 @@ const UserProfile = ({ handleSubmit }) => {
 
   return (
     <>
-      <h1>User Profile</h1>
+      <PageHeader>User Profile</PageHeader>
       {currentUser && (
         <Formik
           validationSchema={UserProfileSchema}
