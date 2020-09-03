@@ -80,6 +80,7 @@ const NavBar = () => {
               label={"Ore Buyback Admin"}
               path={"/dashboard/admin/ore-buyback"}
             />
+            <NavItem label={"Prices"} path={"/dashboard/admin/prices"} />
           </>
         )}
         <div onClick={() => setIsModalOpen(true)}>

@@ -6,6 +6,7 @@ import AwaitingApproval from "../AwaitingApproval";
 import ResourceSearch from "./ResourceSearch";
 import PlanetSearch from "./PlanetSearch";
 import OreBuyback from "./OreBuyback";
+import Prices from "./Admin/Prices";
 import Users from "./Admin/Users";
 import OreBuybackList from "./Admin/OreBuybackList";
 import UserProfile from "./UserProfile";
@@ -51,6 +52,9 @@ const Dashboard = () => {
             </PrivateRoute>
             <PrivateRoute path="/dashboard/admin/ore-buyback">
               <OreBuybackList />
+            </PrivateRoute>
+            <PrivateRoute path="/dashboard/admin/prices">
+              <Prices />
             </PrivateRoute>
             <PrivateRoute path="/dashboard/user-profile">
               <UserProfile />

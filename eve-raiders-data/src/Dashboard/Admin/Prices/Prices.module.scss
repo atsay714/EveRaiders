@@ -1,0 +1,33 @@
+.prices {
+  overflow: auto;
+  height: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  max-width: 672px;
+  margin: 0 auto;
+  width: 210px;
+}
+
+.field {
+  margin: 10px;
+}
+
+.record {
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 672px) {
+  .submitBtn {
+    width: calc(100% - 24px);
+  }
+}
+
+.submitBtn {
+  margin: 20px 12px 0;
+  min-width: 100px;
+  align-self: center;
+}
