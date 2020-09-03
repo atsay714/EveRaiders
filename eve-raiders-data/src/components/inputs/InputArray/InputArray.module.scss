@@ -1,22 +1,19 @@
 @import "../../../styles/mixins";
 
-.pilotName {
-  display: flex;
-  position: relative;
-}
-
-.form {
+.inputArray {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
-.field {
-  margin: 10px;
+.item {
+  position: relative;
 }
 
 .remove {
   position: absolute;
   right: -20px;
+  top: 0;
   visibility: hidden;
   width: auto;
   height: 18px;

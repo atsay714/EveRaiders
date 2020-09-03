@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field, FieldArray } from "formik";
 import Button from "../../components/inputs/Button";
 import Input from "../../components/inputs/Input";
-import PilotName from "./PilotName";
+import InputArray from "../../components/inputs/InputArray";
 import { useQuery } from "react-query";
-import { MdAdd } from "react-icons/md";
+
 import { getCurrentUser, updateCurrentUser } from "../../api/users";
 import styles from "./UserProfile.module.scss";
 
@@ -36,7 +36,7 @@ const UserProfile = ({ handleSubmit }) => {
           initialValues={currentUser}
           onSubmit={updateCurrentUser}
         >
-          {({ values, errors, touched }) => (
+          {({ values, errors, touched, setFieldValue }) => (
             <Form className={styles.form}>
               <Field name={"username"}>
                 {({ field }) => (
@@ -62,24 +62,32 @@ const UserProfile = ({ handleSubmit }) => {
               <FieldArray name={"pilotNames"}>
                 {(arrayHelpers) => (
                   <>
-                    <div>
-                      {values.pilotNames.map((value, i) => (
-                        <PilotName
-                          key={i}
-                          handleAdd={() => arrayHelpers.push("")}
-                          handleRemove={() => arrayHelpers.remove(i)}
-                          index={i}
-                          addable={i === values.pilotNames.length - 1}
-                        />
-                      ))}
-                    </div>
-                    <Button
-                      className={styles.add}
-                      variant={"text"}
-                      onClick={() => arrayHelpers.push("")}
+                    <InputArray
+                      btnLabel={"Add a pilot name"}
+                      handleRemove={(i) => arrayHelpers.remove(i)}
+                      handleAdd={() => arrayHelpers.push("")}
                     >
-                      <MdAdd /> Add a pilot name
-                    </Button>
+                      {values.pilotNames.map((value, index) => (
+                        <Field key={index} name={"pilotName"}>
+                          {({ field }) => (
+                            <Input
+                              label="Pilot Name"
+                              placeholder="name"
+                              className={styles.field}
+                              {...field}
+                              value={values["pilotNames"]?.[index].name || ""}
+                              onChange={(e) =>
+                                setFieldValue(`pilotNames[${index}]`, {
+                                  ...values["pilotNames"]?.[index],
+                                  name: e.currentTarget.value,
+                                })
+                              }
+                              error={errors["pilotNames"]?.[index]}
+                            />
+                          )}
+                        </Field>
+                      ))}
+                    </InputArray>
                   </>
                 )}
               </FieldArray>
