@@ -11,7 +11,7 @@ namespace EveRaiders.Web.Api.ViewModels.Authentication
         public int Id { get; set; }
         public string RequestedAt { get; set; }
         public string Status { get; set; }
-        public double Total { get; set; }
+        public int Total { get; set; }
         public List<ResourceViewModel> Resources { get; set; }
         public string Pilot { get; set; }
     }
