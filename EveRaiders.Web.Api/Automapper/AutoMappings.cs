@@ -48,8 +48,16 @@ namespace EveRaiders.Web.Api.Automapper
             CreateMap<BuybackRequest, BuyBackRequestViewModel>()
                 .ForMember(src => src.Total, opt => opt.MapFrom(dest => dest.TotalPrice))
                 .ForMember(src => src.Status, opt => opt.MapFrom(dest => dest.Status.ToString()))
-                .ForMember(src => src.RequestedAt, opt => opt.MapFrom(dest => dest.RequestedAt.ToString(CultureInfo.InvariantCulture)))
-                .ForMember(src => src.Pilot, opt => opt.MapFrom(dest => dest.Pilot.Name));
+                .ForMember(src => src.RequestedAt,
+                    opt => opt.MapFrom(dest => dest.RequestedAt.ToString(CultureInfo.InvariantCulture)))
+                .ForMember(src => src.Pilot, opt => opt.MapFrom(dest => dest.Pilot.Name))
+                .ForMember(src => src.Resources, opt => opt.MapFrom(dest => dest.Resources.Select(s =>
+                    new ResourceViewModel()
+                    {
+                        Id = s.ResourceId,
+                        Name = s.Resource.Name,
+                        Quantity = s.Quantity
+                    })));
         }
     }
 }

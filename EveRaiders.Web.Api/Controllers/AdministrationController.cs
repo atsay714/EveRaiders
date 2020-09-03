@@ -7,6 +7,7 @@ using AutoMapper;
 using EveRaiders.Data;
 using EveRaiders.Data.Authentication;
 using EveRaiders.Data.Enums;
+using EveRaiders.Data.Models;
 using EveRaiders.Services;
 using EveRaiders.Web.Api.ViewModels.Authentication;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,7 @@ namespace EveRaiders.Web.Api.Controllers
         private readonly CorporationServices _corporationServices;
         private readonly EveRaidersContext _db;
 
-        public AdministrationController(EveRaidersContext db,IMapper mapper, UserManager<RaiderUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, CorporationServices corporationService)
+        public AdministrationController(EveRaidersContext db, IMapper mapper, UserManager<RaiderUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, CorporationServices corporationService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -50,7 +51,7 @@ namespace EveRaiders.Web.Api.Controllers
         [HttpGet("orders/buyback")]
         public async Task<IActionResult> GetBuybackRequests()
         {
-            var request = await _db.BuyBackRequests.Include(i => i.Pilot).ToListAsync();
+            var request = await _db.BuyBackRequests.Include(i => i.Resources).ThenInclude(i => i.Resource).Include(i => i.Pilot).Where(s => s.Resources.Count > 0).ToListAsync();
 
             var mappedRequest = _mapper.Map<List<BuyBackRequestViewModel>>(request);
 
@@ -104,6 +105,28 @@ namespace EveRaiders.Web.Api.Controllers
             else
                 return Conflict(result);
         }
+
+        [HttpGet("prices/resources")]
+        public async Task<IActionResult> GetResourcePrices()
+        {
+            var resources = await _db.Resources.AsAsyncEnumerable().ToListAsync();
+
+            return Ok(resources);
+        }
+
+        [HttpPost("prices/resources")]
+        public async Task<IActionResult> UpdateResourcePrices([FromBody] List<Resource> resources)
+        {
+            foreach (var resource in resources)
+            {
+                _db.Entry(resource).State = EntityState.Modified;
+            }
+
+            await _db.SaveChangesAsync();
+
+            return Ok(resources);
+        }
+
 
     }
 }
