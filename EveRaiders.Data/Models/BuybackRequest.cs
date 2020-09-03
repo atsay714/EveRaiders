@@ -18,6 +18,6 @@ namespace EveRaiders.Data.Models
         public double TotalPrice { get; set; }
         public RequestStatus Status { get; set; }
         public virtual List<ResourceOrder> Resources { get; set; }
-        public virtual RaiderUser User { get; set; }
+        public virtual PilotName Pilot { get; set; }
     }
 }

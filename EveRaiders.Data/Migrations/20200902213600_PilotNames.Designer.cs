@@ -4,14 +4,16 @@ using EveRaiders.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EveRaiders.Data.Migrations
 {
     [DbContext(typeof(EveRaidersContext))]
-    partial class EveRaidersContextModelSnapshot : ModelSnapshot
+    [Migration("20200902213600_PilotNames")]
+    partial class PilotNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -120,9 +122,6 @@ namespace EveRaiders.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("PilotId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("RequestedAt")
                         .HasColumnType("datetime2");
 
@@ -132,9 +131,12 @@ namespace EveRaiders.Data.Migrations
                     b.Property<double>("TotalPrice")
                         .HasColumnType("float");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("PilotId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("BuyBackRequests");
                 });
@@ -234,18 +236,18 @@ namespace EveRaiders.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("PilotId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("RequestedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<double>("TotalPrice")
                         .HasColumnType("float");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("PilotId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("ReprocessingRequests");
                 });
@@ -817,9 +819,9 @@ namespace EveRaiders.Data.Migrations
 
             modelBuilder.Entity("EveRaiders.Data.Models.BuybackRequest", b =>
                 {
-                    b.HasOne("EveRaiders.Data.Authentication.PilotName", "Pilot")
+                    b.HasOne("EveRaiders.Data.Authentication.RaiderUser", "User")
                         .WithMany()
-                        .HasForeignKey("PilotId");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("EveRaiders.Data.Models.Constellation", b =>
@@ -845,9 +847,9 @@ namespace EveRaiders.Data.Migrations
 
             modelBuilder.Entity("EveRaiders.Data.Models.ReprocessingRequest", b =>
                 {
-                    b.HasOne("EveRaiders.Data.Authentication.PilotName", "Pilot")
+                    b.HasOne("EveRaiders.Data.Authentication.RaiderUser", "User")
                         .WithMany()
-                        .HasForeignKey("PilotId");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("EveRaiders.Data.Models.ResourceOrder", b =>

@@ -10,6 +10,14 @@ namespace EveRaiders.Web.Api.ViewModels
 
     public class BuybackOrReprocessResourceViewModel
     {
+        public List<BuybackOrRequestResourceQuantityViewModel> Resources { get; set; }
+
+        [Required]
+        public int PilotNameId { get; set; }
+    }
+
+    public class BuybackOrRequestResourceQuantityViewModel
+    {
         [Required]
         public int Id { get; set; }
         public double Quantity { get; set; }

@@ -37,17 +37,19 @@ namespace EveRaiders.Web.Api.Automapper
 
             CreateMap<Resource, ResourceViewModel>();
 
-            CreateMap<BuybackOrReprocessResourceViewModel, ResourceOrder>()
+            CreateMap<BuybackOrRequestResourceQuantityViewModel, ResourceOrder>()
                 .ForMember(src => src.ResourceId, opt => opt.MapFrom(dest => dest.Id))
                 .ForMember(src => src.Id, opt => opt.Ignore());
 
             CreateMap<RaiderUser, UserViewModel>();
 
+            CreateMap<PilotName, PilotViewModel>();
+
             CreateMap<BuybackRequest, BuyBackRequestViewModel>()
                 .ForMember(src => src.Total, opt => opt.MapFrom(dest => dest.TotalPrice))
                 .ForMember(src => src.Status, opt => opt.MapFrom(dest => dest.Status.ToString()))
                 .ForMember(src => src.RequestedAt, opt => opt.MapFrom(dest => dest.RequestedAt.ToString(CultureInfo.InvariantCulture)))
-                .ForMember(src => src.User, opt => opt.MapFrom(dest => dest.User.DiscordUser));
+                .ForMember(src => src.Pilot, opt => opt.MapFrom(dest => dest.Pilot.Name));
         }
     }
 }

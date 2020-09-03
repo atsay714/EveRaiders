@@ -40,8 +40,46 @@ namespace EveRaiders.Web.Api.Controllers
         [HttpGet("profile")]
         public async Task<IActionResult> GetProfile()
         {
-            var user = await _userManager.FindByIdAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            return Ok(_mapper.Map<UserViewModel>(user));
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            return Ok(_mapper.Map<UserViewModel>(await _userManager.Users.Include(s => s.PilotNames).FirstOrDefaultAsync(s => s.Id == userId)));
+        }
+
+        [HttpPost("profile")]
+        public async Task<IActionResult> UpdateProfile([FromBody] UserViewModel user)
+        {
+            var raidUser = await _userManager.Users.Include(s => s.PilotNames)
+                .SingleOrDefaultAsync(s => s.Id == user.Id.ToString());
+
+            if (!string.IsNullOrEmpty(user.DiscordUser))
+                raidUser.DiscordUser = user.DiscordUser;
+
+            if (raidUser == null)
+                return NotFound();
+
+            foreach (var pilotName in raidUser.PilotNames)
+            {
+                if (user.PilotNames.Select(s => s.Name).Contains(pilotName.Name))
+                    continue;
+
+                _db.PilotNames.Remove(pilotName);
+            }
+
+            foreach (var pilotName in user.PilotNames)
+            {
+                if (raidUser.PilotNames.Select(s => s.Name).Contains(pilotName.Name))
+                    continue;
+
+                await _db.PilotNames.AddAsync(new PilotName()
+                {
+                    User = raidUser,
+                    Name = pilotName.Name
+                });
+            }
+
+            await _db.SaveChangesAsync();
+
+            return Ok(_mapper.Map<UserViewModel>(raidUser));
         }
 
         [HttpGet("orders")]
@@ -49,7 +87,7 @@ namespace EveRaiders.Web.Api.Controllers
         {
             var user = await _userManager.FindByIdAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            var request = await _db.BuyBackRequests.Include(i => i.User).Where(s => s.User.Id == user.Id)
+            var request = await _db.BuyBackRequests.Include(i => i.Pilot).ThenInclude(i => i.User).Where(s => s.Pilot.User.Id == user.Id)
                 .AsAsyncEnumerable().ToListAsync();
 
             var mappedRequest = _mapper.Map<List<BuyBackRequestViewModel>>(request);
