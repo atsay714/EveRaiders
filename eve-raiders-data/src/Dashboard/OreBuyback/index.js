@@ -23,9 +23,9 @@ const OreBuyback = () => {
   const handleSubmit = async (values) => {
     const { success, error, data: res } = await buyback({
       resources: values.resources
-        .filter(({ resourceName }) => resourceName)
-        .map(({ resourceName, quantity }) => ({
-          id: resourceName.id,
+        .filter(({ resource }) => resource?.name)
+        .map(({ resource, quantity }) => ({
+          id: resource.id,
           quantity: +quantity,
         })),
       pilotNameId: values.pilotName.id,
