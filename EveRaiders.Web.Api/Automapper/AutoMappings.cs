@@ -35,7 +35,8 @@ namespace EveRaiders.Web.Api.Automapper
                 .ForMember(src => src.DistanceFromBase, opt => opt.MapFrom(dest => dest.Planet.System.DistanceFromBase - 1))
                 .ForMember(src => src.PlanetType, opt => opt.MapFrom(dest => dest.Planet.EveOnlineTypeId));
 
-            CreateMap<Resource, ResourceViewModel>();
+            CreateMap<Resource, ResourceViewModel>()
+                .ForMember(src => src.Price, opt => opt.MapFrom(dest => dest.Price * (100-dest.Tax)));
 
             CreateMap<BuybackOrRequestResourceQuantityViewModel, ResourceOrder>()
                 .ForMember(src => src.ResourceId, opt => opt.MapFrom(dest => dest.Id))

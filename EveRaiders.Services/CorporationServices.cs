@@ -28,7 +28,7 @@ namespace EveRaiders.Services
                 if (dbResource == null)
                     continue;
 
-                total += resource.Quantity * dbResource.Price;
+                total += resource.Quantity * dbResource.Price * (100 - dbResource.Tax);
             }
 
             var pilot = await _db.PilotNames.FirstOrDefaultAsync(s => s.Id == pilotId);
