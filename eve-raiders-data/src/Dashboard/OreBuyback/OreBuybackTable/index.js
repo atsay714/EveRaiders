@@ -20,8 +20,8 @@ const OreBuybackTable = ({ data = [], mutate, adminView }) => {
       ...(adminView
         ? [
             {
-              Header: "Discord User",
-              accessor: "user",
+              Header: "Pilot Name",
+              accessor: "pilot",
               style: {
                 textAlign: "left",
               },
