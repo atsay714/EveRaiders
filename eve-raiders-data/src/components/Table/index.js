@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { useTable } from "react-table";
 import styles from "./Table.module.scss";
 
@@ -40,9 +41,15 @@ const Table = ({ data, columns, placeholder, scrollRef }) => {
                 {row.cells.map((cell) => {
                   return (
                     <td
-                      className={styles.cell}
+                      className={classNames(styles.cell, {
+                        [styles.selectable]: cell.column.onClick,
+                      })}
                       style={cell.column.style || {}}
                       {...cell.getCellProps()}
+                      onClick={() => {
+                        if (cell.column.onClick)
+                          cell.column.onClick(row.original);
+                      }}
                     >
                       {cell.render("Cell")}
                     </td>

@@ -1,22 +1,33 @@
-import React, { useMemo, useContext, useRef } from "react";
+import React, { useState, useMemo, useContext, useRef } from "react";
 import { UserContext } from "../../../contexts";
 import Select from "../../../components/inputs/Select";
 import Table from "../../../components/Table";
+import BuybackModal from "./BuybackModal";
 import styles from "./OreBuybackTable.module.scss";
 
 const OreBuybackTable = ({ data = [], mutate, adminView }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalData, setModalData] = useState(false);
+
   const user = useContext(UserContext);
   const scrollRef = useRef();
+
+  const onClick = (data) => {
+    setModalData(data);
+    setIsModalOpen(true);
+  };
 
   const columns = useMemo(
     () => [
       {
         Header: "Requested At",
         accessor: "requestedAt",
+        onClick,
       },
       {
         Header: "Pilot Name",
         accessor: "pilot",
+        onClick,
       },
 
       {
@@ -25,6 +36,11 @@ const OreBuybackTable = ({ data = [], mutate, adminView }) => {
         style: {
           textAlign: "right",
         },
+        Cell: ({ value }) =>
+          value.toLocaleString({
+            style: "currency",
+          }),
+        onClick,
       },
       {
         Header: "Status",
@@ -48,18 +64,24 @@ const OreBuybackTable = ({ data = [], mutate, adminView }) => {
             <div>{value}</div>
           );
         },
+        onClick: !adminView && onClick,
       },
     ],
     [user, scrollRef]
   );
 
   return (
-    <Table
-      data={data}
-      columns={columns}
-      placeholder="No buyback contracts available"
-      scrollRef={scrollRef}
-    />
+    <>
+      <Table
+        data={data}
+        columns={columns}
+        placeholder="No buyback contracts available"
+        scrollRef={scrollRef}
+      />
+      {isModalOpen && (
+        <BuybackModal data={modalData} onClose={() => setIsModalOpen(false)} />
+      )}
+    </>
   );
 };
 

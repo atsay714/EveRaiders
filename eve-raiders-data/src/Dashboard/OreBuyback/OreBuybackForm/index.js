@@ -14,7 +14,7 @@ import styles from "./OreBuybackForm.module.scss";
 const oreBuybackSchema = Yup.object().shape({
   resources: Yup.array().of(
     Yup.object().shape({
-      resourceName: Yup.object().required("Resource name is required"),
+      resource: Yup.object().required("Resource is required"),
       quantity: Yup.string().required("Quantity is required"),
     })
   ),
@@ -37,7 +37,7 @@ const OreBuybackForm = ({ handleSubmit, loading }) => {
           initialValues={{
             resources: [
               {
-                resourceName: "",
+                resource: "",
                 quantity: "0",
               },
             ],
@@ -53,7 +53,7 @@ const OreBuybackForm = ({ handleSubmit, loading }) => {
                     btnLabel={"Add a resource"}
                     handleRemove={(i) => arrayHelpers.remove(i)}
                     handleAdd={() =>
-                      arrayHelpers.push({ resourceName: "", quantity: "0" })
+                      arrayHelpers.push({ resource: "", quantity: "0" })
                     }
                   >
                     {values.resources.map((value, i) => (
