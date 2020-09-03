@@ -3,14 +3,11 @@
   flex-direction: column;
   max-width: 672px;
   margin: 0 auto;
-  align-items: center;
+  align-items: flex-start;
 }
 
-.pilotName {
-  width: 200px;
-  align-self: flex-start;
-  margin-left: 10px;
-  margin-bottom: 20px;
+.field {
+  margin: 10px;
 }
 
 @media screen and (max-width: 672px) {
@@ -34,9 +31,13 @@
 .submitBtn {
   margin: 20px 12px 0;
   min-width: 100px;
-  align-self: flex-end;
+  align-self: center;
 }
 
 .error {
   margin-bottom: 20px;
+}
+
+.add {
+  margin: 0 auto;
 }

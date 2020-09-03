@@ -18,7 +18,14 @@ const Button = ({
     type={type}
     {...props}
   >
-    <span style={{ visibility: loading ? "hidden" : "visible" }}>
+    <span
+      style={{
+        visibility: loading ? "hidden" : "visible",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       {children}
     </span>
     {loading && (

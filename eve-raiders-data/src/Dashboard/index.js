@@ -8,11 +8,11 @@ import PlanetSearch from "./PlanetSearch";
 import OreBuyback from "./OreBuyback";
 import Users from "./Admin/Users";
 import OreBuybackList from "./Admin/OreBuybackList";
+import UserProfile from "./UserProfile";
 import NavBar from "./NavBar";
 import { TokenContext, UserContext } from "../contexts";
 import { history } from "../App";
 import styles from "./Dashboard.module.scss";
-import OreBuybacklist from "./Admin/OreBuybackList";
 
 const Dashboard = () => {
   const { loading, error, data: currentUser } = useQuery(
@@ -50,6 +50,9 @@ const Dashboard = () => {
           </PrivateRoute>
           <PrivateRoute path="/dashboard/admin/ore-buyback">
             <OreBuybackList />
+          </PrivateRoute>
+          <PrivateRoute path="/dashboard/user-profile">
+            <UserProfile />
           </PrivateRoute>
         </Switch>
       </UserContext.Provider>

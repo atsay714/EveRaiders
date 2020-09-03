@@ -23,3 +23,27 @@ export const getCurrentUser = async () => {
     return [];
   }
 };
+
+export const updateCurrentUser = async ({
+  id,
+  username,
+  discordUser,
+  approved,
+  superAdmin,
+  pilotNames,
+}) => {
+  try {
+    const res = await instance.post("/api/users/profile", {
+      id,
+      username,
+      discordUser,
+      approved,
+      superAdmin,
+      pilotNames,
+    });
+
+    return res?.data;
+  } catch (e) {
+    return [];
+  }
+};
