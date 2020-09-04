@@ -359,8 +359,8 @@ MigrationBackup/
 build/
 
 # Cypress e2e testing
-cypress/screenshots
-cypress/videos
+**/cypress/screenshots/
+**/cypress/videos/
 
 # misc
 .DS_Store
