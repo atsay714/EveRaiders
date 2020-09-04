@@ -107,9 +107,9 @@ namespace EveRaiders.Web.Api.Controllers
         }
 
         [HttpPost("forgot-password")]
-        public async Task<IActionResult> ForgotPassword(string email)
+        public async Task<IActionResult> ForgotPassword([FromBody]ForgetPasswordViewModel forgetPassword)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(forgetPassword.Email);
             if (user == null)
                 return NotFound();
 
