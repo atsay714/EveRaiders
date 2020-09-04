@@ -29,7 +29,7 @@ const UserProfile = () => {
   );
 
   return (
-    <>
+    <div className={styles.userProfile}>
       <PageHeader>User Profile</PageHeader>
       {currentUser && (
         <Formik
@@ -101,7 +101,7 @@ const UserProfile = () => {
           )}
         </Formik>
       )}
-    </>
+    </div>
   );
 };
 
