@@ -123,9 +123,10 @@ namespace EveRaiders.Web.Api.Controllers
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordViewModel resetPassword)
         {
-            var user = await _userManager.FindByEmailAsync(resetPassword.Email);
+            var base64Message = EmailSender.Base64Decode(resetPassword.Token).Split('&');
+            var user = await _userManager.FindByEmailAsync(base64Message[1]);
 
-            var result = await _userManager.ResetPasswordAsync(user, resetPassword.Token, resetPassword.Password);
+            var result = await _userManager.ResetPasswordAsync(user, base64Message[0], resetPassword.Password);
 
             if (result.Succeeded)
                 return Ok();

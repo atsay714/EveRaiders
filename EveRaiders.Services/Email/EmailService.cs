@@ -46,10 +46,11 @@ namespace EveRaiders.Services.Email
 
         public async Task SendForgotPasswordEmailAsync(string resetToken, string email)
         {
+            string base64Message = Base64Encode($"{resetToken}&{email}");
             string message;
             if (!string.IsNullOrEmpty(email))
             {
-                var resetUrl = $"https://www.everaiders.com/reset-password?token={resetToken}&email={email}";
+                var resetUrl = $"https://www.everaiders.com/reset-password?token={base64Message}";
                 message = $@"<p>Please click the below link to reset your password, the link will be valid for 1 day:</p>
                              <p><a href=""{resetUrl}"">{resetUrl}</a></p>";
             }
@@ -60,6 +61,18 @@ namespace EveRaiders.Services.Email
             }
             
             await Execute(Options.SendGridKey, "Password Reset Request", message, email);
+        }
+
+        public static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
+        }
+
+        public static string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
         }
     }
 }
