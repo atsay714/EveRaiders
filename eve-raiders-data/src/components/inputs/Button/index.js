@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import RingLoader from "@bit/davidhu2000.react-spinners.ring-loader";
+import RingLoader from "react-spinners/RingLoader";
 import styles from "./Button.module.scss";
 
 const Button = ({

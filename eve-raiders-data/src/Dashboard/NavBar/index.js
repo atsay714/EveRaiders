@@ -25,7 +25,7 @@ const navItems = [
     path: "/dashboard/ore-buyback",
     label: "Ore Buyback",
     logo: GiMining,
-    requiresSuperAdmin: true,
+    // requiresSuperAdmin: true,
   },
 ];
 

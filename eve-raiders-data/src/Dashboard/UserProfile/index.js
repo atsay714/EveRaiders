@@ -22,7 +22,7 @@ const UserProfileSchema = Yup.object().shape({
   ),
 });
 
-const UserProfile = ({ handleSubmit }) => {
+const UserProfile = () => {
   const { loading, error, data: currentUser } = useQuery(
     "currentUser",
     getCurrentUser
