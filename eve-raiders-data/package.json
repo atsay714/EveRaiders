@@ -55,11 +55,17 @@
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
       "prettier --write"
+    ],
+    "src/**/*test.js": [
+      "cross-env CI=true react-scripts test --findRelatedTests"
     ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && yarn test"
+      "pre-commit": "lint-staged"
     }
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2"
   }
 }
