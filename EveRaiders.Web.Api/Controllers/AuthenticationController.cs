@@ -111,7 +111,7 @@ namespace EveRaiders.Web.Api.Controllers
         {
             var user = await _userManager.FindByEmailAsync(forgetPassword.Email);
             if (user == null)
-                return NotFound();
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User not found with the supplied email." });
 
             var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
 
