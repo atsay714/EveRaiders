@@ -1,15 +1,7 @@
 import React, { useEffect, useContext } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import Routes from "../Routes";
 import { useQuery } from "react-query";
 import { getCurrentUser } from "../api/users";
-import AwaitingApproval from "../AwaitingApproval";
-import ResourceSearch from "./ResourceSearch";
-import PlanetSearch from "./PlanetSearch";
-import OreBuyback from "./OreBuyback";
-import Prices from "./Admin/Prices";
-import Users from "./Admin/Users";
-import OreBuybackList from "./Admin/OreBuybackList";
-import UserProfile from "./UserProfile";
 import NavBar from "./NavBar";
 import { TokenContext, UserContext } from "../contexts";
 import { history } from "../App";
@@ -21,7 +13,7 @@ const Dashboard = () => {
     getCurrentUser
   );
 
-  const token = useContext(TokenContext);
+  const [token, setToken] = useContext(TokenContext);
 
   useEffect(() => {
     if (currentUser?.approved === false) {
@@ -34,32 +26,7 @@ const Dashboard = () => {
       <UserContext.Provider value={currentUser}>
         {token && <NavBar />}
         <div className={styles.content}>
-          <Switch>
-            <Route path="/dashboard/awaiting-approval">
-              <AwaitingApproval />
-            </Route>
-            <PrivateRoute path="/dashboard/resource-search">
-              <ResourceSearch />
-            </PrivateRoute>
-            <PrivateRoute path="/dashboard/planet-search">
-              <PlanetSearch />
-            </PrivateRoute>
-            <PrivateRoute path="/dashboard/ore-buyback">
-              <OreBuyback />
-            </PrivateRoute>
-            <PrivateRoute path="/dashboard/admin/users">
-              <Users />
-            </PrivateRoute>
-            <PrivateRoute path="/dashboard/admin/ore-buyback">
-              <OreBuybackList />
-            </PrivateRoute>
-            <PrivateRoute path="/dashboard/admin/prices">
-              <Prices />
-            </PrivateRoute>
-            <PrivateRoute path="/dashboard/user-profile">
-              <UserProfile />
-            </PrivateRoute>
-          </Switch>
+          <Routes />
         </div>
       </UserContext.Provider>
     </div>
@@ -67,24 +34,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-const PrivateRoute = ({ children, ...rest }) => {
-  const [token, setToken] = useContext(TokenContext);
-
-  return (
-    <Route>
-      {({ location }) =>
-        token ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location },
-            }}
-          />
-        )
-      }
-    </Route>
-  );
-};

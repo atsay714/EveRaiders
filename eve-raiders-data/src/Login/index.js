@@ -1,12 +1,9 @@
-import React, { useState, useContext, useEffect } from "react";
-import { login } from "../api/auth";
-import { useHistory, useLocation } from "react-router-dom";
+import React, { useState } from "react";
 import RegistrationForm from "./RegistrationForm";
 import LoginForm from "./LoginForm";
-import { TokenContext } from "../contexts";
 import styles from "./Login.module.scss";
 
-const Login = ({ onLogin, initialForm = "login" }) => {
+const Login = ({ initialForm = "login" }) => {
   const [page, setPage] = useState(initialForm);
 
   return (

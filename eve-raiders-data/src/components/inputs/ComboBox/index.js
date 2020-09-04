@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useCombobox } from "downshift";
-import RingLoader from "@bit/davidhu2000.react-spinners.ring-loader";
+import RingLoader from "react-spinners/RingLoader";
 import BaseInput from "../BaseInput";
 import classNames from "classnames";
 import styles from "./ComboBox.module.scss";
@@ -138,7 +138,7 @@ const ComboBox = ({
             </>
           )}
         </ul>,
-        document.querySelector("#root")
+        document.body
       )}
     </div>
   );

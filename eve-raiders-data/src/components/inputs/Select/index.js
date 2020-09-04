@@ -104,7 +104,7 @@ const Select = ({
               </li>
             ))}
         </ul>,
-        document.querySelector("#root")
+        document.body
       )}
     </div>
   );
