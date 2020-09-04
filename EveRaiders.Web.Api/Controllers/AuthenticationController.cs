@@ -11,6 +11,7 @@ using Discord;
 using Discord.Rest;
 using EveRaiders.Data.Authentication;
 using EveRaiders.Data.Models;
+using EveRaiders.Services.Email;
 using EveRaiders.Web.Api.Utils;
 using EveRaiders.Web.Api.ViewModels.Authentication;
 using Microsoft.AspNetCore.Authentication;
@@ -31,12 +32,14 @@ namespace EveRaiders.Web.Api.Controllers
         private readonly IConfiguration _configuration;
         private readonly UserManager<RaiderUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IEmailSender _emailSender;
 
-        public AuthenticationController(UserManager<RaiderUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AuthenticationController(UserManager<RaiderUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IEmailSender emailSender)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _emailSender = emailSender;
         }
 
         [HttpPost]
@@ -101,6 +104,33 @@ namespace EveRaiders.Web.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+        }
+
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return NotFound();
+
+            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            await _emailSender.SendForgotPasswordEmailAsync(resetToken, user.Email);
+
+            return Ok();
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordViewModel resetPassword)
+        {
+            var user = await _userManager.FindByEmailAsync(resetPassword.Email);
+
+            var result = await _userManager.ResetPasswordAsync(user, resetPassword.Token, resetPassword.Password);
+
+            if (result.Succeeded)
+                return Ok();
+
+            return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
         }
     }
 }

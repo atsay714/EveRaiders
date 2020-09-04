@@ -16,6 +16,7 @@ using EveRaiders.Data;
 using EveRaiders.Data.Authentication;
 using EveRaiders.Data.Models;
 using EveRaiders.Services;
+using EveRaiders.Services.Email;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth;
@@ -172,6 +173,9 @@ namespace EveRaiders.Web.Api
                 options.AddPolicy("SuperAdmin", policy =>
                     policy.RequireClaim("SuperAdmin", "True"));
             });
+
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
