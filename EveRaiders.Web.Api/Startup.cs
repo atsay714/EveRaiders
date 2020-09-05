@@ -172,6 +172,7 @@ namespace EveRaiders.Web.Api
                     policy.RequireClaim("Approved", "True"));
                 options.AddPolicy("SuperAdmin", policy =>
                     policy.RequireClaim("SuperAdmin", "True"));
+                options.AddPolicy("Non-Authorized", policy => policy.RequireClaim("Approved", "False"));
             });
 
             services.AddTransient<IEmailSender, EmailSender>();

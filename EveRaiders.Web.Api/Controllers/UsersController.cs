@@ -37,6 +37,7 @@ namespace EveRaiders.Web.Api.Controllers
             _corporationServices = corporationServices;
         }
 
+        [Authorize(Policy = "Non-Authorized, Members")]
         [HttpGet("profile")]
         public async Task<IActionResult> GetProfile()
         {
