@@ -16,7 +16,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EveRaiders.Web.Api.Controllers
 {
-    [Authorize(Policy = "Members")]
+    [Authorize]
     [Route("users")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -37,7 +37,6 @@ namespace EveRaiders.Web.Api.Controllers
             _corporationServices = corporationServices;
         }
 
-        [Authorize(Policy = "Non-Authorized, Members")]
         [HttpGet("profile")]
         public async Task<IActionResult> GetProfile()
         {
@@ -84,6 +83,7 @@ namespace EveRaiders.Web.Api.Controllers
         }
 
         [HttpGet("orders")]
+        [Authorize(Policy = "Members")]
         public async Task<IActionResult> GetOrders()
         {
             var user = await _userManager.FindByIdAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
