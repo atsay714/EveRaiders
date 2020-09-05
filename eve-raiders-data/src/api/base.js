@@ -17,20 +17,6 @@ instance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (
-      !(error?.request?.responseURL === `${baseURL}api/auth/login`) &&
-      error?.response?.status === 401
-    ) {
-      history.push({
-        pathname: "/login",
-        state: { message: "You have been logged out" },
-      });
-    } else if (
-      error?.request?.responseURL === `${baseURL}api/auth/login` &&
-      error?.response?.status === 401
-    ) {
-      error.message = "Invalid username or password";
-      return Promise.reject(error);
-    } else if (
       error?.request?.responseURL === `${baseURL}api/users/profile` &&
       error?.response?.status === 403
     ) {

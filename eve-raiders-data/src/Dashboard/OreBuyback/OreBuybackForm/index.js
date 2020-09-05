@@ -99,7 +99,6 @@ const OreBuybackForm = ({ handleSubmit, loading }) => {
                   values={values}
                   onClose={() => setModalIsOpen(false)}
                   onSubmit={() => {
-                    console.log(values);
                     setModalIsOpen(false);
                     handleSubmit(values);
                   }}

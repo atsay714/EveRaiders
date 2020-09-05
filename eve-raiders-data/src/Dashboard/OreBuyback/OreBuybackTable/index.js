@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useContext, useRef } from "react";
-import { UserContext } from "../../../contexts";
+import useCurrentUser from "../../../context/user";
 import Select from "../../../components/inputs/Select";
 import Table from "../../../components/Table";
 import BuybackModal from "./BuybackModal";
@@ -9,7 +9,7 @@ const OreBuybackTable = ({ data = [], mutate, adminView }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState(false);
 
-  const user = useContext(UserContext);
+  const user = useCurrentUser();
   const scrollRef = useRef();
 
   const onClick = (data) => {

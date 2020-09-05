@@ -2,8 +2,9 @@ import React from "react";
 import { createMemoryHistory } from "history";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import { WrappedDashboard } from "../../Dashboard/Dashboard.test";
+import { WrappedComponent } from "../../testUtils";
 import { getCurrentUser } from "../../api/users";
+import OreBuyback from "./";
 
 jest.mock("../../api/users", () => ({
   getCurrentUser: jest.fn(),
@@ -18,7 +19,11 @@ describe("Route - /dashboard/ore-buyback", () => {
       pilotNames: [{ id: 0, name: "Test Pilot" }],
     }));
 
-    render(<WrappedDashboard history={history} />);
+    render(
+      <WrappedComponent history={history}>
+        <OreBuyback />
+      </WrappedComponent>
+    );
 
     expect(await screen.findByText("Ore Buyback"));
   });
@@ -29,8 +34,11 @@ describe("Route - /dashboard/ore-buyback", () => {
 
     getCurrentUser.mockImplementation(() => ({ pilotNames: [] }));
 
-    render(<WrappedDashboard history={history} />);
-
+    render(
+      <WrappedComponent history={history}>
+        <OreBuyback />
+      </WrappedComponent>
+    );
     expect(await screen.findByText("Ore Buyback"));
   });
 });
