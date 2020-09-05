@@ -63,6 +63,7 @@ const UserProfile = () => {
               <FieldArray name={"pilotNames"}>
                 {(arrayHelpers) => (
                   <InputArray
+                    className={styles.pilotNames}
                     btnLabel={"Add a pilot name"}
                     handleRemove={(i) => arrayHelpers.remove(i)}
                     handleAdd={() => arrayHelpers.push("")}
