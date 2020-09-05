@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef } from "react";
 import classNames from "classnames";
 import { GiMining } from "react-icons/gi";
 import { IoMdPlanet } from "react-icons/io";
@@ -6,9 +6,10 @@ import { MdMenu } from "react-icons/md";
 import useClickAway from "../../hooks/useClickAway";
 import NavItem from "./NavItem";
 import Settings from "./Settings";
-import { TokenContext, UserContext } from "../../contexts";
+import useAuth from "../../context/auth";
 import AboutModal from "./AboutModal";
 import styles from "./NavBar.module.scss";
+import useCurrentUser from "../../context/user";
 
 const navItems = [
   {
@@ -25,7 +26,6 @@ const navItems = [
     path: "/dashboard/ore-buyback",
     label: "Ore Buyback",
     logo: GiMining,
-    // requiresSuperAdmin: true,
   },
 ];
 
@@ -33,9 +33,9 @@ const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const ref = useRef();
-  const [token, setToken] = useContext(TokenContext);
+  const { setToken } = useAuth();
 
-  const user = useContext(UserContext);
+  const user = useCurrentUser();
 
   useClickAway(ref, () => isOpen && setIsOpen(false));
 
@@ -89,7 +89,11 @@ const NavBar = () => {
         <div>
           <NavItem label={"User Profile"} path={"/dashboard/user-profile"} />
         </div>
-        <div onClick={() => setToken("")}>
+        <div
+          onClick={() => {
+            setToken();
+          }}
+        >
           <NavItem label={"Logout"} />
         </div>
       </div>

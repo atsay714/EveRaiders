@@ -35,3 +35,32 @@ export const register = async ({ username, email, password, discordUser }) => {
     };
   }
 };
+
+export const forgotPassword = async ({ email }) => {
+  try {
+    const res = await instance.post("/api/auth/forgot-password", { email });
+    return { success: res.status === 200 };
+  } catch (e) {
+    return {
+      error: e.response?.data?.message ||
+        e.message || ["An unknown error occured. Please try again."],
+    };
+  }
+};
+
+export const resetPassword = async ({ email, token, password }) => {
+  try {
+    const res = await instance.post("/api/auth/reset-password", {
+      email,
+      token,
+      password,
+    });
+
+    return { success: res?.data?.status === "Success" };
+  } catch (e) {
+    return {
+      error: e.response?.data?.message ||
+        e.message || ["An unknown error occured. Please try again."],
+    };
+  }
+};

@@ -4,16 +4,20 @@ import classNames from "classnames";
 import { FaEllipsisV } from "react-icons/fa";
 import useClickAway from "../../../hooks/useClickAway";
 import NavItem from "../NavItem";
-import { TokenContext, UserContext } from "../../../contexts";
+import useAuth from "../../../context/auth";
+import useCurrentUser from "../../../context/user";
 import styles from "./Settings.module.scss";
+import { useHistory } from "react-router-dom";
 
 const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const ref = useRef();
 
-  const user = useContext(UserContext);
-  const [token, setToken] = useContext(TokenContext);
+  const user = useCurrentUser();
+  const { setToken } = useAuth();
+
+  const history = useHistory();
 
   useClickAway(ref, () => isOpen && setIsOpen(false));
   return (
@@ -45,7 +49,11 @@ const Settings = () => {
         <div>
           <NavItem label={"User Profile"} path={"/dashboard/user-profile"} />
         </div>
-        <div onClick={() => setToken("")}>
+        <div
+          onClick={() => {
+            setToken();
+          }}
+        >
           <NavItem label={"Logout"} />
         </div>
       </div>

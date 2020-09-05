@@ -1,10 +1,13 @@
 import React, { useEffect, useContext } from "react";
-import Routes from "../Routes";
+import DashboardRoutes from "./DashboardRoutes";
 import { useQuery } from "react-query";
 import { getCurrentUser } from "../api/users";
 import NavBar from "./NavBar";
-import { TokenContext, UserContext } from "../contexts";
+import useAuth from "../context/auth";
+import useCurrentUser from "../context/user";
 import { history } from "../App";
+import { Redirect } from "react-router-dom";
+import { UserContext } from "../context/user";
 import styles from "./Dashboard.module.scss";
 
 const Dashboard = () => {
@@ -13,20 +16,18 @@ const Dashboard = () => {
     getCurrentUser
   );
 
-  const [token, setToken] = useContext(TokenContext);
+  const { token } = useAuth();
 
-  useEffect(() => {
-    if (currentUser?.approved === false) {
-      history.push("/awaiting-approval");
-    }
-  }, [currentUser?.approved]);
+  if (currentUser?.approved === false) {
+    return <Redirect to="/awaiting-approval" />;
+  }
 
   return (
     <div className={styles.dashboard}>
       <UserContext.Provider value={currentUser}>
         {token && <NavBar />}
         <div className={styles.content}>
-          <Routes />
+          <DashboardRoutes />
         </div>
       </UserContext.Provider>
     </div>

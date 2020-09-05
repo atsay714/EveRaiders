@@ -4,21 +4,20 @@ import Input from "../../components/inputs/Input";
 import Button from "../../components/inputs/Button";
 import Password from "../../components/inputs/Password";
 import { Formik, Form, Field } from "formik";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, NavLink, Redirect } from "react-router-dom";
 import * as Yup from "yup";
 import { MdErrorOutline } from "react-icons/md";
-import { TokenContext } from "../../contexts";
+import useAuth from "../../context/auth";
 import styles from "./LoginForm.module.scss";
 
 const LoginForm = ({ onBack }) => {
+  const [isLoggedIn, setLoggedIn] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState();
   let history = useHistory();
-  let location = useLocation();
 
-  const [token, setToken] = useContext(TokenContext);
-
-  let { from } = location.state || { from: { pathname: "/" } };
+  const { setToken } = useAuth();
 
   let handleLogin = async ({ username, password }) => {
     setLoading(true);
@@ -27,7 +26,7 @@ const LoginForm = ({ onBack }) => {
 
     if (success) {
       setToken(data);
-      history.replace(from || "/");
+      setLoggedIn(true);
     } else if (error) {
       setLoginError(error);
     } else {
@@ -35,14 +34,14 @@ const LoginForm = ({ onBack }) => {
     }
   };
 
-  useEffect(() => {
-    if (token) return history.replace(from);
-  }, [token]);
-
   const LoginSchema = Yup.object().shape({
     username: Yup.string().required("Username is required"),
     password: Yup.string().required("Password is required"),
   });
+
+  if (isLoggedIn) {
+    return <Redirect to="/dashboard/resource-search" />;
+  }
 
   return (
     <Formik
@@ -94,6 +93,9 @@ const LoginForm = ({ onBack }) => {
             <Button className={styles.button} type="submit" loading={loading}>
               Log in
             </Button>
+            <NavLink className={styles.forgotPassword} to="/forgot-password">
+              Forgot Password?
+            </NavLink>
           </div>
         </Form>
       )}
