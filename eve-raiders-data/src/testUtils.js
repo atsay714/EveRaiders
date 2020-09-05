@@ -2,6 +2,10 @@ import React from "react";
 import { Router } from "react-router-dom";
 import { UserContext } from "./context/user";
 import { AuthContext } from "./context/auth";
+import { createMemoryHistory } from "history";
+import { render, screen } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
+import Routes from "./Routes";
 
 const users = {
   approved: {
@@ -22,17 +26,45 @@ const users = {
   },
 };
 
-export const WrappedComponent = ({
+export const RoutesWithContext = ({
   history,
-  user = "approved",
   token = "12345",
-  children = <Dashboard />,
+  user = "approved",
+  loggedOut,
 }) => (
   <Router history={history}>
-    <UserContext.Provider value={users[user]}>
-      <AuthContext.Provider value={{ token, setToken: () => {} }}>
-        {children}
+    <UserContext.Provider value={loggedOut || users[user]}>
+      <AuthContext.Provider value={loggedOut || { token, setToken: () => {} }}>
+        <Routes />
       </AuthContext.Provider>
     </UserContext.Provider>
   </Router>
 );
+
+export const testRoute = ({
+  route,
+  loggedInText = "Find Resources",
+  loggedOutText = "Raiders EVE Echoes Tools",
+}) => {
+  describe(`Route - ${route}`, () => {
+    test("Logged in", async () => {
+      const history = createMemoryHistory();
+      history.push(route);
+
+      render(<RoutesWithContext history={history} />);
+
+      expect(await screen.findByText(loggedInText));
+      expect(history.location.pathname === route);
+    });
+
+    test("Not logged in", async () => {
+      const history = createMemoryHistory();
+      history.push(route);
+
+      render(<RoutesWithContext history={history} loggedOut />);
+
+      expect(await screen.findByText(loggedOutText));
+      expect(history.location.pathname === "/login");
+    });
+  });
+};
