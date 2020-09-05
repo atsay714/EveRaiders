@@ -50,6 +50,7 @@ const OreBuybackForm = ({ handleSubmit, loading }) => {
               <FieldArray name={"resources"}>
                 {(arrayHelpers) => (
                   <InputArray
+                    className={styles.resources}
                     btnLabel={"Add a resource"}
                     handleRemove={(i) => arrayHelpers.remove(i)}
                     handleAdd={() =>

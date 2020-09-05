@@ -5,8 +5,14 @@ import { FaTrashAlt } from "react-icons/fa";
 import Button from "../Button";
 import styles from "./InputArray.module.scss";
 
-const InputArray = ({ btnLabel, handleRemove, handleAdd, children }) => (
-  <div className={styles.inputArray}>
+const InputArray = ({
+  className,
+  btnLabel,
+  handleRemove,
+  handleAdd,
+  children,
+}) => (
+  <div className={classNames(styles.inputArray, className)}>
     {children.map((child, i) => (
       <div key={i} className={styles.item}>
         {child}
