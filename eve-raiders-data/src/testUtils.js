@@ -31,27 +31,39 @@ export const RoutesWithContext = ({
   token = "12345",
   user = "approved",
   loggedOut,
-}) => (
-  <Router history={history}>
-    <UserContext.Provider value={loggedOut || users[user]}>
-      <AuthContext.Provider value={loggedOut || { token, setToken: () => {} }}>
-        <Routes />
-      </AuthContext.Provider>
-    </UserContext.Provider>
-  </Router>
-);
+}) => {
+  return (
+    <Router history={history}>
+      <UserContext.Provider value={loggedOut ? undefined : users[user]}>
+        <AuthContext.Provider
+          value={
+            loggedOut ? { token: undefined } : { token, setToken: () => {} }
+          }
+        >
+          <Routes />
+        </AuthContext.Provider>
+      </UserContext.Provider>
+    </Router>
+  );
+};
 
 export const testRoute = ({
   route,
   loggedInText = "Find Resources",
   loggedOutText = "Raiders EVE Echoes Tools",
+  approved = true,
 }) => {
   describe(`Route - ${route}`, () => {
     test("Logged in", async () => {
       const history = createMemoryHistory();
       history.push(route);
 
-      render(<RoutesWithContext history={history} />);
+      render(
+        <RoutesWithContext
+          history={history}
+          user={approved ? "approved" : "unapproved"}
+        />
+      );
 
       expect(await screen.findByText(loggedInText));
       expect(history.location.pathname === route);

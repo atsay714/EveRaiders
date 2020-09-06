@@ -12,5 +12,5 @@ jest.mock("../../api/users", () => ({
 
 testRoute({
   route: "/dashboard/user-profile",
-  loggedInText: "User Profile",
+  loggedInText: "Profile",
 });

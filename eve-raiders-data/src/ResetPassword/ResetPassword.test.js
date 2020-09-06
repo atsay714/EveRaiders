@@ -4,4 +4,7 @@ import "@testing-library/jest-dom/extend-expect";
 import { testRoute } from "../testUtils";
 import ResetPassword from "./";
 
-testRoute({ route: "/reset-password", loggedInText: "Change Password" });
+testRoute({
+  route: "/reset-password?token=12345",
+  loggedOutText: "Reset Password",
+});

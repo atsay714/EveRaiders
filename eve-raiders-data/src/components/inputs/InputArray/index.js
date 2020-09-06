@@ -10,7 +10,7 @@ const InputArray = ({
   btnLabel,
   handleRemove,
   handleAdd,
-  children,
+  children = [],
 }) => (
   <div className={classNames(styles.inputArray, className)}>
     {children.map((child, i) => (

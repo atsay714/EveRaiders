@@ -5,6 +5,6 @@ import { testRoute } from "../../../testUtils";
 import UserAdmin from "./";
 
 testRoute({
-  route: "/dasboard/admin/users",
+  route: "/dashboard/admin/users",
   loggedInText: "User Administration",
 });
