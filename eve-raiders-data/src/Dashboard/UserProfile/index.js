@@ -37,9 +37,9 @@ const UserProfile = () => {
           initialValues={{
             username: currentUser?.username ?? "",
             discordUser: currentUser?.discordUser ?? "",
-            pilotNames: currentUser?.username ?? [],
-            approved: currentUser?.username ?? false,
-            superAdmin: currentUser?.username ?? false,
+            pilotNames: currentUser?.pilotNames ?? [],
+            approved: currentUser?.approved ?? false,
+            superAdmin: currentUser?.superAdmin ?? false,
           }}
           onSubmit={updateCurrentUser}
         >
