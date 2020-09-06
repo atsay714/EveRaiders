@@ -13,18 +13,4 @@ instance.interceptors.request.use((config) => {
   return config;
 });
 
-instance.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (
-      error?.request?.responseURL === `${baseURL}api/users/profile` &&
-      error?.response?.status === 403
-    ) {
-      history.push("/dashboard/awaiting-approval");
-    } else {
-      return Promise.reject(error);
-    }
-  }
-);
-
 export default instance;

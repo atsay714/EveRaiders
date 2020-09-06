@@ -12,7 +12,7 @@ const ResetPassword = () => {
   const [registerError, setRegisterError] = useState();
   const history = useHistory();
 
-  const { token } = new Url(window.location.href).query;
+  const { token } = new Url(window.location.href).query || {};
 
   const handleResetPassword = async ({ password }) => {
     const { success, error } = await resetPassword({
@@ -58,7 +58,7 @@ const ResetPassword = () => {
               {registerError}
             </div>
           )}
-          <h3 className={styles.header}>Change Password</h3>
+          <h3 className={styles.header}>Reset Password</h3>
           <Field name={"password"}>
             {({ field }) => {
               return (

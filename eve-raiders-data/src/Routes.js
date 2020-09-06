@@ -5,6 +5,7 @@ import ForgotPassword from "./ForgotPassword";
 import Login from "./Login";
 import Dashboard from "./Dashboard";
 import useAuth from "./context/auth";
+import AwaitingApproval from "./AwaitingApproval";
 
 const Routes = () => (
   <Switch>
@@ -17,10 +18,13 @@ const Routes = () => (
     <RestrictedRoute path="/reset-password">
       <ResetPassword />
     </RestrictedRoute>
+    <Redirect from="/" to="/login" exact />
+    <Route path="/awaiting-approval">
+      <AwaitingApproval />
+    </Route>
     <Route path="/dashboard">
       <Dashboard />
     </Route>
-    <Redirect from="/" to="/login" />
   </Switch>
 );
 

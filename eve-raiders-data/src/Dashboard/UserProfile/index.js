@@ -30,11 +30,17 @@ const UserProfile = () => {
 
   return (
     <div className={styles.userProfile}>
-      <PageHeader>User Profile</PageHeader>
+      <PageHeader>Profile</PageHeader>
       {currentUser && (
         <Formik
           validationSchema={UserProfileSchema}
-          initialValues={currentUser}
+          initialValues={{
+            username: currentUser?.username ?? "",
+            discordUser: currentUser?.discordUser ?? "",
+            pilotNames: currentUser?.username ?? [],
+            approved: currentUser?.username ?? false,
+            superAdmin: currentUser?.username ?? false,
+          }}
           onSubmit={updateCurrentUser}
         >
           {({ values, errors, touched, setFieldValue }) => (
