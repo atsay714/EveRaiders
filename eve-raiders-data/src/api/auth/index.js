@@ -11,6 +11,9 @@ export const login = async ({ username, password }) => {
     }
     return { success: false };
   } catch (e) {
+    if (e.response.status === 401)
+      return { error: "Invalid username or password" };
+
     return {
       error: e.response?.data?.message ||
         e.message || ["An unknown error occured. Please try again."],

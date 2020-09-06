@@ -15,7 +15,6 @@ const LoginForm = ({ onBack }) => {
 
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState();
-  let history = useHistory();
 
   const { setToken } = useAuth();
 
