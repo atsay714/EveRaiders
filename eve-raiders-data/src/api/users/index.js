@@ -18,18 +18,14 @@ export const updateCurrentUser = async ({
   superAdmin,
   pilotNames,
 }) => {
-  try {
-    const res = await instance.post("/api/users/profile", {
-      id,
-      username,
-      discordUser,
-      approved,
-      superAdmin,
-      pilotNames,
-    });
+  const res = await instance.post("/api/users/profile", {
+    id,
+    username,
+    discordUser,
+    approved,
+    superAdmin,
+    pilotNames,
+  });
 
-    return res?.data;
-  } catch (e) {
-    return [];
-  }
+  return res?.data;
 };

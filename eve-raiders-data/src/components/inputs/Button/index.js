@@ -9,6 +9,7 @@ const Button = ({
   loading,
   variant = "contained",
   children = "Submit",
+  disabled,
   ...props
 }) => (
   <button
@@ -16,6 +17,7 @@ const Button = ({
       [styles[variant]]: variant !== "contained",
     })}
     type={type}
+    disabled={loading || disabled}
     {...props}
   >
     <span

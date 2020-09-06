@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field, FieldArray } from "formik";
 import PageHeader from "../../components/PageHeader";
 import Button from "../../components/inputs/Button";
 import Input from "../../components/inputs/Input";
 import InputArray from "../../components/inputs/InputArray";
-import { useQuery } from "react-query";
-
+import Notification from "../../components/Notification";
+import { useQuery, useMutation, queryCache } from "react-query";
 import { getCurrentUser, updateCurrentUser } from "../../api/users";
 import styles from "./UserProfile.module.scss";
 
@@ -25,10 +25,8 @@ const UserProfileSchema = Yup.object().shape({
 });
 
 const UserProfile = () => {
-  const { loading, error, data: currentUser } = useQuery(
-    "currentUser",
-    getCurrentUser
-  );
+  const [results, setResults] = useState();
+  const { data: currentUser } = useQuery("currentUser", getCurrentUser);
 
   return (
     <div className={styles.userProfile}>
@@ -40,14 +38,42 @@ const UserProfile = () => {
             id: currentUser?.id,
             username: currentUser?.username ?? "",
             discordUser: currentUser?.discordUser ?? "",
-            pilotNames: currentUser?.pilotNames ?? [],
+            pilotNames:
+              currentUser?.pilotNames.map((x) => ({ ...x, saved: true })) ?? [],
             approved: currentUser?.approved ?? false,
             superAdmin: currentUser?.superAdmin ?? false,
           }}
-          onSubmit={updateCurrentUser}
+          onSubmit={(values, { resetForm, setSubmitting }) => {
+            const newValues = {
+              ...values,
+              pilotNames: values.pilotNames.filter((x) => x.name),
+            };
+            updateCurrentUser(newValues)
+              .then(() => {
+                setResults({ type: "success", message: "Saved" });
+              })
+              .catch((e) => {
+                setResults({
+                  type: "error",
+                  message:
+                    "And error occured while attempting to update the profile",
+                });
+              })
+              .finally(() => {
+                setSubmitting(false);
+                resetForm({ values: newValues });
+              });
+          }}
         >
-          {({ values, errors, touched, setFieldValue }) => (
-            <Form className={styles.form}>
+          {({
+            values,
+            errors,
+            touched,
+            dirty,
+            setFieldValue,
+            isSubmitting,
+          }) => (
+            <Form className={styles.form} onChange={setResults}>
               <Field name={"username"}>
                 {({ field }) => (
                   <Input
@@ -93,6 +119,7 @@ const UserProfile = () => {
                               })
                             }
                             error={errors["pilotNames"]?.[index]}
+                            readOnly={value.saved}
                           />
                         )}
                       </Field>
@@ -100,13 +127,19 @@ const UserProfile = () => {
                   </InputArray>
                 )}
               </FieldArray>
+
               <Button
                 className={styles.submitBtn}
                 type="submit"
-                disabled={loading}
+                loading={isSubmitting}
               >
                 Submit
               </Button>
+              {results && !dirty && (
+                <Notification type={results.type}>
+                  {results.message}
+                </Notification>
+              )}
             </Form>
           )}
         </Formik>

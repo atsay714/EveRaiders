@@ -1,0 +1,10 @@
+.notificationMessage {
+  margin-left: 10px;
+
+  &.success {
+    color: #73af55;
+  }
+  &.error {
+    color: var(--color-red-lighter);
+  }
+}
