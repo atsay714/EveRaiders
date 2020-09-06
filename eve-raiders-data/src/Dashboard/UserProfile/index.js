@@ -14,7 +14,9 @@ const UserProfileSchema = Yup.object().shape({
   resources: Yup.array().of(
     Yup.object().shape({
       username: Yup.string(),
-      discordUser: Yup.string().required("Discord Username is required"),
+      discordUser: Yup.string()
+        .required("Discord User is required")
+        .matches(/^((.+?)#\d{4})/, "Must be a valid Discord username"),
       pilotNames: Yup.array(),
       approved: Yup.boolean(),
       superAdmin: Yup.boolean(),
@@ -35,6 +37,7 @@ const UserProfile = () => {
         <Formik
           validationSchema={UserProfileSchema}
           initialValues={{
+            id: currentUser?.id,
             username: currentUser?.username ?? "",
             discordUser: currentUser?.discordUser ?? "",
             pilotNames: currentUser?.pilotNames ?? [],
