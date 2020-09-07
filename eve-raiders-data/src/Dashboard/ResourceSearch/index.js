@@ -94,7 +94,7 @@ const ResourceSearch = () => {
         label: "Resource Type",
         placeholder: "resource type",
         type: "combobox",
-        items: resourceNameOptions,
+        items: resourceNameOptions.sort(),
         className: styles.field,
       },
       {
@@ -109,7 +109,7 @@ const ResourceSearch = () => {
         name: "region",
         label: "Region",
         placeholder: "Select a region",
-        items: regions,
+        items: regions.sort((a, b) => a.name.localeCompare(b.name)),
         type: "combobox",
         itemToString: (item) => item?.name ?? "",
         className: styles.field,
