@@ -45,7 +45,7 @@ const OreBuybackForm = ({ handleSubmit, loading }) => {
           }}
           onSubmit={() => setModalIsOpen(true)}
         >
-          {({ values, setFieldValue }) => (
+          {({ values, setFieldValue, resetForm }) => (
             <Form className={styles.form}>
               <FieldArray name={"resources"}>
                 {(arrayHelpers) => (
@@ -102,6 +102,7 @@ const OreBuybackForm = ({ handleSubmit, loading }) => {
                   onSubmit={() => {
                     setModalIsOpen(false);
                     handleSubmit(values);
+                    resetForm();
                   }}
                 />
               )}
