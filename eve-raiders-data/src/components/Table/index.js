@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { useTable } from "react-table";
 import styles from "./Table.module.scss";
 
-const Table = ({ data, columns, placeholder, scrollRef }) => {
+const Table = ({ className, data, columns, placeholder, scrollRef }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -16,7 +16,7 @@ const Table = ({ data, columns, placeholder, scrollRef }) => {
   });
 
   return (
-    <div ref={scrollRef} className={styles.tableWrapper}>
+    <div ref={scrollRef} className={classNames(styles.tableWrapper, className)}>
       <table className={styles.table} {...getTableProps()}>
         <thead className={styles.headers}>
           {headerGroups.map((headerGroup) => (
