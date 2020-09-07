@@ -1,17 +1,11 @@
 import React, { useState, useMemo } from "react";
 import Table from "../../components/Table";
-import FormRenderer from "../../components/FormRenderer";
+import ResourceSearchForm from "./ResourceSearchForm";
 import PageHeader from "../../components/PageHeader";
 import SlideDown from "../../components/SlideDown";
-import { getFilters, getResources } from "../../api";
-import { useQuery } from "react-query";
+import { getResources } from "../../api";
 import * as Yup from "yup";
 import styles from "./ResourceSearch.module.scss";
-
-const ResourceSearchSchema = Yup.object().shape({
-  resourceName: Yup.string().required("Resource Name is required"),
-  richness: Yup.string().required("Richness is required"),
-});
 
 const ResourceSearch = () => {
   const [data, setData] = useState([]);
@@ -63,69 +57,11 @@ const ResourceSearch = () => {
     []
   );
 
-  const {
-    loading: filtersLoading,
-    error: filtersError,
-    data: filtersTypesData,
-  } = useQuery("filters", getFilters);
-
-  const { regions = [], richness = [], types = [] } = useMemo(
-    () => (filtersTypesData ? filtersTypesData.data : []),
-    [filtersTypesData]
-  );
-
-  const resourceNameOptions = useMemo(
-    () => types.map((type) => type.replace(/([A-Z])/g, " $1").trim()),
-    [types]
-  );
-
-  if (filtersLoading) return "Loading...";
-
-  if (filtersError) return "An error has occurred: " + filtersError.message;
-
-  const formConfig = {
-    validation: ResourceSearchSchema,
-    className: styles.resourceSearchForm,
-    fieldsClassName: styles.fields,
-    btnClassName: styles.submitBtn,
-    fields: [
-      {
-        name: "resourceName",
-        label: "Resource Type",
-        placeholder: "resource type",
-        type: "combobox",
-        items: resourceNameOptions.sort(),
-        className: styles.field,
-      },
-      {
-        name: "richness",
-        label: "Richness",
-        placeholder: "Select a richness",
-        items: richness,
-        type: "select",
-        className: styles.field,
-      },
-      {
-        name: "region",
-        label: "Region",
-        placeholder: "Select a region",
-        items: regions.sort((a, b) => a.name.localeCompare(b.name)),
-        type: "combobox",
-        itemToString: (item) => item?.name ?? "",
-        className: styles.field,
-      },
-    ],
-  };
-
   return (
     <div className={styles.resourceSearch}>
       <PageHeader>Find Resources</PageHeader>
       <SlideDown>
-        <FormRenderer
-          config={formConfig}
-          onSubmit={getData}
-          loading={loading}
-        />
+        <ResourceSearchForm handleSubmit={getData} loading={loading} />
       </SlideDown>
       <div className={styles.results}>
         {error && (

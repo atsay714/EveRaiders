@@ -24,7 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-Cypress.Commands.add("login", (type) => {
+Cypress.Commands.add("login", (type = "normal") => {
   cy.request("POST", "https://everaiders.azurewebsites.net/api/auth/login", {
     username: `${type}testuser`,
     password: `${type}TESTuser123!@#`,

@@ -1,0 +1,37 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  max-width: 672px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.fields {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.submitBtn {
+  margin: 20px 12px 0;
+  min-width: 100px;
+  align-self: flex-end;
+}
+
+.field {
+  margin: 12px;
+  width: 200px;
+}
+
+@media screen and (max-width: 755px) {
+  .fields {
+    flex-direction: column;
+    width: calc(100% - 10px);
+    padding: 0 10px;
+    margin: 5px 0;
+  }
+
+  .field,
+  .submitBtn {
+    width: calc(100% - 24px);
+  }
+}

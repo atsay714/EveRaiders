@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useCombobox } from "downshift";
-import RingLoader from "react-spinners/RingLoader";
+import Loader from "../../Loader";
 import BaseInput from "../BaseInput";
 import classNames from "classnames";
 import styles from "./ComboBox.module.scss";
@@ -110,12 +110,7 @@ const ComboBox = ({
             <>
               {loading ? (
                 <div className={styles.loader}>
-                  <RingLoader
-                    size={26}
-                    color={getComputedStyle(
-                      document.documentElement
-                    ).getPropertyValue("--color-text-white")}
-                  />
+                  <Loader size={26} />
                 </div>
               ) : (
                 <>

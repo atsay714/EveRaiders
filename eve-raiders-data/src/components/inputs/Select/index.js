@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelect } from "downshift";
 import BaseInput from "../BaseInput";
 import classNames from "classnames";
+import Loader from "../../../components/Loader";
 import { MdExpandMore } from "react-icons/md";
 import styles from "./Select.module.scss";
 import ReactDOM from "react-dom";
@@ -16,6 +17,7 @@ const Select = ({
   onChange,
   error,
   itemToString = (item) => item,
+  loading,
   scrollRef,
 }) => {
   const {
@@ -88,21 +90,32 @@ const Select = ({
                 (scrollRef?.current?.scrollTop || 0) || undefined,
           }}
         >
-          {isOpen &&
-            items.map((item, index) => (
-              <li
-                className={classNames(styles.item, {
-                  [styles.highlighted]: highlightedIndex === index,
-                })}
-                key={`${item}${index}`}
-                {...getItemProps({
-                  item,
-                  index,
-                })}
-              >
-                {item}
-              </li>
-            ))}
+          {isOpen && (
+            <>
+              {loading ? (
+                <div className={styles.loader}>
+                  <Loader size={26} />
+                </div>
+              ) : (
+                <>
+                  {items.map((item, index) => (
+                    <li
+                      className={classNames(styles.item, {
+                        [styles.highlighted]: highlightedIndex === index,
+                      })}
+                      key={`${item}${index}`}
+                      {...getItemProps({
+                        item,
+                        index,
+                      })}
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </>
+              )}
+            </>
+          )}
         </ul>,
         document.body
       )}
