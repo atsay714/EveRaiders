@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { getCurrentUser } from "../api/users";
 import Loader from "../components/Loader";
 import * as api from "../api/auth";
+import instance from "../api/base";
+import { history } from "../AppProviders";
 
 const AuthContext = React.createContext();
 
@@ -18,6 +20,24 @@ export const AuthProvider = (props) => {
 
     setToken(data);
   };
+
+  useEffect(() => {
+    instance.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (401 === error.response.status) {
+          setTokenLocalStorage();
+          setUser();
+          history.push({
+            pathname: "/login",
+            state: "You have been logged out",
+          });
+        } else {
+          return Promise.reject(error);
+        }
+      }
+    );
+  }, []);
 
   useEffect(() => {
     if (token) {
