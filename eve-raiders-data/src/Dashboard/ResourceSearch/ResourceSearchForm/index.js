@@ -36,7 +36,12 @@ const ResourceSearchForm = ({ handleSubmit, loading }) => {
     [regions]
   );
 
-  if (filtersLoading) return <Loader />;
+  if (filtersLoading)
+    return (
+      <div className={styles.loader}>
+        <Loader />
+      </div>
+    );
 
   return (
     <Formik

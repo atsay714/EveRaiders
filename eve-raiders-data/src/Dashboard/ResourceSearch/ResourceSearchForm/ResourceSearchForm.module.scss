@@ -22,6 +22,12 @@
   width: 200px;
 }
 
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media screen and (max-width: 755px) {
   .fields {
     flex-direction: column;

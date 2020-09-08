@@ -33,5 +33,15 @@ export default Routes;
 const RestrictedRoute = ({ children }) => {
   const { token } = useAuth();
 
-  return <Route>{token ? <Redirect to="/dashboard" /> : children}</Route>;
+  return (
+    <Route>
+      {(props) =>
+        token ? (
+          <Redirect to="/dashboard" />
+        ) : (
+          React.cloneElement(children, props)
+        )
+      }
+    </Route>
+  );
 };

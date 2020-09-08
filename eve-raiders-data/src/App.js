@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ModalProvider } from "./components/Modal";
 import { ReactQueryConfigProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query-devtools";
@@ -7,6 +7,7 @@ import { Router } from "react-router-dom";
 import Routes from "./Routes";
 import "./App.scss";
 import { AuthContext } from "./context/auth";
+import instance from "./api/base";
 
 const queryConfig = {
   refetchAllOnWindowFocus: true,
@@ -27,6 +28,23 @@ const App = () => {
 
     setToken(data);
   };
+
+  useEffect(() => {
+    instance.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (401 === error.response.status) {
+          setTokenLocalStorage();
+          history.push({
+            pathname: "/login",
+            state: "You have been logged out",
+          });
+        } else {
+          return Promise.reject(error);
+        }
+      }
+    );
+  }, []);
 
   return (
     <div className="App">
