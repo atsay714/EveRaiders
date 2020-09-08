@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useCombobox } from "downshift";
-import Loader from "../../Loader";
-import BaseInput from "../BaseInput";
+import Loader from "components/Loader";
+import BaseInput from "components/inputs/BaseInput";
 import classNames from "classnames";
 import styles from "./ComboBox.module.scss";
 import { MdExpandMore } from "react-icons/md";

@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import useUser from "../context/user";
-import useAuth from "../context/auth";
+import useUser from "context/user";
+import useAuth from "context/auth";
 import styles from "./AwaitingApproval.module.scss";
 
 const AwaitingApproval = () => {

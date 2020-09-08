@@ -1,11 +1,11 @@
 import React from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field, FieldArray } from "formik";
-import PageHeader from "../../../components/PageHeader";
-import Button from "../../../components/inputs/Button";
-import Input from "../../../components/inputs/Input";
+import PageHeader from "components/PageHeader";
+import Button from "components/inputs/Button";
+import Input from "components/inputs/Input";
 import { useQuery, useMutation, queryCache } from "react-query";
-import { getPrices, updatePrices } from "../../../api/admin";
+import { getPrices, updatePrices } from "api/admin";
 import styles from "./Prices.module.scss";
 
 const PricesSchema = Yup.object().shape({

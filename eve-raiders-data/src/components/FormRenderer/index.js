@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import classNames from "classnames";
-import Button from "../inputs/Button";
+import Button from "components/inputs/Button";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import RingLoader from "react-spinners/RingLoader";
 import inputTypes from "./inputTypes";

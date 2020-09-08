@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { register } from "../../api/auth";
-import Input from "../../components/inputs/Input";
-import Password from "../../components/inputs/Password";
-import Button from "../../components/inputs/Button";
+import { register } from "api/auth";
+import Input from "components/inputs/Input";
+import Password from "components/inputs/Password";
+import Button from "components/inputs/Button";
 import { Formik, Form, Field } from "formik";
 import { useHistory } from "react-router-dom";
 import { MdErrorOutline } from "react-icons/md";

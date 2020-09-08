@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
-import Input from "../../components/inputs/Input";
-import Button from "../../components/inputs/Button";
-import Password from "../../components/inputs/Password";
+import Input from "components/inputs/Input";
+import Button from "components/inputs/Button";
+import Password from "components/inputs/Password";
 import { Formik, Form, Field } from "formik";
 import { useHistory, useLocation, NavLink, Redirect } from "react-router-dom";
 import * as Yup from "yup";
 import { MdErrorOutline } from "react-icons/md";
-import useAuth from "../../context/auth";
+import useAuth from "context/auth";
 import styles from "./LoginForm.module.scss";
 
 const LoginForm = ({ onBack }) => {

@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import { GiStopSign } from "react-icons/gi";
-import Modal from "../../../../components/Modal";
+import Modal from "components/Modal";
 import GrandTotal from "../GrandTotal";
-import Table from "../../../../components/Table";
+import Table from "components/Table";
 import styles from "./ConfirmOreBuybackModal.module.scss";
 
 const ConfirmOreBuybackModal = ({ onSubmit, onClose, values }) => {

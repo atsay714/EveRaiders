@@ -3,9 +3,9 @@ import { Router } from "react-router-dom";
 import { ReactQueryConfigProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query-devtools";
 import { createBrowserHistory } from "history";
-import { AuthProvider } from "../context/auth";
-import { UserProvider } from "../context/user";
-import { ModalProvider } from "../components/Modal";
+import { AuthProvider } from "context/auth";
+import { UserProvider } from "context/user";
+import { ModalProvider } from "components/Modal";
 
 const queryConfig = {
   refetchAllOnWindowFocus: true,

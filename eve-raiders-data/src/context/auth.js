@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { getCurrentUser } from "../api/users";
-import Loader from "../components/Loader";
-import * as api from "../api/auth";
-import instance from "../api/base";
+import { getCurrentUser } from "api/users";
+import Loader from "components/Loader";
+import * as api from "api/auth";
+import instance from "api/base";
 import { history } from "../AppProviders";
 
 const AuthContext = React.createContext();

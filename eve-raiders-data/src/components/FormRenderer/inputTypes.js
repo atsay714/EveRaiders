@@ -1,6 +1,6 @@
-import Input from "../../components/inputs/Input";
-import ComboBox from "../inputs/ComboBox";
-import Select from "../inputs/Select";
+import Input from "components/inputs/Input";
+import ComboBox from "components/inputs/ComboBox";
+import Select from "components/inputs/Select";
 
 export default {
   select: Select,

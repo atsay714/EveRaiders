@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
-import Modal from "../../../../components/Modal";
-import Table from "../../../../components/Table";
+import Modal from "components/Modal";
+import Table from "components/Table";
 import GrandTotal from "../../OreBuybackForm/GrandTotal";
 import styles from "./BuybackModal.module.scss";
 

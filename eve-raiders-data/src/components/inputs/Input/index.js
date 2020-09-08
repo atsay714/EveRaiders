@@ -1,5 +1,5 @@
 import React from "react";
-import BaseInput from "../BaseInput";
+import BaseInput from "components/inputs/BaseInput";
 import styles from "./Input.module.scss";
 
 const Input = ({ className, label, error, ...inputProps }) => (

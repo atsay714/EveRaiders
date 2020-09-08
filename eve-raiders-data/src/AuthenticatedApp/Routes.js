@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { Switch, Route, useLocation } from "react-router-dom";
-import ErrorBoundary from "../components/ErrorBoundary";
-import useUser from "../context/user";
+import ErrorBoundary from "components/ErrorBoundary";
+import useUser from "context/user";
 
 const ResourceSearch = lazy(() => import("./ResourceSearch"));
 const PlanetSearch = lazy(() => import("./PlanetSearch"));
@@ -10,7 +10,7 @@ const Prices = lazy(() => import("./Admin/Prices"));
 const Users = lazy(() => import("./Admin/Users"));
 const OreBuybackList = lazy(() => import("./Admin/OreBuybackList"));
 const UserProfile = lazy(() => import("./UserProfile"));
-const AwaitingApproval = lazy(() => import("../AwaitingApproval"));
+const AwaitingApproval = lazy(() => import("./AwaitingApproval"));
 
 const Routes = () => {
   const location = useLocation();

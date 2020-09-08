@@ -1,9 +1,8 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import ResetPassword from "../ResetPassword";
-import ForgotPassword from "../ForgotPassword";
-import Login from "../Login";
-import AwaitingApproval from "../AwaitingApproval";
+import ResetPassword from "./ResetPassword";
+import ForgotPassword from "./ForgotPassword";
+import Login from "./Login";
 
 const Routes = () => (
   <Switch>

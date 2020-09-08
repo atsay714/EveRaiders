@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
-import Table from "../../../components/Table";
-import Button from "../../../components/inputs/Button";
-import PageHeader from "../../../components/PageHeader";
-import { getUsers, approveUser } from "../../../api/admin";
+import Table from "components/Table";
+import Button from "components/inputs/Button";
+import PageHeader from "components/PageHeader";
+import { getUsers, approveUser } from "api/admin";
 import { useQuery, useMutation, queryCache } from "react-query";
 import styles from "./Users.module.scss";
 

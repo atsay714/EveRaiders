@@ -1,11 +1,11 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import { getCurrentUser } from "../../api/users";
-import { testRoute } from "../../testUtils";
+import { getCurrentUser } from "api/users";
+import { testRoute } from "testUtils";
 import OreBuyback from "./";
 
-jest.mock("../../api/users", () => ({
+jest.mock("api/users", () => ({
   getCurrentUser: jest.fn(),
 }));
 

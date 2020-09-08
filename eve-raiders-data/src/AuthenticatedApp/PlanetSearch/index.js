@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from "react";
-import Table from "../../components/Table";
-import FormRenderer from "../../components/FormRenderer";
-import PageHeader from "../../components/PageHeader";
-import SlideDown from "../../components/SlideDown";
+import Table from "components/Table";
+import FormRenderer from "components/FormRenderer";
+import PageHeader from "components/PageHeader";
+import SlideDown from "components/SlideDown";
 import { getFilters, getPlanets } from "../../api";
 import { useQuery } from "react-query";
 import * as Yup from "yup";

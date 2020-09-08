@@ -1,4 +1,4 @@
-import instance from "../base";
+import instance from "api/base";
 
 export const buyback = async (resources) => {
   try {

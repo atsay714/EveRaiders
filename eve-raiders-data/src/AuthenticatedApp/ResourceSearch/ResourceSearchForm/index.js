@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
-import Button from "../../../components/inputs/Button";
-import Select from "../../../components/inputs/Select";
-import ComboBox from "../../../components/inputs/ComboBox";
-import Loader from "../../../components/Loader";
+import Button from "components/inputs/Button";
+import Select from "components/inputs/Select";
+import ComboBox from "components/inputs/ComboBox";
+import Loader from "components/Loader";
 import { useQuery } from "react-query";
 import { getFilters } from "../../../api";
 import styles from "./ResourceSearchForm.module.scss";

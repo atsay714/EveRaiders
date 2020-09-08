@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import BaseInput from "../BaseInput";
+import BaseInput from "components/inputs/BaseInput";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import styles from "./Password.module.scss";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { render, waitForElement, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-// import mockData from "../../mockData";
+// import mockData from "mockData";
 import Table from ".";
 
 let mockData = [];

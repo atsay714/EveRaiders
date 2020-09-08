@@ -1,11 +1,11 @@
 import React, { useState, useMemo, useContext, useRef, useEffect } from "react";
-import useCurrentUser from "../../../context/user";
-import Select from "../../../components/inputs/Select";
-import Table from "../../../components/Table";
+import useCurrentUser from "context/user";
+import Select from "components/inputs/Select";
+import Table from "components/Table";
 import BuybackModal from "./BuybackModal";
 import styles from "./OreBuybackTable.module.scss";
 import { queryCache } from "react-query";
-import { getResources } from "../../../api/resources";
+import { getResources } from "api/resources";
 
 const OreBuybackTable = ({ data = [], mutate, adminView }) => {
   useEffect(() => {

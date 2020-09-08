@@ -1,5 +1,5 @@
-import instance, { baseURL } from "../base";
-import { history } from "../../App";
+import instance, { baseURL } from "api/base";
+import { history } from "App";
 
 export const getCurrentUser = async () => {
   try {

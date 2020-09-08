@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "../../../components/Modal";
+import Modal from "components/Modal";
 import styles from "./AboutModal.module.scss";
 
 const AboutModal = ({ onClose }) => (

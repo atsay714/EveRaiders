@@ -3,13 +3,13 @@ import classNames from "classnames";
 import { GiMining } from "react-icons/gi";
 import { IoMdPlanet } from "react-icons/io";
 import { MdMenu } from "react-icons/md";
-import useClickAway from "../../hooks/useClickAway";
+import useClickAway from "hooks/useClickAway";
 import NavItem from "./NavItem";
 import Settings from "./Settings";
-import useAuth from "../../context/auth";
+import useAuth from "context/auth";
 import AboutModal from "./AboutModal";
 import styles from "./NavBar.module.scss";
-import useUser from "../../context/user";
+import useUser from "context/user";
 
 const navItems = [
   {

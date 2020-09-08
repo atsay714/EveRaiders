@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from "react";
-import Table from "../../components/Table";
+import Table from "components/Table";
 import ResourceSearchForm from "./ResourceSearchForm";
-import PageHeader from "../../components/PageHeader";
-import SlideDown from "../../components/SlideDown";
+import PageHeader from "components/PageHeader";
+import SlideDown from "components/SlideDown";
 import { getResources } from "../../api";
 import * as Yup from "yup";
 import styles from "./ResourceSearch.module.scss";

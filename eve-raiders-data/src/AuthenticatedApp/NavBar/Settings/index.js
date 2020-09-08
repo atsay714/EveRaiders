@@ -1,11 +1,11 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef } from "react";
 import AboutModal from "../AboutModal";
 import classNames from "classnames";
 import { FaEllipsisV } from "react-icons/fa";
-import useClickAway from "../../../hooks/useClickAway";
+import useClickAway from "hooks/useClickAway";
 import NavItem from "../NavItem";
-import useAuth from "../../../context/auth";
-import useCurrentUser from "../../../context/user";
+import useAuth from "context/auth";
+import useCurrentUser from "context/user";
 import styles from "./Settings.module.scss";
 import { useHistory } from "react-router-dom";
 

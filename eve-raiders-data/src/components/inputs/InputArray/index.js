@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import { MdAdd } from "react-icons/md";
 import { FaTrashAlt } from "react-icons/fa";
-import Button from "../Button";
+import Button from "components/inputs/Button";
 import styles from "./InputArray.module.scss";
 
 const InputArray = ({

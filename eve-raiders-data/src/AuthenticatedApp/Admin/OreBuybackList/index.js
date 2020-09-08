@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
-import PageHeader from "../../../components/PageHeader";
+import PageHeader from "components/PageHeader";
 import OreBuybackTable from "../../OreBuyback/OreBuybackTable";
-import { getOrders, updateStatus } from "../../../api/oreBuyback";
+import { getOrders, updateStatus } from "api/oreBuyback";
 import { useQuery, useMutation, queryCache } from "react-query";
 import styles from "./OreBuybackList.module.scss";
 

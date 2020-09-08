@@ -3,7 +3,7 @@ import { createMemoryHistory } from "history";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import AuthenticatedApp from ".";
-import { RoutesWithContext } from "../testUtils";
+import { RoutesWithContext } from "testUtils";
 
 // I don't know what these need to do anymore, now that routing has changed.
 // revist this as soon as possible

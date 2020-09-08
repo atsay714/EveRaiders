@@ -1,9 +1,9 @@
 import React from "react";
 import { Field, useFormikContext } from "formik";
 import { useQuery } from "react-query";
-import { getResources } from "../../../../api/resources";
-import Input from "../../../../components/inputs/Input";
-import ComboBox from "../../../../components/inputs/ComboBox";
+import { getResources } from "api/resources";
+import Input from "components/inputs/Input";
+import ComboBox from "components/inputs/ComboBox";
 import RowPrice from "./RowPrice";
 import styles from "./Record.module.scss";
 

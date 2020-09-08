@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field, FieldArray } from "formik";
-import PageHeader from "../../components/PageHeader";
-import Button from "../../components/inputs/Button";
-import Input from "../../components/inputs/Input";
-import InputArray from "../../components/inputs/InputArray";
-import Notification from "../../components/Notification";
+import PageHeader from "components/PageHeader";
+import Button from "components/inputs/Button";
+import Input from "components/inputs/Input";
+import InputArray from "components/inputs/InputArray";
+import Notification from "components/Notification";
 import { useQuery, useMutation, queryCache } from "react-query";
-import { getCurrentUser, updateCurrentUser } from "../../api/users";
+import { getCurrentUser, updateCurrentUser } from "api/users";
 import styles from "./UserProfile.module.scss";
 
 const UserProfileSchema = Yup.object().shape({

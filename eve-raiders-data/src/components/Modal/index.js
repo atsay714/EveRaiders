@@ -1,6 +1,6 @@
 import React, { useRef, useContext, useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import Button from "../inputs/Button";
+import Button from "components/inputs/Button";
 import styles from "./Modal.module.scss";
 
 const Context = React.createContext();

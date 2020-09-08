@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import ConfirmOreBuybackModal from "./ConfirmOreBuybackModal";
 import { Formik, Form, Field, FieldArray } from "formik";
-import Button from "../../../components/inputs/Button";
-import Select from "../../../components/inputs/Select";
-import InputArray from "../../../components/inputs/InputArray";
+import Button from "components/inputs/Button";
+import Select from "components/inputs/Select";
+import InputArray from "components/inputs/InputArray";
 import Record from "./Record";
 import GrandTotal from "./GrandTotal";
 import { useQuery } from "react-query";
-import { getCurrentUser } from "../../../api/users";
+import { getCurrentUser } from "api/users";
 import styles from "./OreBuybackForm.module.scss";
 
 const oreBuybackSchema = Yup.object().shape({

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelect } from "downshift";
-import BaseInput from "../BaseInput";
+import BaseInput from "components/inputs/BaseInput";
 import classNames from "classnames";
-import Loader from "../../../components/Loader";
+import Loader from "components/Loader";
 import { MdExpandMore } from "react-icons/md";
 import styles from "./Select.module.scss";
 import ReactDOM from "react-dom";

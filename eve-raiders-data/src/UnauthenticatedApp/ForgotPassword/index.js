@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { forgotPassword } from "../api/auth";
-import Input from "../components/inputs/Input";
-import Button from "../components/inputs/Button";
+import { forgotPassword } from "api/auth";
+import Input from "components/inputs/Input";
+import Button from "components/inputs/Button";
 import { Formik, Form, Field } from "formik";
 import { MdErrorOutline } from "react-icons/md";
 import * as Yup from "yup";

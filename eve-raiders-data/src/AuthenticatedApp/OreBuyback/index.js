@@ -1,15 +1,15 @@
 import React from "react";
 import { getFilters } from "../../api";
-import { buyback, getUserOrders } from "../../api/oreBuyback";
+import { buyback, getUserOrders } from "api/oreBuyback";
 import { useQuery, useMutation, queryCache } from "react-query";
 import styles from "./OreBuyback.module.scss";
 import OreBuybackForm from "./OreBuybackForm";
 import OreBuybackTable from "./OreBuybackTable";
-import PageHeader from "../../components/PageHeader";
-import SlideDown from "../../components/SlideDown";
-import Button from "../../components/inputs/Button";
+import PageHeader from "components/PageHeader";
+import SlideDown from "components/SlideDown";
+import Button from "components/inputs/Button";
 import { useHistory } from "react-router-dom";
-import { getCurrentUser } from "../../api/users";
+import { getCurrentUser } from "api/users";
 
 const OreBuyback = () => {
   const {

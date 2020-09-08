@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import { useQuery } from "react-query";
-import { getResources } from "../../../../api/resources";
+import { getResources } from "api/resources";
 import styles from "./GrandTotal.module.scss";
 
 const GrandTotal = ({ className, values }) => {

@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import { queryCache } from "react-query";
 import { ErrorBoundary as ReactErrorBoundary } from "react-error-boundary";
-import Button from "../inputs/Button";
+import Button from "components/inputs/Button";
 import styles from "./ErrorBoundary.module.scss";
 
 const ErrorBoundary = ({ className, children }) => (
