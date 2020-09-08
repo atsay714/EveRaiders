@@ -1,4 +1,8 @@
 describe("Login", () => {
+  beforeEach(() => {
+    cy.contains("Logout").click({ force: true });
+  });
+
   it("Shows login field validation", () => {
     cy.visit("http://localhost:3000/");
 

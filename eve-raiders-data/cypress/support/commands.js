@@ -32,3 +32,7 @@ Cypress.Commands.add("login", (type = "normal") => {
     window.localStorage.setItem("token", res.body.token);
   });
 });
+
+Cypress.Commands.add("logout", () => {
+  window.localStorage.setItem("token", undefined);
+});
