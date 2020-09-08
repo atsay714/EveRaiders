@@ -9,7 +9,7 @@ import Settings from "./Settings";
 import useAuth from "../../context/auth";
 import AboutModal from "./AboutModal";
 import styles from "./NavBar.module.scss";
-import useCurrentUser from "../../context/user";
+import useUser from "../../context/user";
 
 const navItems = [
   {
@@ -33,9 +33,9 @@ const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const ref = useRef();
-  const { setToken } = useAuth();
+  const { logout } = useAuth();
 
-  const user = useCurrentUser();
+  const user = useUser();
 
   useClickAway(ref, () => isOpen && setIsOpen(false));
 
@@ -91,7 +91,7 @@ const NavBar = () => {
         </div>
         <div
           onClick={() => {
-            setToken();
+            logout();
           }}
         >
           <NavItem label={"Logout"} />

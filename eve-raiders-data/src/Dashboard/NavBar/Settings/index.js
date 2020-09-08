@@ -15,7 +15,7 @@ const Settings = () => {
   const ref = useRef();
 
   const user = useCurrentUser();
-  const { setToken } = useAuth();
+  const { logout } = useAuth();
 
   const history = useHistory();
 
@@ -51,7 +51,7 @@ const Settings = () => {
         </div>
         <div
           onClick={() => {
-            setToken();
+            logout();
           }}
         >
           <NavItem label={"Logout"} />

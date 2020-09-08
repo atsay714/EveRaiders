@@ -6,7 +6,7 @@ export const getCurrentUser = async () => {
     const res = await instance.get("/api/users/profile");
     return res?.data;
   } catch (e) {
-    return [];
+    return undefined;
   }
 };
 

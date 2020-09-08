@@ -37,7 +37,14 @@ export const RoutesWithContext = ({
       <UserContext.Provider value={loggedOut ? undefined : users[user]}>
         <AuthContext.Provider
           value={
-            loggedOut ? { token: undefined } : { token, setToken: () => {} }
+            loggedOut
+              ? { token: undefined }
+              : {
+                  data: token,
+                  login: () => {},
+                  register: () => {},
+                  logout: () => {},
+                }
           }
         >
           <Routes />

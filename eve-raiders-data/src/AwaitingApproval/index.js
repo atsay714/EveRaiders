@@ -1,16 +1,11 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import useCurrentUser from "../context/user";
+import useUser from "../context/user";
 import useAuth from "../context/auth";
 import styles from "./AwaitingApproval.module.scss";
 
 const AwaitingApproval = () => {
-  const user = useCurrentUser();
-  const { token } = useAuth();
-
-  if (user?.approved || !token) {
-    return <Redirect to="/" />;
-  }
+  const user = useUser();
 
   return (
     <div className={styles.awaitingApproval}>

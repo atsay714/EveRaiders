@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import { login } from "../../api/auth";
 import Input from "../../components/inputs/Input";
 import Button from "../../components/inputs/Button";
 import Password from "../../components/inputs/Password";
@@ -11,21 +10,17 @@ import useAuth from "../../context/auth";
 import styles from "./LoginForm.module.scss";
 
 const LoginForm = ({ onBack }) => {
-  const [isLoggedIn, setLoggedIn] = useState(false);
-
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState();
 
-  const { setToken } = useAuth();
+  const { login } = useAuth();
 
   let handleLogin = async ({ username, password }) => {
     setLoading(true);
-    const { success, error, data } = await login({ username, password });
+    const { success, error } = await login({ username, password });
     setLoading(false);
 
     if (success) {
-      setToken(data);
-      setLoggedIn(true);
     } else if (error) {
       setLoginError(error);
     } else {
@@ -37,10 +32,6 @@ const LoginForm = ({ onBack }) => {
     username: Yup.string().required("Username is required"),
     password: Yup.string().required("Password is required"),
   });
-
-  if (isLoggedIn) {
-    return <Redirect to="/dashboard/resource-search" />;
-  }
 
   return (
     <Formik

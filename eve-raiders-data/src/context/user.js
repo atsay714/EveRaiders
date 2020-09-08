@@ -1,7 +1,14 @@
-import { createContext, useContext } from "react";
+import React, { createContext, useContext } from "react";
+import useAuth from "./auth";
 
-export const UserContext = createContext();
+const UserContext = createContext();
 
-const useCurrentUser = () => useContext(UserContext);
+export const UserProvider = (props) => {
+  const { data } = useAuth();
 
-export default useCurrentUser;
+  return <UserContext.Provider value={data?.user} {...props} />;
+};
+
+const useUser = () => useContext(UserContext);
+
+export default useUser;
