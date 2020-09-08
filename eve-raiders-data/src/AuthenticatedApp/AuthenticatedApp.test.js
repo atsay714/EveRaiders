@@ -2,7 +2,7 @@ import React from "react";
 import { createMemoryHistory } from "history";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import Dashboard from "./";
+import AuthenticatedApp from ".";
 import { RoutesWithContext } from "../testUtils";
 
 // I don't know what these need to do anymore, now that routing has changed.
@@ -12,20 +12,20 @@ test.skip("Default route", async () => {
 
   render(
     <RoutesWithContext history={history} token={null}>
-      <Dashboard />
+      <AuthenticatedApp />
     </RoutesWithContext>
   );
 
   expect(await screen.findByText("Raiders EVE Echoes Tools"));
 });
 
-test.skip("Route - /dashboard/awaiting-approval", async () => {
+test.skip("Route - /awaiting-approval", async () => {
   const history = createMemoryHistory();
-  history.push("/dashboard/awaiting-approval");
+  history.push("/awaiting-approval");
 
   render(
     <RoutesWithContext history={history}>
-      <Dashboard />
+      <AuthenticatedApp />
     </RoutesWithContext>
   );
   expect(await screen.findByText("Account is currently awaiting approval."));

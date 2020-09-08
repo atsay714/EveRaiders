@@ -5,6 +5,6 @@ import { testRoute } from "../../testUtils";
 import ResourceSearch from "./";
 
 testRoute({
-  route: "/dashboard/resource-search",
+  route: "/resource-search",
   loggedInText: "Find Resources",
 });

@@ -13,17 +13,17 @@ import useUser from "../../context/user";
 
 const navItems = [
   {
-    path: "/dashboard/resource-search",
+    path: "/resource-search",
     label: "Resource Search",
     logo: GiMining,
   },
   {
-    path: "/dashboard/planet-search",
+    path: "/planet-search",
     label: "Planet Search",
     logo: IoMdPlanet,
   },
   {
-    path: "/dashboard/ore-buyback",
+    path: "/ore-buyback",
     label: "Ore Buyback",
     logo: GiMining,
   },
@@ -75,19 +75,16 @@ const NavBar = () => {
           ))}
         {user?.superAdmin && (
           <>
-            <NavItem label={"User Admin"} path={"/dashboard/admin/users"} />
-            <NavItem
-              label={"Ore Buyback Admin"}
-              path={"/dashboard/admin/ore-buyback"}
-            />
-            <NavItem label={"Prices"} path={"/dashboard/admin/prices"} />
+            <NavItem label={"User Admin"} path={"/admin/users"} />
+            <NavItem label={"Ore Buyback Admin"} path={"/admin/ore-buyback"} />
+            <NavItem label={"Prices"} path={"/admin/prices"} />
           </>
         )}
         <div onClick={() => setIsModalOpen(true)}>
           <NavItem label={"About"} />
         </div>
         <div>
-          <NavItem label={"User Profile"} path={"/dashboard/user-profile"} />
+          <NavItem label={"User Profile"} path={"/user-profile"} />
         </div>
         <div
           onClick={() => {

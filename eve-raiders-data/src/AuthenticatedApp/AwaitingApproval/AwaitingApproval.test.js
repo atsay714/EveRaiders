@@ -5,7 +5,7 @@ import AwaitingApproval from "./";
 import { testRoute } from "../testUtils";
 
 testRoute({
-  route: "/dashboard/awaiting-approval",
+  route: "/awaiting-approval",
   loggedInText: "Account is currently awaiting approval.",
   approved: false,
 });

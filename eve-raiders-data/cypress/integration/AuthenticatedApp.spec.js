@@ -1,4 +1,4 @@
-describe("Dashboard", () => {
+describe("AuthenticatedApp", () => {
   afterEach(() => {
     cy.contains("Logout").click({ force: true });
   });

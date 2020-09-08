@@ -56,9 +56,7 @@ const OreBuyback = () => {
   if (currentUser?.pilotNames?.length === 0)
     return (
       <div className={styles.noPilotNames}>
-        <Button onClick={() => history.push("/dashboard/user-profile")}>
-          Add
-        </Button>
+        <Button onClick={() => history.push("/user-profile")}>Add</Button>
         pilot names to your profile before using this tool.
       </div>
     );

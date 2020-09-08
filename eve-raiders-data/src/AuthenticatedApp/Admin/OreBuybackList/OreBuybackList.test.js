@@ -5,6 +5,6 @@ import { testRoute } from "../../../testUtils";
 import OreBuybackList from "./";
 
 testRoute({
-  route: "/dashboard/admin/ore-buyback",
+  route: "/admin/ore-buyback",
   loggedInText: "Ore Buyback Administration",
 });

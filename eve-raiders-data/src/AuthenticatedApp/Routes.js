@@ -25,22 +25,22 @@ const Routes = () => {
               <AwaitingApproval />
             </Route>
           )}
-          <Route path="/dashboard/planet-search">
+          <Route path="/planet-search">
             <PlanetSearch />
           </Route>
-          <Route path="/dashboard/ore-buyback">
+          <Route path="/ore-buyback">
             <OreBuyback />
           </Route>
-          <Route path="/dashboard/admin/users">
+          <Route path="/admin/users">
             <Users />
           </Route>
-          <Route path="/dashboard/admin/ore-buyback">
+          <Route path="/admin/ore-buyback">
             <OreBuybackList />
           </Route>
-          <Route path="/dashboard/admin/prices">
+          <Route path="/admin/prices">
             <Prices />
           </Route>
-          <Route path="/dashboard/user-profile">
+          <Route path="/user-profile">
             <UserProfile />
           </Route>
           <Route path={"*"}>

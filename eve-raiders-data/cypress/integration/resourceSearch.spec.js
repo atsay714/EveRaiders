@@ -1,6 +1,6 @@
 beforeEach(() => {
   cy.login();
-  cy.visit("http://localhost:3000/dashboard/resource-search");
+  cy.visit("http://localhost:3000/resource-search");
 });
 
 describe("Resource Search", () => {

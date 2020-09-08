@@ -10,7 +10,7 @@ jest.mock("../../api/users", () => ({
 }));
 
 testRoute({
-  route: "/dashboard/ore-buyback",
+  route: "/ore-buyback",
   loggedInText: "Ore Buyback",
 });
 
