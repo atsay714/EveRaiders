@@ -62,7 +62,7 @@ const ResourceSearchForm = ({ handleSubmit, loading }) => {
                   className={styles.field}
                   label="Resource"
                   placeholder="resource"
-                  items={resourceNameOptions}
+                  items={resourceNameOptions.sort()}
                   {...field}
                   onChange={(value) => setFieldValue("resourceName", value)}
                   error={touched["resourceName"] && errors["resourceName"]}
@@ -88,7 +88,7 @@ const ResourceSearchForm = ({ handleSubmit, loading }) => {
                   className={styles.field}
                   label="Region"
                   placeholder="region"
-                  items={regions}
+                  items={regions.sort((a, b) => a.name.localeCompare(b.name))}
                   itemToString={(item) => item?.name ?? ""}
                   {...field}
                   onChange={(value) => setFieldValue("region", value)}

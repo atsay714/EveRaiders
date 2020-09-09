@@ -11,7 +11,7 @@ const Record = ({ index }) => {
   const {
     loading: resourcesLoading,
     error: resourcesError,
-    data: resourcesData,
+    data: resourcesData = [],
   } = useQuery("resources", getResources);
 
   const { values, touched, errors, setFieldValue } = useFormikContext();
@@ -24,7 +24,7 @@ const Record = ({ index }) => {
             className={styles.resourceField}
             label="Resource"
             placeholder="resource"
-            items={resourcesData}
+            items={resourcesData.sort((a, b) => a.name.localeCompare(b.name))}
             itemToString={(item) => item?.name ?? ""}
             {...field}
             value={values["resources"]?.[index]?.["resource"] || ""}
