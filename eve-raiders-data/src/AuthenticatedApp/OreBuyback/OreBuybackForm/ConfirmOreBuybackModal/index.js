@@ -34,7 +34,9 @@ const ConfirmOreBuybackModal = ({ onSubmit, onClose, values }) => {
         <GiStopSign className={styles.stopIcon} size={60} />
         <h3>Have you created a contract yet?</h3>
       </header>
-      <p>Before continuing, make a contract for buyback in N-DQ to: TBNRregs</p>
+      <p>
+        Before continuing, make a contract for buyback in CZDJ-1 to: TBNRregs
+      </p>
       <div className={styles.table}>
         <Table data={values.resources} columns={columns} />
       </div>
