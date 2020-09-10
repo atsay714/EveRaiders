@@ -48,6 +48,7 @@ const Record = ({ index }) => {
             type={"number"}
             {...field}
             value={values["resources"]?.[index]?.["quantity"] || ""}
+            onFocus={(e) => e.currentTarget.select()}
             onChange={(e) =>
               setFieldValue(
                 `resources[${index}].quantity`,
