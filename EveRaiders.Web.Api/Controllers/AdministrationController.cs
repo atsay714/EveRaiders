@@ -71,13 +71,13 @@ namespace EveRaiders.Web.Api.Controllers
 
         [HttpPost]
         [Route("approve")]
-        public async Task<IActionResult> Approve(string userName)
+        public async Task<IActionResult> Approve(string userName, bool approve)
         {
             var user = await _userManager.FindByNameAsync(userName);
             if (user == null)
                 return NotFound();
 
-            user.Approved = true;
+            user.Approved = approve;
 
             var result = await _userManager.UpdateAsync(user);
 

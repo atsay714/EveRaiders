@@ -35,7 +35,7 @@ const Button = ({
         className={styles.loader}
         style={{
           position: "absolute",
-          top: 10,
+          top: "calc(50% - 10px)",
           left: "calc(50% - 10px)",
         }}
       >

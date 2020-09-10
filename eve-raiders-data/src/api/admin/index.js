@@ -9,10 +9,10 @@ export const getUsers = async () => {
   }
 };
 
-export const approveUser = async (userName) => {
+export const approveUser = async ({ userName, approve }) => {
   try {
     const res = await instance.post("/api/administration/approve", null, {
-      params: { userName },
+      params: { userName, approve },
     });
     return res.data;
   } catch (e) {
