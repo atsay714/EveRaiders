@@ -346,6 +346,71 @@ namespace EveRaiders.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ParticipationTokenTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TokenName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TokenDescription = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Score = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ParticipationTokenTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ParticipationTokens",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TinyTokenId = table.Column<string>(type: "nvarchar(10)", nullable: false),
+                    ParticipationTokenTypeId = table.Column<int>(type: "int", nullable: false),
+                    UsesRemaining = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime", nullable: false),
+                    ExpirationDate = table.Column<DateTime>(type: "datetime", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ParticipationTokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ParticipationTokens_ParticipationTokenTypes",
+                        column: x => x.ParticipationTokenTypeId,
+                        principalTable: "ParticipationTokenTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Participation",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ParticipationTokenId = table.Column<long>(type: "bigint", nullable: false),
+                    DateClaimed = table.Column<DateTime>(type: "datetime", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Participation", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Participation_AspNetUsers",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Participation_ParticipationTokens",
+                        column: x => x.ParticipationTokenId,
+                        principalTable: "ParticipationTokens",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Resources",
                 columns: new[] { "Id", "Name", "Price" },

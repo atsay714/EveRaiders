@@ -162,6 +162,7 @@ namespace EveRaiders.Web.Api
 
 
             services.AddScoped<CorporationServices>();
+            services.AddScoped<ParticipationServices>();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers().AddJsonOptions(options =>
                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
