@@ -60,6 +60,14 @@ namespace EveRaiders.Web.Api.Automapper
                         Quantity = s.Quantity,
                         Price = (int)Math.Round(s.Resource.Price * ((float)(100 - s.Resource.Tax) / 100), 0)
                     })));
+
+            CreateMap<ParticipationTokens, ParticipationTokensViewModel>()
+                .ForMember(src => src.ParticipationTokenTypeId, opt => opt.MapFrom(dest => dest.ParticipationTokenTypeId))
+                .ForMember(src => src.TinyTokenId, opt => opt.MapFrom(dest => dest.TinyTokenId))
+                .ForMember(src => src.ExpirationDate, opt => opt.MapFrom(dest => dest.ExpirationDate))
+                .ForMember(src => src.UsesRemaining, opt => opt.MapFrom(dest => dest.UsesRemaining))
+                .ForMember(src => src.DateCreated, opt => opt.MapFrom(dest => dest.DateCreated))
+                .ForMember(src => src.Id, opt => opt.MapFrom(dest => dest.Id));
         }
     }
 }
