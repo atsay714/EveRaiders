@@ -4,6 +4,23 @@
   align-items: center;
   height: 100%;
 
+  .content {
+    display: flex;
+  }
+
+  .efficiencyDesktop {
+    width: 50%;
+    margin-right: 40px;
+  }
+
+  .efficiencyMobile {
+    display: none;
+  }
+
+  .buyback {
+    margin-top: 58px;
+  }
+
   .results {
     height: 100%;
     width: 100%;
@@ -23,5 +40,24 @@
   button {
     width: 50px;
     margin-right: 10px;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .content {
+    flex-direction: column;
+    align-items: center;
+
+    .buyback {
+      margin-top: 20px;
+    }
+
+    .efficiencyDesktop {
+      display: none;
+    }
+
+    .efficiencyMobile {
+      display: block;
+    }
   }
 }

@@ -10,6 +10,7 @@ import useAuth from "context/auth";
 import AboutModal from "./AboutModal";
 import styles from "./NavBar.module.scss";
 import useUser from "context/user";
+import { NavLink } from "react-router-dom";
 
 const navItems = [
   {
@@ -41,11 +42,13 @@ const NavBar = () => {
 
   return (
     <div ref={ref} className={styles.navBar}>
-      <img
-        className={styles.logo}
-        src={`${process.env.PUBLIC_URL}/logo.png`}
-        alt="raiders logo"
-      />
+      <NavLink to={"/overview"}>
+        <img
+          className={styles.logo}
+          src={`${process.env.PUBLIC_URL}/logo.png`}
+          alt="raiders logo"
+        />
+      </NavLink>
       <div className={styles.navItems}>
         {navItems
           .filter(

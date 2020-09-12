@@ -8,8 +8,10 @@ import { UserProvider } from "context/user";
 import { ModalProvider } from "components/Modal";
 
 const queryConfig = {
-  refetchAllOnWindowFocus: true,
-  staleTime: 60000,
+  queries: {
+    refetchAllOnWindowFocus: false,
+    staleTime: Infinity,
+  },
 };
 
 export const history = createBrowserHistory();

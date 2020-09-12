@@ -1,9 +1,9 @@
 .form {
   display: flex;
   flex-direction: column;
-  max-width: 672px;
   margin: 0 auto;
   align-items: center;
+  max-height: 359px;
 }
 
 .submitRow {
@@ -46,7 +46,6 @@
 }
 
 .resources {
-  max-height: 50vh;
   margin-bottom: 10px;
   padding: 0 5px 5px;
 }

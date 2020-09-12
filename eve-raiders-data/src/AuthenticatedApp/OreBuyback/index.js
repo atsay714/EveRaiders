@@ -5,6 +5,8 @@ import { useQuery, useMutation, queryCache } from "react-query";
 import styles from "./OreBuyback.module.scss";
 import OreBuybackForm from "./OreBuybackForm";
 import OreBuybackTable from "./OreBuybackTable";
+import MiningIskEfficiency from "./MiningIskEfficiency";
+import Sidebar from "./Sidebar";
 import PageHeader from "components/PageHeader";
 import SlideDown from "components/SlideDown";
 import Button from "components/inputs/Button";
@@ -64,16 +66,28 @@ const OreBuyback = () => {
   return (
     <div className={styles.oreBuyback}>
       <PageHeader>Ore Buyback</PageHeader>
-      <SlideDown>
-        <OreBuybackForm handleSubmit={mutate} />
-      </SlideDown>
-      <div className={styles.results}>
-        {error && (
-          <div className={styles.error}>
-            An error occured. Please try again.
+      <div className={styles.content}>
+        <div className={styles.efficiencyDesktop}>
+          <MiningIskEfficiency />
+        </div>
+        <div className={styles.efficiencyMobile}>
+          <Sidebar>
+            <MiningIskEfficiency />
+          </Sidebar>
+        </div>
+        <div className={styles.buyback}>
+          <SlideDown>
+            <OreBuybackForm handleSubmit={mutate} />
+          </SlideDown>
+          <div className={styles.results}>
+            {error && (
+              <div className={styles.error}>
+                An error occured. Please try again.
+              </div>
+            )}
+            <OreBuybackTable data={data} />
           </div>
-        )}
-        <OreBuybackTable data={data} />
+        </div>
       </div>
     </div>
   );
