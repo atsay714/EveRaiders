@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using EveRaiders.Data;
-using EveRaiders.Data.Authentication;
-using EveRaiders.Data.Enums;
 using EveRaiders.Data.Models;
+using HashidsNet;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace EveRaiders.Services
 {
@@ -20,20 +18,20 @@ namespace EveRaiders.Services
             _db = db;
         }
 
-        public async Task<Participation> CreateRedeemParticipationTokenRequest(string tinyTokenId, string userId)
+        public async Task<Participation> CreateRedeemParticipationToken(string tinyTokenId, string userId)
         {
-            //Uhhh, this may be dumb. But unavoidable if we're using human readable tokens that are likely to collide. We'll just grab the latest created one...?
-            var listOfMatchingTokens = await _db.ParticipationTokens
-                .Where(s => s.TinyTokenId == tinyTokenId)
-                .OrderByDescending(x => x.DateCreated)
-                .ToListAsync();
+            var token = await _db.ParticipationTokens
+                .FirstOrDefaultAsync(s => s.TinyTokenId == tinyTokenId);
 
-            if (!listOfMatchingTokens.Any())
+            if (token == null)
             {
-                //exit somehow
+                throw new NoMatchFoundException("Invalid Token");
             }
 
-            var token = listOfMatchingTokens.FirstOrDefault();
+            if(DateTime.Compare(token.ExpirationDate, DateTime.UtcNow) < 0)
+            {
+                throw new SecurityTokenExpiredException("Token is expired");
+            }
 
             var participation = new Participation()
             {
@@ -41,8 +39,8 @@ namespace EveRaiders.Services
                 UserId = userId
             };
 
-            //Add new token entry
-            var addedParticipationToken = await _db.Participation.AddAsync(participation);
+            //Add new participation entry
+            await _db.Participation.AddAsync(participation);
 
             //Get the token
             var participationToken = await _db.ParticipationTokens.FirstOrDefaultAsync(s => s.Id == token.Id);
@@ -55,18 +53,23 @@ namespace EveRaiders.Services
             return participation;
         }
 
-        //public async Task<BuybackRequest> UpdatBuyBackRequestStatus(int buyBackId, RequestStatus status)
-        //{
-        //    var request = await _db.BuyBackRequests.FirstOrDefaultAsync(s => s.Id == buyBackId);
+        public async Task<ParticipationTokens> CreateGetToken(ParticipationTokens token, int length)
+        {
+            var addedToken = await _db.ParticipationTokens.AddAsync(token);
 
-        //    if (request == null)
-        //        return null;
+            await _db.SaveChangesAsync();
 
-        //    request.Status = status;
+            var hashIds = new Hashids("really cool raiders salt", length, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+            var tinyToken = hashIds.Encode(Convert.ToInt32(addedToken.Entity.Id));
+            var numbers = hashIds.Decode(tinyToken);
 
-        //    await _db.SaveChangesAsync();
+            var participationToken = await _db.ParticipationTokens.FirstOrDefaultAsync(s => s.Id == addedToken.Entity.Id);
+            participationToken.TinyTokenId = tinyToken;
 
-        //    return request;
-        //}
+            await _db.SaveChangesAsync();
+
+            return participationToken;
+
+        }
     }
 }

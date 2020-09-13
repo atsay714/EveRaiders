@@ -10,10 +10,13 @@ using EveRaiders.Data.Models;
 using EveRaiders.Services;
 using EveRaiders.Web.Api.ViewModels;
 using EveRaiders.Web.Api.ViewModels.Authentication;
+using HashidsNet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace EveRaiders.Web.Api.Controllers
@@ -43,41 +46,43 @@ namespace EveRaiders.Web.Api.Controllers
         public async Task<IActionResult> RedeemParticipationTokenRequest(string TinyTokenId)
         {
             var user = await _userManager.FindByNameAsync("atsay714");
+            string error = "";
+            try
+            {
+                var redeemedToken = await _participationServices.CreateRedeemParticipationToken(TinyTokenId, user.Id);
+            }
+            catch(Exception e)
+            {
+                error = e.Message;
+            }
 
-            var redeemedToken = await _participationServices.CreateRedeemParticipationTokenRequest(TinyTokenId, user.Id);
-
-
-            //Return a total for the user. We can either a history of their tokens, or just a total amount.
-            return Ok(5);
+            //Return a total for the user. We can return either a history of their tokens, or just a total amount.
+            return Ok(error);
         }
 
         [HttpGet("token")]
         public async Task<IActionResult> GetToken(int numberOfUses, int tokenType, int? tokenLength = null, DateTime? expiration = null)
         {
             //Default length to 5
-            int length = 5;
-
-            //Get Human Readable token of length
-            var tinyToken = Utils.ParticipationTokenUtils.GenerateUniqueHumanReadableToken(tokenLength ?? length);
+            int length = tokenLength ?? 5;
 
             //Creates participation token for users to use
             var token = new ParticipationTokens()
             {
-                TinyTokenId = tinyToken,
+                TinyTokenId = "",
                 UsesRemaining = numberOfUses,
                 ParticipationTokenTypeId = tokenType,
                 ExpirationDate = expiration ?? DateTime.UtcNow.AddMinutes(15) //if expiration is null, default it to 15 minutes
 
             };
 
-            var newToken = await _db.ParticipationTokens.AddAsync(token);
-            await _db.SaveChangesAsync();
+            var createdToken = await _participationServices.CreateGetToken(token, length);
 
-            return Ok(tinyToken);
-            //var resources = await _db.Resources.ToListAsync();
-
-            //var mappedResources = _mapper.Map<List<ResourceViewModel>>(resources);
-            //return Ok(mappedResources);
+            return Ok(createdToken.TinyTokenId);
+        }
+        public class MyTempTable
+        {
+            public int Id { get; set; }
         }
     }
 }
