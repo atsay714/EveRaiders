@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using EveRaiders.Data.Enums;
 
 namespace EveRaiders.Web.Api.ViewModels
 {
@@ -14,6 +15,7 @@ namespace EveRaiders.Web.Api.ViewModels
 
         [Required]
         public int PilotNameId { get; set; }
+        public TransactionTypes TransactionType { get; set; }
     }
 
     public class BuybackOrRequestResourceQuantityViewModel

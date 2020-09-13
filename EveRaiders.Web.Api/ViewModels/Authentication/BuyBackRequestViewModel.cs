@@ -14,5 +14,6 @@ namespace EveRaiders.Web.Api.ViewModels.Authentication
         public int Total { get; set; }
         public List<ResourceViewModel> Resources { get; set; }
         public string Pilot { get; set; }
+        public TransactionTypes TransactionType { get; set; }
     }
 }

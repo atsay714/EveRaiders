@@ -44,7 +44,7 @@ namespace EveRaiders.Web.Api.Controllers
         {
             var resources = _mapper.Map<List<ResourceOrder>>(model.Resources);
 
-            var savedOrder = await _corporationServices.CreateBuyBackRequest(resources, model.PilotNameId);
+            var savedOrder = await _corporationServices.CreateBuyBackRequest(resources, model.PilotNameId, model.TransactionType);
 
             return Ok(_mapper.Map<BuyBackRequestViewModel>(savedOrder));
         }
