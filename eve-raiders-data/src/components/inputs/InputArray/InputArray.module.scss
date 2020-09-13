@@ -14,6 +14,10 @@
   width: 100%;
 }
 
+.add {
+  flex: 1 0 auto;
+}
+
 .remove {
   visibility: hidden;
   width: auto;
@@ -24,6 +28,7 @@
   cursor: pointer;
   color: var(--color-red);
   padding: 2px 1px;
+  margin-right: 10px;
 
   &:hover {
     color: var(--color-red-lighter);
