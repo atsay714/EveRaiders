@@ -10,14 +10,29 @@
   flex-direction: column;
   max-width: 672px;
   margin: 0 auto;
-  width: 210px;
+}
+
+.fields {
+  display: flex;
 }
 
 .field {
   margin: 10px;
 }
 
+.account,
+.pilotNames {
+  width: 250px;
+  margin: 0 5px;
+  display: flex;
+  flex-direction: column;
+}
+
 @media screen and (max-width: 672px) {
+  .fields {
+    flex-direction: column;
+  }
+
   .submitBtn {
     width: calc(100% - 24px);
   }
@@ -47,8 +62,4 @@
 
 .add {
   margin: 0 auto;
-}
-
-.pilotNames {
-  max-height: 50vh;
 }

@@ -4,9 +4,10 @@ import { Formik, Form, Field, FieldArray } from "formik";
 import PageHeader from "components/PageHeader";
 import Button from "components/inputs/Button";
 import Input from "components/inputs/Input";
-import InputArray from "components/inputs/InputArray";
+import Fieldset from "components/inputs/Fieldset";
 import Notification from "components/Notification";
-import { useQuery, useMutation, queryCache } from "react-query";
+import PilotNames from "./PilotNames";
+import { useQuery } from "react-query";
 import { getCurrentUser, updateCurrentUser } from "api/users";
 import styles from "./UserProfile.module.scss";
 
@@ -74,60 +75,38 @@ const UserProfile = () => {
             isSubmitting,
           }) => (
             <Form className={styles.form} onChange={setResults}>
-              <Field name={"username"}>
-                {({ field }) => (
-                  <Input
-                    className={styles.field}
-                    label={"username"}
-                    {...field}
-                    error={touched["username"] && errors["username"]}
-                    readOnly={"readonly"}
-                  />
-                )}
-              </Field>
-              <Field name={"discordUser"}>
-                {({ field }) => (
-                  <Input
-                    className={styles.field}
-                    label={"Discord User"}
-                    {...field}
-                    error={touched["discordUser"] && errors["discordUser"]}
-                  />
-                )}
-              </Field>
-              <FieldArray name={"pilotNames"}>
-                {(arrayHelpers) => (
-                  <InputArray
-                    className={styles.pilotNames}
-                    btnLabel={"Add a pilot name"}
-                    handleRemove={(i) => arrayHelpers.remove(i)}
-                    handleAdd={() => arrayHelpers.push("")}
-                  >
-                    {values.pilotNames.map((value, index) => (
-                      <Field key={index} name={"pilotName"}>
-                        {({ field }) => (
-                          <Input
-                            label="Pilot Name"
-                            placeholder="name"
-                            className={styles.field}
-                            {...field}
-                            value={values["pilotNames"]?.[index].name || ""}
-                            onChange={(e) =>
-                              setFieldValue(`pilotNames[${index}]`, {
-                                ...values["pilotNames"]?.[index],
-                                name: e.currentTarget.value,
-                              })
-                            }
-                            error={errors["pilotNames"]?.[index]}
-                            readOnly={value.saved}
-                          />
-                        )}
-                      </Field>
-                    ))}
-                  </InputArray>
-                )}
-              </FieldArray>
-
+              <div className={styles.fields}>
+                <div className={styles.account}>
+                  <Fieldset label={"Account"}>
+                    <Field name={"username"}>
+                      {({ field }) => (
+                        <Input
+                          className={styles.field}
+                          label={"username"}
+                          {...field}
+                          error={touched["username"] && errors["username"]}
+                          readOnly={"readonly"}
+                        />
+                      )}
+                    </Field>
+                    <Field name={"discordUser"}>
+                      {({ field }) => (
+                        <Input
+                          className={styles.field}
+                          label={"Discord User"}
+                          {...field}
+                          error={
+                            touched["discordUser"] && errors["discordUser"]
+                          }
+                        />
+                      )}
+                    </Field>
+                  </Fieldset>
+                </div>
+                <div className={styles.pilotNames}>
+                  <PilotNames />
+                </div>
+              </div>
               <Button
                 className={styles.submitBtn}
                 type="submit"
