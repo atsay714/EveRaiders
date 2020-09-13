@@ -8,7 +8,7 @@ namespace EveRaiders.Data.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_BuyBackRequests_AspNetUsers_UserId",
-                table: "BuyBackRequests");
+                table: "BuySellRequests");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_ReprocessingRequests_AspNetUsers_UserId",
@@ -20,7 +20,7 @@ namespace EveRaiders.Data.Migrations
 
             migrationBuilder.DropIndex(
                 name: "IX_BuyBackRequests_UserId",
-                table: "BuyBackRequests");
+                table: "BuySellRequests");
 
             migrationBuilder.DropColumn(
                 name: "UserId",
@@ -28,7 +28,7 @@ namespace EveRaiders.Data.Migrations
 
             migrationBuilder.DropColumn(
                 name: "UserId",
-                table: "BuyBackRequests");
+                table: "BuySellRequests");
 
             migrationBuilder.AddColumn<int>(
                 name: "PilotId",
@@ -38,7 +38,7 @@ namespace EveRaiders.Data.Migrations
 
             migrationBuilder.AddColumn<int>(
                 name: "PilotId",
-                table: "BuyBackRequests",
+                table: "BuySellRequests",
                 type: "int",
                 nullable: true);
 
@@ -49,12 +49,12 @@ namespace EveRaiders.Data.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_BuyBackRequests_PilotId",
-                table: "BuyBackRequests",
+                table: "BuySellRequests",
                 column: "PilotId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_BuyBackRequests_PilotNames_PilotId",
-                table: "BuyBackRequests",
+                table: "BuySellRequests",
                 column: "PilotId",
                 principalTable: "PilotNames",
                 principalColumn: "Id",
@@ -73,7 +73,7 @@ namespace EveRaiders.Data.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_BuyBackRequests_PilotNames_PilotId",
-                table: "BuyBackRequests");
+                table: "BuySellRequests");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_ReprocessingRequests_PilotNames_PilotId",
@@ -85,7 +85,7 @@ namespace EveRaiders.Data.Migrations
 
             migrationBuilder.DropIndex(
                 name: "IX_BuyBackRequests_PilotId",
-                table: "BuyBackRequests");
+                table: "BuySellRequests");
 
             migrationBuilder.DropColumn(
                 name: "PilotId",
@@ -93,7 +93,7 @@ namespace EveRaiders.Data.Migrations
 
             migrationBuilder.DropColumn(
                 name: "PilotId",
-                table: "BuyBackRequests");
+                table: "BuySellRequests");
 
             migrationBuilder.AddColumn<string>(
                 name: "UserId",
@@ -103,7 +103,7 @@ namespace EveRaiders.Data.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "UserId",
-                table: "BuyBackRequests",
+                table: "BuySellRequests",
                 type: "nvarchar(450)",
                 nullable: true);
 
@@ -114,12 +114,12 @@ namespace EveRaiders.Data.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_BuyBackRequests_UserId",
-                table: "BuyBackRequests",
+                table: "BuySellRequests",
                 column: "UserId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_BuyBackRequests_AspNetUsers_UserId",
-                table: "BuyBackRequests",
+                table: "BuySellRequests",
                 column: "UserId",
                 principalTable: "AspNetUsers",
                 principalColumn: "Id",

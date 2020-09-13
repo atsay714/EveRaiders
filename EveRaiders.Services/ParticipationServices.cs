@@ -55,9 +55,9 @@ namespace EveRaiders.Services
             return participation;
         }
 
-        //public async Task<BuybackRequest> UpdatBuyBackRequestStatus(int buyBackId, RequestStatus status)
+        //public async Task<BuySellRequest> UpdatBuyBackRequestStatus(int buyBackId, RequestStatus status)
         //{
-        //    var request = await _db.BuyBackRequests.FirstOrDefaultAsync(s => s.Id == buyBackId);
+        //    var request = await _db.BuySellRequests.FirstOrDefaultAsync(s => s.Id == buyBackId);
 
         //    if (request == null)
         //        return null;

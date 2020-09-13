@@ -183,7 +183,7 @@ namespace EveRaiders.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BuyBackRequests",
+                name: "BuySellRequests",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -262,7 +262,7 @@ namespace EveRaiders.Data.Migrations
                     table.ForeignKey(
                         name: "FK_ResourceOrders_BuyBackRequests_BuybackRequestId",
                         column: x => x.BuybackRequestId,
-                        principalTable: "BuyBackRequests",
+                        principalTable: "BuySellRequests",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -517,7 +517,7 @@ namespace EveRaiders.Data.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_BuyBackRequests_UserId",
-                table: "BuyBackRequests",
+                table: "BuySellRequests",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -591,7 +591,7 @@ namespace EveRaiders.Data.Migrations
                 name: "Planets");
 
             migrationBuilder.DropTable(
-                name: "BuyBackRequests");
+                name: "BuySellRequests");
 
             migrationBuilder.DropTable(
                 name: "ReprocessingRequests");

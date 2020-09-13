@@ -46,7 +46,7 @@ namespace EveRaiders.Web.Api.Automapper
 
             CreateMap<PilotName, PilotViewModel>();
 
-            CreateMap<BuybackRequest, BuyBackRequestViewModel>()
+            CreateMap<BuySellRequest, BuyBackRequestViewModel>()
                 .ForMember(src => src.Total, opt => opt.MapFrom(dest => dest.TotalPrice))
                 .ForMember(src => src.Status, opt => opt.MapFrom(dest => dest.Status.ToString()))
                 .ForMember(src => src.RequestedAt,

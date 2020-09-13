@@ -115,7 +115,7 @@ namespace EveRaiders.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("EveRaiders.Data.Models.BuybackRequest", b =>
+            modelBuilder.Entity("EveRaiders.Data.Models.BuySellRequest", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -138,7 +138,7 @@ namespace EveRaiders.Data.Migrations
 
                     b.HasIndex("PilotId");
 
-                    b.ToTable("BuyBackRequests");
+                    b.ToTable("BuySellRequests");
                 });
 
             modelBuilder.Entity("EveRaiders.Data.Models.Constellation", b =>
@@ -878,7 +878,7 @@ namespace EveRaiders.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("EveRaiders.Data.Models.BuybackRequest", b =>
+            modelBuilder.Entity("EveRaiders.Data.Models.BuySellRequest", b =>
                 {
                     b.HasOne("EveRaiders.Data.Authentication.PilotName", "Pilot")
                         .WithMany()
@@ -915,7 +915,7 @@ namespace EveRaiders.Data.Migrations
 
             modelBuilder.Entity("EveRaiders.Data.Models.ResourceOrder", b =>
                 {
-                    b.HasOne("EveRaiders.Data.Models.BuybackRequest", "BuybackRequest")
+                    b.HasOne("EveRaiders.Data.Models.BuySellRequest", "BuySellRequest")
                         .WithMany("Resources")
                         .HasForeignKey("BuybackRequestId");
 

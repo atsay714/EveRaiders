@@ -2,12 +2,12 @@
 
 namespace EveRaiders.Data.Migrations
 {
-    public partial class BuybackRequestStatusField : Migration
+    public partial class AddingTransactionEnum : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
-                name: "Status",
+                name: "TransactionType",
                 table: "BuySellRequests",
                 type: "int",
                 nullable: false,
@@ -17,7 +17,7 @@ namespace EveRaiders.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Status",
+                name: "TransactionType",
                 table: "BuySellRequests");
         }
     }

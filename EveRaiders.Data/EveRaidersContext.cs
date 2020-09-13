@@ -19,7 +19,7 @@ namespace EveRaiders.Data
         public DbSet<Resource> Resources { get; set; }
         public DbSet<ResourceOrder> ResourceOrders { get; set; }
         public DbSet<ReprocessingRequest> ReprocessingRequests { get; set; }
-        public DbSet<BuybackRequest> BuyBackRequests { get; set; }
+        public DbSet<BuySellRequest> BuySellRequests { get; set; }
         public DbSet<Participation> Participation { get; set; }
         public DbSet<ParticipationTokens> ParticipationTokens { get; set; }
 

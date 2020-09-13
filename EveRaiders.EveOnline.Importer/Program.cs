@@ -14,8 +14,8 @@ namespace EveRaiders.EveOnline.Importer
 {
     class Program
     {
-        private static readonly EveRaidersContext _db = new EveRaidersContext(new DbContextOptionsBuilder<EveRaidersContext>().UseSqlServer("Server=localhost;Database=everaiders;Trusted_Connection=True;").Options);
-        private static readonly int HomeSystemId = 30000904;
+        private static readonly EveRaidersContext _db = new EveRaidersContext(new DbContextOptionsBuilder<EveRaidersContext>().UseSqlServer("Server=everaider.database.windows.net;Initial Catalog=everaider;Persist Security Info=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;User ID=raider;Password=1*xgJ0M5DsZdKzJT&jPzaoiq1l^#iS*8").Options);
+        private static readonly int HomeSystemId = 30002953;
 
         static async Task Main(string[] args)
         {
@@ -79,7 +79,7 @@ namespace EveRaiders.EveOnline.Importer
             Console.WriteLine("Fetching System Distances");
             var systemList = _db.Systems;
 
-            foreach (var solarSystem in systemList.Where(s => s.EveOnlineId != 0 && s.DistanceFromBase == null))
+            foreach (var solarSystem in systemList.Where(s => s.EveOnlineId != 0))
             {
                 try
                 {
