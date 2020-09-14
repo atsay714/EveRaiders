@@ -93,7 +93,7 @@ namespace EveRaiders.Web.Api.Controllers
 
             systemNameMap = CreateSystemNameMap();
 
-            if (!systemNameMap.ContainsKey(homeSystemName))
+            if (!systemNameMap.ContainsKey(rootSystemName))
             {
                 return NotFound();
             }

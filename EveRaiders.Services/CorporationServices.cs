@@ -19,7 +19,7 @@ namespace EveRaiders.Services
             _db = db;
         }
 
-        public async Task<BuySellRequest> CreateBuyBackRequest(List<ResourceOrder> resources, int pilotId, TransactionTypes transactionType)
+        public async Task<BuySellRequest> CreateBuyBackRequest(List<ResourceOrder> resources, int pilotId)
         {
             double total = 0;
             foreach (var resource in resources)
@@ -37,8 +37,7 @@ namespace EveRaiders.Services
             {
                 Pilot = pilot,
                 Resources = resources,
-                TotalPrice = total,
-                TransactionType = transactionType
+                TotalPrice = total
             };
 
             var savedOrder = await _db.BuySellRequests.AddAsync(order);
