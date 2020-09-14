@@ -6,9 +6,9 @@ using EveRaiders.Data.Enums;
 
 namespace EveRaiders.Data.Models
 {
-    public class BuySellRequest
+    public class BuybackRequest
     {
-        public BuySellRequest()
+        public BuybackRequest()
         {
             RequestedAt = DateTime.UtcNow;
         }
@@ -17,7 +17,6 @@ namespace EveRaiders.Data.Models
         public DateTime RequestedAt { get; set; }
         public double TotalPrice { get; set; }
         public RequestStatus Status { get; set; }
-        public TransactionTypes TransactionType { get; set; }
         public virtual List<ResourceOrder> Resources { get; set; }
         public virtual PilotName Pilot { get; set; }
     }

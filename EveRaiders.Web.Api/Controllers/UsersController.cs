@@ -88,7 +88,7 @@ namespace EveRaiders.Web.Api.Controllers
         {
             var user = await _userManager.FindByIdAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            var request = await _db.BuySellRequests.Include(i => i.Resources).ThenInclude(i => i.Resource).Include(i => i.Pilot).ThenInclude(i => i.User).Where(s => s.Pilot.User.Id == user.Id)
+            var request = await _db.BuyBackRequests.Include(i => i.Resources).ThenInclude(i => i.Resource).Include(i => i.Pilot).ThenInclude(i => i.User).Where(s => s.Pilot.User.Id == user.Id)
                 .AsAsyncEnumerable().ToListAsync();
 
             var mappedRequest = _mapper.Map<List<BuyBackRequestViewModel>>(request);

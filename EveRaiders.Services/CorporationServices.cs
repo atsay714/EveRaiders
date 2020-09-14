@@ -19,7 +19,7 @@ namespace EveRaiders.Services
             _db = db;
         }
 
-        public async Task<BuySellRequest> CreateBuyBackRequest(List<ResourceOrder> resources, int pilotId)
+        public async Task<BuybackRequest> CreateBuyBackRequest(List<ResourceOrder> resources, int pilotId)
         {
             double total = 0;
             foreach (var resource in resources)
@@ -33,23 +33,23 @@ namespace EveRaiders.Services
 
             var pilot = await _db.PilotNames.FirstOrDefaultAsync(s => s.Id == pilotId);
 
-            var order = new BuySellRequest()
+            var order = new BuybackRequest()
             {
                 Pilot = pilot,
                 Resources = resources,
                 TotalPrice = total
             };
 
-            var savedOrder = await _db.BuySellRequests.AddAsync(order);
+            var savedOrder = await _db.BuyBackRequests.AddAsync(order);
             await _db.SaveChangesAsync();
 
 
             return order;
         }
 
-        public async Task<BuySellRequest> UpdatBuyBackRequestStatus(int buyBackId, RequestStatus status)
+        public async Task<BuybackRequest> UpdatBuyBackRequestStatus(int buyBackId, RequestStatus status)
         {
-            var request = await _db.BuySellRequests.FirstOrDefaultAsync(s => s.Id == buyBackId);
+            var request = await _db.BuyBackRequests.FirstOrDefaultAsync(s => s.Id == buyBackId);
 
             if (request == null)
                 return null;
