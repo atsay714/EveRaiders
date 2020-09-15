@@ -14,7 +14,8 @@ namespace EveRaiders.EveOnline.Importer
 {
     class Program
     {
-        private static readonly EveRaidersContext _db = new EveRaidersContext(new DbContextOptionsBuilder<EveRaidersContext>().UseSqlServer("Server=everaider.database.windows.net;Initial Catalog=everaider;Persist Security Info=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;User ID=raider;Password=1*xgJ0M5DsZdKzJT&jPzaoiq1l^#iS*8").Options);
+        //private static readonly EveRaidersContext _db = new EveRaidersContext(new DbContextOptionsBuilder<EveRaidersContext>().UseSqlServer("Server=everaider.database.windows.net;Initial Catalog=everaider;Persist Security Info=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;User ID=raider;Password=1*xgJ0M5DsZdKzJT&jPzaoiq1l^#iS*8").Options);
+        private static readonly EveRaidersContext _db = new EveRaidersContext(new DbContextOptionsBuilder<EveRaidersContext>().UseSqlServer("Server=everaiders.database.windows.net,1433;Initial Catalog=everaiders;Persist Security Info=False;User ID=raider;Password=DvxCKE$%00yd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30").Options);
         private static readonly int HomeSystemId = 30002953;
 
         static async Task Main(string[] args)

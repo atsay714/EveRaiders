@@ -16,7 +16,8 @@ namespace EveRaiders.Importer
 {
     public class Program
     {
-        private static readonly EveRaidersContext _db = new EveRaidersContext(new DbContextOptionsBuilder<EveRaidersContext>().UseSqlServer("Server=localhost;Database=everaiders;Trusted_Connection=True;").Options);
+        //private static readonly EveRaidersContext _db = new EveRaidersContext(new DbContextOptionsBuilder<EveRaidersContext>().UseSqlServer("Server=localhost;Database=everaiders;Trusted_Connection=True;").Options);
+        private static readonly EveRaidersContext _db = new EveRaidersContext(new DbContextOptionsBuilder<EveRaidersContext>().UseSqlServer("Server=everaiders.database.windows.net,1433;Initial Catalog=everaiders;Persist Security Info=False;User ID=raider;Password=DvxCKE$%00yd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30").Options);
         static async Task Main(string[] args)
         {
             Console.WriteLine("Initializing Importer");

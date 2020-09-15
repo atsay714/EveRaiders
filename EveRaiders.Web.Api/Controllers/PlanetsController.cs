@@ -16,6 +16,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
+using Microsoft.Extensions.Configuration;
 
 namespace EveRaiders.Web.Api.Controllers
 {
@@ -27,11 +31,13 @@ namespace EveRaiders.Web.Api.Controllers
         private readonly EveRaidersContext _db;
         private readonly IMapper _mapper;
 
-        public PlanetsController(EveRaidersContext db, IMapper mapper)
+        public PlanetsController(EveRaidersContext db, IMapper mapper, IConfiguration configuration)
         {
             _db = db;
             _mapper = mapper;
+            Configuration = configuration;
         }
+        public IConfiguration Configuration { get; }
 
         // GET: api/<PlanetsController>
         [Produces("application/json")]
@@ -88,55 +94,106 @@ namespace EveRaiders.Web.Api.Controllers
         [HttpGet("resources/{resourceType}/{richnessType}")]
         public IActionResult GetPlanetsByResourceAndRichness(string resourceType, string richnessType, int? regionId, string? homeSystemName)
         {
-            string rootSystemName = homeSystemName ?? "CZDJ-1";
-            var systemNameMap = new Dictionary<string, long>();
-
-            systemNameMap = CreateSystemNameMap();
-
-            if (!systemNameMap.ContainsKey(rootSystemName))
+            try
             {
-                return NotFound();
-            }
+                string rootSystemName = homeSystemName ?? "CZDJ-1";
+                var systemNameMap = new Dictionary<string, long>();
 
-            if (Enum.TryParse(resourceType, out PlanetResourceTypes resource) && Enum.TryParse(richnessType, out ResourceRichnessTypes richness))
-            {
-                var resources = _db.PlanetResources.Include(s => s.Planet).ThenInclude(s => s.System).ThenInclude(s => s.Constellation)
-                    .ThenInclude(s => s.Region)
-                    .Where(s => s.Richness == richness && s.Type == resource);
+                systemNameMap = CreateNodeMapFromBlob().Result;
 
-                if (regionId.HasValue && regionId != 0)
-                    resources = resources.Where(s => s.Planet.System.Constellation.Region.Id == regionId.Value);
-
-                var systemsDict = new Dictionary<string, List<string>>();
-                var systemsGraph = new Dictionary<long, SystemGraphNode>();
-
-                int distance = 1;
-
-                Dictionary<SystemGraphNode, bool> traveled = new Dictionary<SystemGraphNode, bool>();
-
-
-                CreateGraphs(systemsDict, systemsGraph);
-
-                BFSLookForSystems(systemNameMap[rootSystemName], systemsGraph, distance, traveled);
-
-                var resourceResult = _mapper.Map<List<ResourceRichnessViewModel>>(resources.OrderBy(s => s.Planet.System.DistanceFromBase).ThenByDescending(s => s.Output).ToList());
-
-                var resourcesDict = resources.ToLookup(x => x.Planet.Name, y => y.Planet.System.EveOnlineId).ToDictionary(x => x.Key, y => y.First()); //This only needs to be here cause there's no ID in the view model.
-
-                //Replacing distances for now.
-                foreach (var res in resourceResult)
+                if (!systemNameMap.ContainsKey(rootSystemName))
                 {
-                    res.DistanceFromBase = systemsGraph[resourcesDict[res.PlanetName]].Distance;
+                    return NotFound();
                 }
 
-                resourceResult = resourceResult.OrderBy(s => s.DistanceFromBase).ThenByDescending(s => s.Output).ToList();
+                if (Enum.TryParse(resourceType, out PlanetResourceTypes resource) && Enum.TryParse(richnessType, out ResourceRichnessTypes richness))
+                {
+                    var resources = _db.PlanetResources.Include(s => s.Planet).ThenInclude(s => s.System).ThenInclude(s => s.Constellation)
+                        .ThenInclude(s => s.Region)
+                        .Where(s => s.Richness == richness && s.Type == resource);
 
-                return Ok(resourceResult);
+                    if (regionId.HasValue && regionId != 0)
+                        resources = resources.Where(s => s.Planet.System.Constellation.Region.Id == regionId.Value);
+
+                    var systemsGraph = new Dictionary<string, List<string>>();
+                    var systemsDict = new Dictionary<long, SystemGraphNode>();
+
+                    int distance = 1;
+
+                    Dictionary<SystemGraphNode, bool> traveled = new Dictionary<SystemGraphNode, bool>();
+
+                    systemsGraph = CreateInitialGraphFromBlob().Result;
+                    systemsDict = PopulateGraph(systemsGraph);
+
+                    BFSLookForSystems(systemNameMap[rootSystemName], systemsDict, distance, traveled);
+
+                    var resourceResult = _mapper.Map<List<ResourceRichnessViewModel>>(resources.OrderBy(s => s.Planet.System.DistanceFromBase).ThenByDescending(s => s.Output).ToList());
+
+                    var resourcesDict = resources.ToLookup(x => x.Planet.Name, y => y.Planet.System.EveOnlineId).ToDictionary(x => x.Key, y => y.First()); //This only needs to be here cause there's no ID in the view model.
+
+                    //Replacing distances for now.
+                    foreach (var res in resourceResult)
+                    {
+                        res.DistanceFromBase = systemsDict[resourcesDict[res.PlanetName]].Distance;
+                    }
+
+                    resourceResult = resourceResult.OrderBy(s => s.DistanceFromBase).ThenByDescending(s => s.Output).ToList();
+
+                    return Ok(resourceResult);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
-            else
+            catch (Exception e) 
             {
-                return NotFound();
+                return Problem(e.Message);
             }
+        }
+
+        private async Task<Dictionary<string, List<string>>> CreateInitialGraphFromBlob()
+        {
+            Dictionary<string, List<string>> SystemGraphNode;
+            BlobClient blobClient = GetFileFromBlob("NewEdenGraph.csv");
+            BlobDownloadInfo download = await blobClient.DownloadAsync();
+
+            using (var reader = new StreamReader(download.Content))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Configuration.HasHeaderRecord = true;
+                csv.Configuration.RegisterClassMap<CsvImportMap>();
+                var rows = csv.GetRecords<CsvImportModel>();
+                SystemGraphNode = rows.ToDictionary(x => x.Id, x => x.Neighbors);
+            }
+
+            return SystemGraphNode;
+        }
+
+        private async Task<Dictionary<string, long>> CreateNodeMapFromBlob()
+        {
+
+            var systemsMap = new Dictionary<string, long>();
+            BlobClient blobClient = GetFileFromBlob("SystemNamesDict.csv");
+            BlobDownloadInfo download = await blobClient.DownloadAsync();
+
+            using (var reader = new StreamReader(download.Content))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Configuration.PrepareHeaderForMatch = (string header, int index) => header.ToLower();
+                var records = csv.GetRecords<SystemViewModel>();
+                systemsMap = records.ToDictionary(x => x.Name, x => x.Id); //Reverse, for front-end lookup
+            }
+
+            return systemsMap;
+        }
+
+        private BlobClient GetFileFromBlob(string fileName)
+        {
+            BlobServiceClient blobServiceClient = new BlobServiceClient(Configuration["ConnectionStrings:AzureBlobConnection"]);
+
+            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("everaidersblob");
+            return containerClient.GetBlobClient(fileName);
         }
 
         //Move this helper function somewhere else?
@@ -176,48 +233,29 @@ namespace EveRaiders.Web.Api.Controllers
         }
 
         //Move this helper function somewhere else?
-        private static void CreateGraphs(Dictionary<string, List<string>> systemsDict, Dictionary<long, SystemGraphNode> systemsGraph)
+        private Dictionary<long, SystemGraphNode> PopulateGraph(Dictionary<string, List<string>> systemsGraph)
         {
-            using (var reader = new StreamReader("NewEdenGraph.csv"))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-            {
-                csv.Configuration.HasHeaderRecord = true;
-                csv.Configuration.RegisterClassMap<CsvImportMap>();
-                var rows = csv.GetRecords<CsvImportModel>();
-                systemsDict = rows.ToDictionary(x => x.Id, x => x.Neighbors);
-            }
+            Dictionary<long, SystemGraphNode> systemsDict = new Dictionary<long, SystemGraphNode>();
 
             //Create a dictionary with key of systemId and value of the graphNode
-            foreach (var system in systemsDict)
+            foreach (var system in systemsGraph)
             {
-                systemsGraph[Convert.ToInt32(system.Key)] = new SystemGraphNode(system.Key);
+                systemsDict[Convert.ToInt32(system.Key)] = new SystemGraphNode(system.Key);
             }
 
 
-            foreach (var node in systemsGraph)
+            foreach (var node in systemsDict)
             {
-                foreach (var neighbor in systemsDict[node.Key.ToString()])
+                foreach (var neighbor in systemsGraph[node.Key.ToString()])
                 {
                     if (!string.IsNullOrEmpty(neighbor))
                     {
-                        node.Value.Neighbors.Add(systemsGraph[Convert.ToInt32(neighbor)]);
+                        node.Value.Neighbors.Add(systemsDict[Convert.ToInt32(neighbor)]);
                     }
                 }
             }
-        }
 
-        private static Dictionary<string, long> CreateSystemNameMap()
-        {
-            var systemsMap = new Dictionary<string, long>();
-            using (var reader = new StreamReader("SystemNamesDict.csv"))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-            {
-                csv.Configuration.PrepareHeaderForMatch = (string header, int index) => header.ToLower();
-                var records = csv.GetRecords<SystemViewModel>();
-                systemsMap = records.ToDictionary(x => x.Name, x => x.Id); //Reverse, for front-end lookup
-            }
-
-            return systemsMap;
+            return systemsDict;
         }
 
         [AllowAnonymous]

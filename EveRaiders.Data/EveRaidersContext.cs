@@ -26,6 +26,7 @@ namespace EveRaiders.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer(@"Data Source=localhost;Initial Catalog=EveRaiders;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=everaiders.database.windows.net,1433;Initial Catalog=everaiders;Persist Security Info=False;User ID=raider;Password=DvxCKE$%00yd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
