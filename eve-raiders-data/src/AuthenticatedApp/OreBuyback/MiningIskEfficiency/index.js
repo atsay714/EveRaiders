@@ -5,22 +5,22 @@ import { useQuery } from "react-query";
 import styles from "./MiningIskEfficiency.module.scss";
 
 const orePerUnit = {
-  Veldspar: 10,
-  Plagioclase: 2.86,
-  Scordite: 6.67,
-  Omber: 1.67,
-  Pyroxeres: 0.67,
-  Kernite: 0.83,
-  "Dark Orche": 0.625,
-  Gneiss: 0.5,
-  Spodanium: 0.31244444444444447,
-  Hemorphite: 0.33,
-  Hedbergite: 0.33,
-  Jaspet: 0.25,
-  Crokite: 0.156,
-  Bistot: 0.156,
-  Arkonor: 0.156,
-  Mercoxit: 0.125,
+  Veldspar: 0.1,
+  Plagioclase: 0.35,
+  Scordite: 0.15,
+  Omber: 0.6,
+  Pyroxeres: 1.5,
+  Kernite: 1.2,
+  "Dark Orche": 1.6,
+  Gneiss: 2.0,
+  Spodanium: 3.2,
+  Hemorphite: 3.0,
+  Hedbergite: 3.0,
+  Jaspet: 4.0,
+  Crokite: 6.4,
+  Bistot: 6.4,
+  Arkonor: 6.4,
+  Mercoxit: 8,
 };
 
 const MiningIskEfficiency = () => {
@@ -41,6 +41,11 @@ const MiningIskEfficiency = () => {
           </>
         ),
         accessor: "pricePerUnit",
+        Cell: ({ value }) =>
+          value.toLocaleString("en", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }),
         style: {
           textAlign: "right",
         },
@@ -53,9 +58,7 @@ const MiningIskEfficiency = () => {
     .filter((resource) => orePerUnit[resource.name])
     .map((ore) => ({
       name: ore.name,
-      pricePerUnit: (orePerUnit[ore.name] * ore.price).toLocaleString({
-        style: "currency",
-      }),
+      pricePerUnit: (1 / orePerUnit[ore.name]) * ore.price,
     }))
     .sort((a, b) => b.pricePerUnit - a.pricePerUnit);
 
