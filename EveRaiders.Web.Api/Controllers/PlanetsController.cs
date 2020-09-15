@@ -85,8 +85,8 @@ namespace EveRaiders.Web.Api.Controllers
         }
 
         [Produces("application/json")]
-        [HttpGet("resources/{resourceType}/{richnessType}")]
-        public IActionResult GetPlanetsByResourceAndRichness(string resourceType, string richnessType, int? regionId, string? homeSystemName)
+        [HttpGet("resources/{resourceType}/{richnessType}/{homeSystemName}")]
+        public IActionResult GetPlanetsByResourceAndRichness(string resourceType, string richnessType, string homeSystemName, int? regionId)
         {
             string rootSystemName = homeSystemName ?? "CZDJ-1";
             var systemNameMap = new Dictionary<string, long>();
