@@ -102,7 +102,7 @@ namespace EveRaiders.Web.Api
             });
 
             services.AddCors();
-            services.AddDbContext<EveRaidersContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddDbContext<EveRaidersContext>(options => options.UseSqlServer("Server=everaiders.database.windows.net,1433;Initial Catalog=everaiders;Persist Security Info=False;User ID=raider;Password=DvxCKE$%00yd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30"));
 
             services.AddIdentity<RaiderUser, IdentityRole>()
                 .AddEntityFrameworkStores<EveRaidersContext>()
