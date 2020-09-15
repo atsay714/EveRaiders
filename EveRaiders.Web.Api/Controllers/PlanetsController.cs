@@ -85,57 +85,64 @@ namespace EveRaiders.Web.Api.Controllers
         }
 
         [Produces("application/json")]
-        [HttpGet("resources/{resourceType}/{richnessType}/{homeSystemName}")]
-        public IActionResult GetPlanetsByResourceAndRichness(string resourceType, string richnessType, string homeSystemName, int? regionId)
+        [HttpGet("resources/{resourceType}/{richnessType}")]
+        public IActionResult GetPlanetsByResourceAndRichness(string resourceType, string richnessType, int? regionId, string? homeSystemName)
         {
-            string rootSystemName = homeSystemName ?? "CZDJ-1";
-            var systemNameMap = new Dictionary<string, long>();
-
-            systemNameMap = CreateSystemNameMap();
-
-            if (!systemNameMap.ContainsKey(rootSystemName))
+            try
             {
-                return NotFound();
-            }
+                string rootSystemName = homeSystemName ?? "CZDJ-1";
+                var systemNameMap = new Dictionary<string, long>();
 
-            if (Enum.TryParse(resourceType, out PlanetResourceTypes resource) && Enum.TryParse(richnessType, out ResourceRichnessTypes richness))
-            {
-                var resources = _db.PlanetResources.Include(s => s.Planet).ThenInclude(s => s.System).ThenInclude(s => s.Constellation)
-                    .ThenInclude(s => s.Region)
-                    .Where(s => s.Richness == richness && s.Type == resource);
+                systemNameMap = CreateSystemNameMap();
 
-                if (regionId.HasValue && regionId != 0)
-                    resources = resources.Where(s => s.Planet.System.Constellation.Region.Id == regionId.Value);
-
-                var systemsDict = new Dictionary<string, List<string>>();
-                var systemsGraph = new Dictionary<long, SystemGraphNode>();
-
-                int distance = 1;
-
-                Dictionary<SystemGraphNode, bool> traveled = new Dictionary<SystemGraphNode, bool>();
-
-
-                CreateGraphs(systemsDict, systemsGraph);
-
-                BFSLookForSystems(systemNameMap[rootSystemName], systemsGraph, distance, traveled);
-
-                var resourceResult = _mapper.Map<List<ResourceRichnessViewModel>>(resources.OrderBy(s => s.Planet.System.DistanceFromBase).ThenByDescending(s => s.Output).ToList());
-
-                var resourcesDict = resources.ToLookup(x => x.Planet.Name, y => y.Planet.System.EveOnlineId).ToDictionary(x => x.Key, y => y.First()); //This only needs to be here cause there's no ID in the view model.
-
-                //Replacing distances for now.
-                foreach (var res in resourceResult)
+                if (!systemNameMap.ContainsKey(rootSystemName))
                 {
-                    res.DistanceFromBase = systemsGraph[resourcesDict[res.PlanetName]].Distance;
+                    return NotFound();
                 }
 
-                resourceResult = resourceResult.OrderBy(s => s.DistanceFromBase).ThenByDescending(s => s.Output).ToList();
+                if (Enum.TryParse(resourceType, out PlanetResourceTypes resource) && Enum.TryParse(richnessType, out ResourceRichnessTypes richness))
+                {
+                    var resources = _db.PlanetResources.Include(s => s.Planet).ThenInclude(s => s.System).ThenInclude(s => s.Constellation)
+                        .ThenInclude(s => s.Region)
+                        .Where(s => s.Richness == richness && s.Type == resource);
 
-                return Ok(resourceResult);
+                    if (regionId.HasValue && regionId != 0)
+                        resources = resources.Where(s => s.Planet.System.Constellation.Region.Id == regionId.Value);
+
+                    var systemsDict = new Dictionary<string, List<string>>();
+                    var systemsGraph = new Dictionary<long, SystemGraphNode>();
+
+                    int distance = 1;
+
+                    Dictionary<SystemGraphNode, bool> traveled = new Dictionary<SystemGraphNode, bool>();
+
+
+                    CreateGraphs(systemsDict, systemsGraph);
+
+                    BFSLookForSystems(systemNameMap[rootSystemName], systemsGraph, distance, traveled);
+
+                    var resourceResult = _mapper.Map<List<ResourceRichnessViewModel>>(resources.OrderBy(s => s.Planet.System.DistanceFromBase).ThenByDescending(s => s.Output).ToList());
+
+                    var resourcesDict = resources.ToLookup(x => x.Planet.Name, y => y.Planet.System.EveOnlineId).ToDictionary(x => x.Key, y => y.First()); //This only needs to be here cause there's no ID in the view model.
+
+                    //Replacing distances for now.
+                    foreach (var res in resourceResult)
+                    {
+                        res.DistanceFromBase = systemsGraph[resourcesDict[res.PlanetName]].Distance;
+                    }
+
+                    resourceResult = resourceResult.OrderBy(s => s.DistanceFromBase).ThenByDescending(s => s.Output).ToList();
+
+                    return Ok(resourceResult);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
-            else
+            catch (Exception e) 
             {
-                return NotFound();
+                return Problem(e.Message);
             }
         }
 
