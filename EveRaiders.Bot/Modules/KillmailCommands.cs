@@ -13,8 +13,11 @@ namespace EveRaiders.Bot.Modules
 {
     public class KillmailCommands : ModuleBase
     {
+        //private readonly EveRaidersContext _db = new EveRaidersContext(new DbContextOptionsBuilder<EveRaidersContext>()
+        //    .UseSqlServer(@"Data Source = localhost; Initial Catalog = EveRaiders; Trusted_Connection=True;")
+        //    .Options);
         private readonly EveRaidersContext _db = new EveRaidersContext(new DbContextOptionsBuilder<EveRaidersContext>()
-            .UseSqlServer(@"Data Source = localhost; Initial Catalog = EveRaiders; Trusted_Connection=True;")
+            .UseSqlServer("Server=everaiders.database.windows.net,1433;Initial Catalog=everaiders;Persist Security Info=False;User ID=raider;Password=DvxCKE$%00yd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30")
             .Options);
 
         private readonly OCRSpace _ocr = new OCRSpace();
