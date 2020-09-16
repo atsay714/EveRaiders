@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const baseURL = "https://everaiders.azurewebsites.net/";
+// export const baseURL = "https://localhost:5001";
 
 const instance = axios.create({
   baseURL,

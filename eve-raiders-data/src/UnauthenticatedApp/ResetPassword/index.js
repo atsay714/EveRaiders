@@ -14,13 +14,15 @@ const ResetPassword = () => {
 
   const { token } = new Url(window.location.href).query || {};
 
-  const handleResetPassword = async ({ password }) => {
+  const handleResetPassword = async ({ password }, { setSubmitting }) => {
     const { success, error } = await resetPassword({
       token,
       password,
     });
 
-    if (error) return setRegisterError(error);
+    if (success) history.push("/login");
+    if (error) setRegisterError(error);
+    setSubmitting(false);
   };
 
   const ResetPasswordSchema = Yup.object().shape({
@@ -50,7 +52,7 @@ const ResetPassword = () => {
       }}
       onSubmit={handleResetPassword}
     >
-      {({ errors, touched }) => (
+      {({ errors, touched, isSubmitting }) => (
         <Form className={styles.form}>
           {registerError && (
             <div className={styles.errorMessage}>
@@ -79,7 +81,11 @@ const ResetPassword = () => {
             >
               Back to login
             </Button>
-            <Button className={styles.button} type="submit">
+            <Button
+              className={styles.button}
+              type="submit"
+              loading={isSubmitting}
+            >
               Change Password
             </Button>
           </div>

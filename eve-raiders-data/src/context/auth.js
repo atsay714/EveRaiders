@@ -25,7 +25,7 @@ export const AuthProvider = (props) => {
     instance.interceptors.response.use(
       (response) => response,
       (error) => {
-        if (401 === error.response.status) {
+        if (401 === error.response?.status) {
           setTokenLocalStorage();
           setUser();
           history.push({
