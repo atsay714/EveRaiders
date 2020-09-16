@@ -13,10 +13,11 @@ const ForgotPassword = () => {
   const [errorMessage, setErrorMessage] = useState();
   const history = useHistory();
 
-  const handleForgotPassword = async (values) => {
+  const handleForgotPassword = async (values, { setSubmitting }) => {
     const { success, error } = await forgotPassword(values);
     if (success) setEmailSent(true);
-    if (error) return setErrorMessage(error);
+    if (error) setErrorMessage(error);
+    setSubmitting(false);
   };
 
   const ForgotPasswordSchema = Yup.object().shape({
@@ -31,7 +32,7 @@ const ForgotPassword = () => {
       }}
       onSubmit={handleForgotPassword}
     >
-      {({ values, errors, touched }) => (
+      {({ values, errors, touched, isSubmitting }) => (
         <Form className={styles.form}>
           <h3 className={styles.header}>Forgot Password</h3>
           {!emailSent && (
@@ -62,7 +63,11 @@ const ForgotPassword = () => {
               Back to login
             </Button>
             {!emailSent && (
-              <Button className={styles.button} type="submit">
+              <Button
+                className={styles.button}
+                type="submit"
+                loading={isSubmitting}
+              >
                 Send Email
               </Button>
             )}

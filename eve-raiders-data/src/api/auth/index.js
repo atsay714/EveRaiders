@@ -59,7 +59,7 @@ export const resetPassword = async ({ email, token, password }) => {
       password,
     });
 
-    return { success: res?.data?.status === "Success" };
+    return { success: res.status === 200 };
   } catch (e) {
     return {
       error: e.response?.data?.message ||
