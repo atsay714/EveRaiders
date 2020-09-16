@@ -3,9 +3,12 @@ import { GiStopSign } from "react-icons/gi";
 import Modal from "components/Modal";
 import GrandTotal from "../GrandTotal";
 import Table from "components/Table";
+import useTradeType from "../../useTradeType";
 import styles from "./ConfirmOreBuybackModal.module.scss";
 
 const ConfirmOreBuybackModal = ({ onSubmit, onClose, values }) => {
+  const tradeType = useTradeType();
+
   const columns = useMemo(
     () => [
       {
@@ -35,7 +38,8 @@ const ConfirmOreBuybackModal = ({ onSubmit, onClose, values }) => {
         <h3>Have you created a contract yet?</h3>
       </header>
       <p>
-        Before continuing, make a contract for buyback in CZDJ-1 to: TBNRregs
+        Before continuing, make a contract for buyback in CZDJ-1 to:{" "}
+        {tradeType === "refine" ? "RockhoundXL" : "TBNRregs"}
       </p>
       <div className={styles.table}>
         <Table data={values.resources} columns={columns} />

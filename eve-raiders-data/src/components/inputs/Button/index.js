@@ -10,11 +10,15 @@ const Button = ({
   variant = "contained",
   children = "Submit",
   disabled,
+  active,
+  hover,
   ...props
 }) => (
   <button
     className={classNames(className, styles.button, {
       [styles[variant]]: variant !== "contained",
+      [styles.active]: active,
+      [styles.hover]: hover,
     })}
     type={type}
     disabled={loading || disabled}

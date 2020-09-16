@@ -1,0 +1,12 @@
+.toggleButton {
+  display: flex;
+}
+
+.button {
+  opacity: 0.5;
+  width: 75px;
+
+  &.selected {
+    opacity: 1;
+  }
+}

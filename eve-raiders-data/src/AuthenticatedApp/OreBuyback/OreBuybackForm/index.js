@@ -21,7 +21,7 @@ const oreBuybackSchema = Yup.object().shape({
   pilotName: Yup.object().required("Pilot Name is required"),
 });
 
-const OreBuybackForm = ({ handleSubmit, loading }) => {
+const OreBuybackForm = ({ handleSubmit, loading, values: resources }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const { loading: loadingUser, error, data: currentUser } = useQuery(
@@ -35,7 +35,7 @@ const OreBuybackForm = ({ handleSubmit, loading }) => {
         <Formik
           validationSchema={oreBuybackSchema}
           initialValues={{
-            resources: [
+            resources: resources || [
               {
                 resource: "",
                 quantity: "0",
@@ -44,6 +44,7 @@ const OreBuybackForm = ({ handleSubmit, loading }) => {
             pilotName: currentUser?.pilotNames[0] || {},
           }}
           onSubmit={() => setModalIsOpen(true)}
+          enableReinitialize
         >
           {({ values, setFieldValue, resetForm }) => (
             <Form className={styles.form}>
