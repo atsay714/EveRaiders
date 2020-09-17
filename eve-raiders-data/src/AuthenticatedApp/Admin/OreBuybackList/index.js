@@ -26,15 +26,42 @@ const OreBuybackList = () => {
     },
   });
 
-  const filteredData = useMemo(
-    () => data.filter((x) => x.pilot && x.total > 0 && x.status !== "Closed"),
+  const activeOrders = useMemo(
+    () =>
+      data
+        .filter((x) => x.status !== "Closed")
+        .sort((a, b) => Date.parse(a.requestedAt) - Date.parse(b.requestedAt)),
+    [data]
+  );
+
+  const inactiveOrders = useMemo(
+    () =>
+      data
+        .filter((x) => x.pilot && x.total > 0 && x.status === "Closed")
+        .sort((a, b) => Date.parse(b.requestedAt) - Date.parse(a.requestedAt)),
+
     [data]
   );
 
   return (
-    <div className={styles.users}>
+    <div className={styles.oreBuybackList}>
       <PageHeader>Ore Buyback Administration</PageHeader>
-      <OreBuybackTable data={filteredData} mutate={mutate} adminView />
+      <div className={styles.tables}>
+        <OreBuybackTable
+          className={styles.activeOrders}
+          header={"Active Orders"}
+          data={activeOrders}
+          mutate={mutate}
+          adminView
+        />
+        <OreBuybackTable
+          className={styles.activeOrders}
+          header={"Inactive Orders"}
+          data={inactiveOrders}
+          mutate={mutate}
+          adminView
+        />
+      </div>
     </div>
   );
 };

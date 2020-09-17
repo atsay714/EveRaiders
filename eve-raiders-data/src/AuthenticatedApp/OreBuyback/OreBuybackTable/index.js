@@ -1,4 +1,5 @@
-import React, { useState, useMemo, useContext, useRef, useEffect } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
+import classNames from "classnames";
 import useCurrentUser from "context/user";
 import Select from "components/inputs/Select";
 import Table from "components/Table";
@@ -7,7 +8,13 @@ import styles from "./OreBuybackTable.module.scss";
 import { queryCache } from "react-query";
 import { getResources } from "api/resources";
 
-const OreBuybackTable = ({ data = [], mutate, adminView }) => {
+const OreBuybackTable = ({
+  className,
+  header,
+  data = [],
+  mutate,
+  adminView,
+}) => {
   useEffect(() => {
     queryCache.prefetchQuery("resources", getResources);
   }, []);
@@ -77,7 +84,8 @@ const OreBuybackTable = ({ data = [], mutate, adminView }) => {
   );
 
   return (
-    <>
+    <div className={classNames(styles.oreBuybackTable, className)}>
+      <h3>{header}</h3>
       <Table
         data={data}
         columns={columns}
@@ -87,7 +95,7 @@ const OreBuybackTable = ({ data = [], mutate, adminView }) => {
       {isModalOpen && (
         <BuybackModal data={modalData} onClose={() => setIsModalOpen(false)} />
       )}
-    </>
+    </div>
   );
 };
 

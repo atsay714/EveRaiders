@@ -3,3 +3,15 @@
   flex-direction: column;
   height: 100%;
 }
+
+.tables {
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+.activeOrders,
+.inactiveOrders {
+  margin: 0 10px;
+  height: 100%;
+}
