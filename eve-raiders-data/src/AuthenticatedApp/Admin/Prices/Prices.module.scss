@@ -1,18 +1,25 @@
 .prices {
   overflow: auto;
   height: 100%;
+  width: 100%;
 }
 
 .form {
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
   max-width: 672px;
   margin: 0 auto;
-  width: 210px;
+  height: 100%;
 }
 
 .field {
   margin: 10px;
+}
+
+.resources {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .record {

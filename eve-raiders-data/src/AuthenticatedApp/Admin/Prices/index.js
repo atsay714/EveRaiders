@@ -4,8 +4,10 @@ import { Formik, Form, Field, FieldArray } from "formik";
 import PageHeader from "components/PageHeader";
 import Button from "components/inputs/Button";
 import Input from "components/inputs/Input";
+import Fieldset from "components/inputs/Fieldset";
 import { useQuery, useMutation, queryCache } from "react-query";
 import { getPrices, updatePrices } from "api/admin";
+import Taxes from "./Taxes";
 import styles from "./Prices.module.scss";
 
 const PricesSchema = Yup.object().shape({
@@ -34,15 +36,21 @@ const Prices = () => {
       {prices && (
         <Formik
           validationSchema={PricesSchema}
-          initialValues={[
-            ...prices.map(({ tax, ...rest }) => ({
-              ...rest,
-              needed: tax === 10,
-            })),
-          ]}
+          initialValues={{
+            prices: [
+              ...prices.map(({ tax, ...rest }) => ({
+                ...rest,
+                needed: tax === 10,
+              })),
+            ],
+            taxSellBase: 0,
+            taxSellNeeded: 0,
+            taxBuyBase: 0,
+            taxBuyNeeded: 0,
+          }}
           onSubmit={(values) =>
             mutate(
-              values.map(({ needed, ...rest }) => ({
+              values.prices.map(({ needed, ...rest }) => ({
                 ...rest,
                 tax: needed ? 10 : 15,
               }))
@@ -51,49 +59,52 @@ const Prices = () => {
         >
           {({ values, errors, touched, setFieldValue }) => (
             <Form className={styles.form}>
-              <FieldArray name={"prices"}>
-                <>
-                  {values.map((value, index) => (
-                    <div key={value.name} className={styles.record}>
-                      <Field name={"price"}>
-                        {({ field }) => (
-                          <Input
-                            label={value.name}
-                            placeholder=""
-                            className={styles.field}
-                            {...field}
-                            value={values?.[index].price || ""}
-                            onChange={(e) =>
-                              setFieldValue(`[${index}]`, {
-                                ...values?.[index],
-                                price: +e.currentTarget.value,
-                              })
-                            }
-                            error={errors[index]}
-                          />
-                        )}
-                      </Field>
-                      <Field name={"needed"}>
-                        {({ field }) => (
-                          <input
-                            type={"checkbox"}
-                            // className={styles.field}
-                            {...field}
-                            checked={values?.[index].needed ? "checked" : ""}
-                            onChange={(e) =>
-                              setFieldValue(`[${index}]`, {
-                                ...values?.[index],
-                                needed: e.currentTarget.checked,
-                              })
-                            }
-                            error={errors[index]}
-                          />
-                        )}
-                      </Field>
-                    </div>
-                  ))}
-                </>
-              </FieldArray>
+              <Taxes />
+              <Fieldset label={"Resources"}>
+                <FieldArray name={"prices"}>
+                  <div className={styles.resources}>
+                    {values.prices.map((value, index) => (
+                      <div key={value.name} className={styles.record}>
+                        <Field name={"price"}>
+                          {({ field }) => (
+                            <Input
+                              label={value.name}
+                              placeholder=""
+                              className={styles.field}
+                              {...field}
+                              value={value.price || ""}
+                              onChange={(e) =>
+                                setFieldValue(`prices[${index}]`, {
+                                  ...value,
+                                  price: +e.currentTarget.value,
+                                })
+                              }
+                              error={errors.prices?.[index]}
+                            />
+                          )}
+                        </Field>
+                        <Field name={"needed"}>
+                          {({ field }) => (
+                            <input
+                              type={"checkbox"}
+                              // className={styles.field}
+                              {...field}
+                              checked={value.needed ? "checked" : ""}
+                              onChange={(e) =>
+                                setFieldValue(`prices[${index}]`, {
+                                  ...value,
+                                  needed: e.currentTarget.checked,
+                                })
+                              }
+                              error={errors.prices?.[index]}
+                            />
+                          )}
+                        </Field>
+                      </div>
+                    ))}
+                  </div>
+                </FieldArray>
+              </Fieldset>
               <Button
                 className={styles.submitBtn}
                 type="submit"
