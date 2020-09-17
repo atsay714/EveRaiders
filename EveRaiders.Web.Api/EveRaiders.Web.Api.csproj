@@ -10,6 +10,7 @@
 	<PropertyGroup>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>$(NoWarn);1591</NoWarn>
+		<ApplicationInsightsResourceId>/subscriptions/45e0488a-f072-48f1-b022-0c808fc53439/resourceGroups/RaidersResource/providers/microsoft.insights/components/everaiders</ApplicationInsightsResourceId>
 	</PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +20,8 @@
     <PackageReference Include="CsvHelper" Version="15.0.5" />
     <PackageReference Include="Discord.Net.Rest" Version="2.2.0" />
     <PackageReference Include="flurl.http" Version="2.4.2" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.15.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.14.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.7" />
