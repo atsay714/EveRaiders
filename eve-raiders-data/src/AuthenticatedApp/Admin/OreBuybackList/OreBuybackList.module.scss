@@ -15,3 +15,15 @@
   margin: 0 10px;
   height: 100%;
 }
+
+@media screen and (max-width: 975px) {
+  .tables {
+    flex-direction: column;
+  }
+
+  .activeOrders,
+  .inactiveOrders {
+    margin: 0 0 10px;
+    height: 50%;
+  }
+}
