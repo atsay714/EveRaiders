@@ -1,13 +1,14 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
 import Input from "components/inputs/Input";
 import Button from "components/inputs/Button";
 import Password from "components/inputs/Password";
 import { Formik, Form, Field } from "formik";
-import { useHistory, useLocation, NavLink, Redirect } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import * as Yup from "yup";
 import { MdErrorOutline } from "react-icons/md";
 import useAuth from "context/auth";
 import styles from "./LoginForm.module.scss";
+import { queryCache } from "react-query";
 
 const LoginForm = ({ onBack }) => {
   const [loading, setLoading] = useState(false);
@@ -21,6 +22,7 @@ const LoginForm = ({ onBack }) => {
     setLoading(false);
 
     if (success) {
+      queryCache.clear();
     } else if (error) {
       setLoginError(error);
     } else {
