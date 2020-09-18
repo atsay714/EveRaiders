@@ -3,6 +3,7 @@
 .button {
   position: relative;
   height: 40px;
+  min-height: 40px;
   outline: none;
   background-color: var(--color-blue-lighter);
   border: 0;

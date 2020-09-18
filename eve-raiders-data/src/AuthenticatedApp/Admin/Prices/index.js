@@ -61,6 +61,7 @@ const Prices = () => {
             <Form className={styles.form}>
               <Taxes />
               <Fieldset label={"Resources"}>
+                <div className={styles.neededLabel}>Needed?</div>
                 <FieldArray name={"prices"}>
                   <div className={styles.resources}>
                     {values.prices.map((value, index) => (
@@ -87,7 +88,7 @@ const Prices = () => {
                           {({ field }) => (
                             <input
                               type={"checkbox"}
-                              // className={styles.field}
+                              className={styles.neededCheckbox}
                               {...field}
                               checked={value.needed ? "checked" : ""}
                               onChange={(e) =>

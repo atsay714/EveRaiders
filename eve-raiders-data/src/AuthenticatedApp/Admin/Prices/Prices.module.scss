@@ -16,6 +16,14 @@
   margin: 10px;
 }
 
+.neededLabel {
+  text-align: right;
+}
+
+.neededCheckbox {
+  margin-left: 25px;
+}
+
 .resources {
   display: flex;
   flex-direction: column;
@@ -28,13 +36,20 @@
 }
 
 @media screen and (max-width: 672px) {
-  .submitBtn {
-    width: calc(100% - 24px);
+  .prices {
+    .form {
+      flex-direction: column;
+      width: 270px;
+    }
+
+    .submitBtn {
+      width: calc(100% - 24px);
+      margin-bottom: 20px;
+    }
   }
 }
 
 .submitBtn {
   margin: 20px 12px 0;
   min-width: 100px;
-  align-self: center;
 }
