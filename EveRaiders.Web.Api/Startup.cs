@@ -178,7 +178,7 @@ namespace EveRaiders.Web.Api
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
-            services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]);
+            services.AddApplicationInsightsTelemetry("49249f9a-3a9d-417f-a6c2-bcd9b9247e5e");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
