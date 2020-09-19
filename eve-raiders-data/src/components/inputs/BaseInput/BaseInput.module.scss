@@ -24,6 +24,13 @@
   &.hasError {
     border: 1px solid var(--color-red);
   }
+
+  &.readOnly {
+    color: var(--color-text-white-darker);
+    cursor: not-allowed;
+
+    @include box-shadow-none;
+  }
 }
 
 .label {

@@ -4,7 +4,10 @@ import { MdErrorOutline } from "react-icons/md";
 import styles from "./BaseInput.module.scss";
 
 const BaseInput = React.forwardRef(
-  ({ className, label, name, active, error, children, ...props }, ref) => {
+  (
+    { className, label, name, active, error, readOnly, children, ...props },
+    ref
+  ) => {
     const [hasFocus, setHasFocus] = useState(false);
     const childRef = useRef();
 
@@ -27,6 +30,7 @@ const BaseInput = React.forwardRef(
           className={classNames(styles.inputContainer, {
             [styles.active]: hasFocus || active,
             [styles.hasError]: error,
+            [styles.readOnly]: readOnly,
           })}
           {...props}
         >
