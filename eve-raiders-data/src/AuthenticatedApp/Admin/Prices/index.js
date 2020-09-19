@@ -4,6 +4,7 @@ import { Formik, Form, Field, FieldArray } from "formik";
 import PageHeader from "components/PageHeader";
 import Button from "components/inputs/Button";
 import Input from "components/inputs/Input";
+import Checkbox from "components/inputs/Checkbox";
 import Fieldset from "components/inputs/Fieldset";
 import { useQuery, useMutation, queryCache } from "react-query";
 import { getPrices, updatePrices } from "api/admin";
@@ -86,8 +87,7 @@ const Prices = () => {
                         </Field>
                         <Field name={"needed"}>
                           {({ field }) => (
-                            <input
-                              type={"checkbox"}
+                            <Checkbox
                               className={styles.neededCheckbox}
                               {...field}
                               checked={value.needed ? "checked" : ""}
