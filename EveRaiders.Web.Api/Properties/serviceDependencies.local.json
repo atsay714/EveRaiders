@@ -7,7 +7,7 @@
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/microsoft.insights/components/everaiders",
       "type": "appInsights.azure",
       "connectionId": "APPINSIGHTS_INSTRUMENTATIONKEY",
-      "secretStore": "LocalSecretsFile"
+      "secretStore": null
     }
   }
 }
