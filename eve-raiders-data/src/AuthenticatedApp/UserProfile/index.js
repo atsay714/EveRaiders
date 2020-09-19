@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
-import { Formik, Form, Field, FieldArray } from "formik";
+import { Formik, Form, Field } from "formik";
 import PageHeader from "components/PageHeader";
 import Button from "components/inputs/Button";
 import Input from "components/inputs/Input";
 import Fieldset from "components/inputs/Fieldset";
 import Notification from "components/Notification";
 import PilotNames from "./PilotNames";
-import { useQuery } from "react-query";
+import { useQuery, useMutation, queryCache } from "react-query";
 import { getCurrentUser, updateCurrentUser } from "api/users";
 import styles from "./UserProfile.module.scss";
 
@@ -29,6 +29,11 @@ const UserProfile = () => {
   const [results, setResults] = useState();
   const { data: currentUser } = useQuery("currentUser", getCurrentUser);
 
+  const [mutate] = useMutation(updateCurrentUser, {
+    onSuccess: (updatedUser) =>
+      queryCache.setQueryData("currentUser", updatedUser),
+  });
+
   return (
     <div className={styles.userProfile}>
       <PageHeader>Profile</PageHeader>
@@ -49,7 +54,7 @@ const UserProfile = () => {
               ...values,
               pilotNames: values.pilotNames.filter((x) => x.name),
             };
-            updateCurrentUser(newValues)
+            mutate(newValues)
               .then(() => {
                 setResults({ type: "success", message: "Saved" });
               })
