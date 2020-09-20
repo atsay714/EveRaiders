@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Formik, Form, Field, FieldArray } from "formik";
 import PageHeader from "components/PageHeader";
 import Button from "components/inputs/Button";
-import Input from "components/inputs/Input";
+import { InputField } from "components/inputs";
 import { useQuery, useMutation, queryCache } from "react-query";
 import { getPrices, updatePrices } from "api/admin";
 import styles from "./Prices.module.scss";
@@ -55,24 +55,20 @@ const Prices = () => {
                 <>
                   {values.map((value, index) => (
                     <div key={value.name} className={styles.record}>
-                      <Field name={"price"}>
-                        {({ field }) => (
-                          <Input
-                            label={value.name}
-                            placeholder=""
-                            className={styles.field}
-                            {...field}
-                            value={values?.[index].price || ""}
-                            onChange={(e) =>
-                              setFieldValue(`[${index}]`, {
-                                ...values?.[index],
-                                price: +e.currentTarget.value,
-                              })
-                            }
-                            error={errors[index]}
-                          />
-                        )}
-                      </Field>
+                      <InputField
+                        name={"price"}
+                        label={value.name}
+                        placeholder=""
+                        className={styles.field}
+                        value={values?.[index].price || ""}
+                        onChange={(e) =>
+                          setFieldValue(`[${index}]`, {
+                            ...values?.[index],
+                            price: +e.currentTarget.value,
+                          })
+                        }
+                        error={errors[index]}
+                      />
                       <Field name={"needed"}>
                         {({ field }) => (
                           <input

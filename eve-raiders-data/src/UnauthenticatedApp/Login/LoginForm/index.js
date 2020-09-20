@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import Input from "components/inputs/Input";
+import { InputField, PasswordField } from "components/inputs";
 import Button from "components/inputs/Button";
-import Password from "components/inputs/Password";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import { NavLink } from "react-router-dom";
 import * as Yup from "yup";
 import { MdErrorOutline } from "react-icons/md";
@@ -44,53 +43,37 @@ const LoginForm = ({ onBack }) => {
       }}
       onSubmit={handleLogin}
     >
-      {({ errors, touched }) => (
-        <Form className={styles.form}>
-          <Button className={styles.button} onClick={onBack}>
-            Create Account
-          </Button>
-          <div className={styles.or}>- or -</div>
-          {loginError && (
-            <div className={styles.errorMessage}>
-              <MdErrorOutline style={{ marginRight: 5, minWidth: "1em" }} />
-              {loginError}
-            </div>
-          )}
-          <Field name={"username"}>
-            {({ field }) => {
-              return (
-                <Input
-                  className={styles.field}
-                  label={"Username"}
-                  type={"text"}
-                  error={touched["username"] && errors["username"]}
-                  {...field}
-                />
-              );
-            }}
-          </Field>
-          <Field name={"password"}>
-            {({ field }) => {
-              return (
-                <Password
-                  className={styles.field}
-                  label={"Password"}
-                  error={touched["password"] && errors["password"]}
-                  {...field}
-                />
-              );
-            }}
-          </Field>
-          <div className={styles.buttons}>
-            <Button className={styles.button} type="submit" loading={loading}>
-              Log in
-            </Button>
-            <NavLink className={styles.forgotPassword} to="/forgot-password">
-              Forgot Password?
-            </NavLink>
+      <Form className={styles.form}>
+        <Button className={styles.button} onClick={onBack}>
+          Create Account
+        </Button>
+        <div className={styles.or}>- or -</div>
+        {loginError && (
+          <div className={styles.errorMessage}>
+            <MdErrorOutline style={{ marginRight: 5, minWidth: "1em" }} />
+            {loginError}
           </div>
-        </Form>
-      )}
+        )}
+        <InputField
+          name={"username"}
+          className={styles.field}
+          label={"Username"}
+          type={"text"}
+        />
+        <PasswordField
+          name={"password"}
+          className={styles.field}
+          label={"Password"}
+        />
+        <div className={styles.buttons}>
+          <Button className={styles.button} type="submit" loading={loading}>
+            Log in
+          </Button>
+          <NavLink className={styles.forgotPassword} to="/forgot-password">
+            Forgot Password?
+          </NavLink>
+        </div>
+      </Form>
     </Formik>
   );
 };

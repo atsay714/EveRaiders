@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import { register } from "api/auth";
-import Input from "components/inputs/Input";
-import Password from "components/inputs/Password";
+import { InputField, PasswordField } from "components/inputs";
 import Button from "components/inputs/Button";
-import { Formik, Form, Field } from "formik";
-import { useHistory } from "react-router-dom";
+import { Formik, Form } from "formik";
 import { MdErrorOutline } from "react-icons/md";
 import * as Yup from "yup";
 import styles from "./RegistrationForm.module.scss";
 
 const RegistrationForm = ({ onBack }) => {
   const [registerError, setRegisterError] = useState();
-  let history = useHistory();
 
   const handleRegister = async (values) => {
     const { success, error } = await register(values);
@@ -72,58 +69,31 @@ const RegistrationForm = ({ onBack }) => {
             </div>
           )}
           <h3 className={styles.header}>Create Account</h3>
-          <Field name={"username"}>
-            {({ field }) => {
-              return (
-                <Input
-                  className={styles.field}
-                  label={"Username"}
-                  type={"text"}
-                  error={touched["username"] && errors["username"]}
-                  {...field}
-                />
-              );
-            }}
-          </Field>
-          <Field name={"email"}>
-            {({ field }) => {
-              return (
-                <Input
-                  className={styles.field}
-                  label={"Email"}
-                  type={"email"}
-                  error={touched["email"] && errors["email"]}
-                  {...field}
-                />
-              );
-            }}
-          </Field>
-          <Field name={"password"}>
-            {({ field }) => {
-              return (
-                <Password
-                  className={styles.field}
-                  label={"Password"}
-                  error={touched["password"] && errors["password"]}
-                  {...field}
-                />
-              );
-            }}
-          </Field>
-          <Field name={"discordUser"}>
-            {({ field }) => {
-              return (
-                <Input
-                  className={styles.field}
-                  label={"Discord User"}
-                  type={"text"}
-                  placeholder={"user#1234"}
-                  error={touched["discordUser"] && errors["discordUser"]}
-                  {...field}
-                />
-              );
-            }}
-          </Field>
+          <InputField
+            name={"username"}
+            className={styles.field}
+            label={"Username"}
+            type={"text"}
+          />
+          <InputField
+            name={"email"}
+            className={styles.field}
+            label={"Email"}
+            type={"email"}
+          />
+          <PasswordField
+            name={"password"}
+            className={styles.field}
+            label={"Password"}
+          />
+
+          <InputField
+            name={"discordUser"}
+            className={styles.field}
+            label={"Discord User"}
+            type={"text"}
+            placeholder={"user#1234"}
+          />
           <div className={styles.buttons}>
             <Button
               className={styles.button}

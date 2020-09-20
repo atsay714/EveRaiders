@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { forgotPassword } from "api/auth";
-import Input from "components/inputs/Input";
+import { InputField } from "components/inputs";
 import Button from "components/inputs/Button";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import { MdErrorOutline } from "react-icons/md";
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
@@ -32,21 +32,16 @@ const ForgotPassword = () => {
       }}
       onSubmit={handleForgotPassword}
     >
-      {({ values, errors, touched, isSubmitting }) => (
+      {({ values, isSubmitting }) => (
         <Form className={styles.form}>
           <h3 className={styles.header}>Forgot Password</h3>
           {!emailSent && (
-            <Field name={"email"}>
-              {({ field }) => (
-                <Input
-                  className={styles.field}
-                  label={"Email"}
-                  type={"email"}
-                  error={touched["email"] && errors["email"]}
-                  {...field}
-                />
-              )}
-            </Field>
+            <InputField
+              name={"email"}
+              className={styles.field}
+              label={"Email"}
+              type={"email"}
+            />
           )}
           {emailSent && (
             <p>
