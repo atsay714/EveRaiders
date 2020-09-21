@@ -34,9 +34,11 @@ const BaseInput = React.forwardRef(
           })}
           {...props}
         >
-          <label className={styles.label} htmlFor={name}>
-            {label}
-          </label>
+          {label && (
+            <label className={styles.label} htmlFor={name}>
+              {label}
+            </label>
+          )}
           {children(childRef)}
         </div>
         {error && (
