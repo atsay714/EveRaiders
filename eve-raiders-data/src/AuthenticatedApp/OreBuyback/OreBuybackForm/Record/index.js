@@ -2,7 +2,7 @@ import React from "react";
 import { Field, useFormikContext } from "formik";
 import { useQuery } from "react-query";
 import { getResources } from "api/resources";
-import Input from "components/inputs/Input";
+import { InputField } from "components/inputs";
 import ComboBox from "components/inputs/ComboBox";
 import RowPrice from "./RowPrice";
 import styles from "./Record.module.scss";
@@ -39,29 +39,22 @@ const Record = ({ index }) => {
           />
         )}
       </Field>
-      <Field name={"quantity"}>
-        {({ field }) => (
-          <Input
-            label="Quantity"
-            placeholder="quantity"
-            className={styles.countField}
-            type={"number"}
-            {...field}
-            value={values["resources"]?.[index]?.["quantity"] || ""}
-            onFocus={(e) => e.currentTarget.select()}
-            onChange={(e) =>
-              setFieldValue(
-                `resources[${index}].quantity`,
-                e.currentTarget.value
-              )
-            }
-            error={
-              touched["resources"]?.[index]?.["quantity"] &&
-              errors["resources"]?.[index]?.["quantity"]
-            }
-          />
-        )}
-      </Field>
+      <InputField
+        name={"quantity"}
+        label="Quantity"
+        placeholder="quantity"
+        className={styles.countField}
+        type={"number"}
+        value={values["resources"]?.[index]?.["quantity"] || ""}
+        onFocus={(e) => e.currentTarget.select()}
+        onChange={(e) =>
+          setFieldValue(`resources[${index}].quantity`, e.currentTarget.value)
+        }
+        error={
+          touched["resources"]?.[index]?.["quantity"] &&
+          errors["resources"]?.[index]?.["quantity"]
+        }
+      />
       <RowPrice value={values["resources"]?.[index]} />
     </div>
   );

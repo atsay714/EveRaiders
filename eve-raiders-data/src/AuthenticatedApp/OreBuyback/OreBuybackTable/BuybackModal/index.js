@@ -18,10 +18,6 @@ const BuybackModal = ({ onClose, data = [] }) => {
           textAlign: "right",
         },
       },
-      {
-        Header: "Price",
-        accessor: "price",
-      },
     ],
     []
   );
@@ -32,15 +28,9 @@ const BuybackModal = ({ onClose, data = [] }) => {
       <div className={styles.table}>
         <Table data={data.resources} columns={columns} />
       </div>
-      <GrandTotal
-        className={styles.grandTotal}
-        values={{
-          resources: data.resources.map(({ quantity, ...resource }) => ({
-            resource,
-            quantity,
-          })),
-        }}
-      />
+      <div className={styles.grandTotal}>
+        Total = {data.total.toLocaleString({ style: "currency" })} ISK
+      </div>
     </Modal>
   );
 };

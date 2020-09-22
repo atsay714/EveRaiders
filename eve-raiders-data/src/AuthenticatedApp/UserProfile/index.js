@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
-import { Formik, Form, Field, FieldArray } from "formik";
+import { Formik, Form } from "formik";
 import PageHeader from "components/PageHeader";
 import Button from "components/inputs/Button";
-import Input from "components/inputs/Input";
+import { InputField } from "components/inputs/";
 import Fieldset from "components/inputs/Fieldset";
 import Notification from "components/Notification";
 import PilotNames from "./PilotNames";
-import { useQuery } from "react-query";
+import { useQuery, useMutation, queryCache } from "react-query";
 import { getCurrentUser, updateCurrentUser } from "api/users";
 import styles from "./UserProfile.module.scss";
 
@@ -29,6 +29,11 @@ const UserProfile = () => {
   const [results, setResults] = useState();
   const { data: currentUser } = useQuery("currentUser", getCurrentUser);
 
+  const [mutate] = useMutation(updateCurrentUser, {
+    onSuccess: (updatedUser) =>
+      queryCache.setQueryData("currentUser", updatedUser),
+  });
+
   return (
     <div className={styles.userProfile}>
       <PageHeader>Profile</PageHeader>
@@ -49,7 +54,7 @@ const UserProfile = () => {
               ...values,
               pilotNames: values.pilotNames.filter((x) => x.name),
             };
-            updateCurrentUser(newValues)
+            mutate(newValues)
               .then(() => {
                 setResults({ type: "success", message: "Saved" });
               })
@@ -66,41 +71,22 @@ const UserProfile = () => {
               });
           }}
         >
-          {({
-            values,
-            errors,
-            touched,
-            dirty,
-            setFieldValue,
-            isSubmitting,
-          }) => (
+          {({ dirty, isSubmitting }) => (
             <Form className={styles.form} onChange={setResults}>
               <div className={styles.fields}>
                 <div className={styles.account}>
                   <Fieldset label={"Account"}>
-                    <Field name={"username"}>
-                      {({ field }) => (
-                        <Input
-                          className={styles.field}
-                          label={"username"}
-                          {...field}
-                          error={touched["username"] && errors["username"]}
-                          readOnly={"readonly"}
-                        />
-                      )}
-                    </Field>
-                    <Field name={"discordUser"}>
-                      {({ field }) => (
-                        <Input
-                          className={styles.field}
-                          label={"Discord User"}
-                          {...field}
-                          error={
-                            touched["discordUser"] && errors["discordUser"]
-                          }
-                        />
-                      )}
-                    </Field>
+                    <InputField
+                      name={"username"}
+                      className={styles.field}
+                      label={"username"}
+                      readOnly={"readonly"}
+                    />
+                    <InputField
+                      name={"discordUser"}
+                      className={styles.field}
+                      label={"Discord User"}
+                    />
                   </Fieldset>
                 </div>
                 <div className={styles.pilotNames}>

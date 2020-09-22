@@ -35,3 +35,32 @@
     }
   }
 }
+
+@mixin box-shadow-none {
+  & {
+    transition: none;
+    transform: none;
+  }
+
+  &::after {
+    box-shadow: none;
+  }
+
+  &:hover,
+  &.hover,
+  &.active:hover {
+    transform: scale(1);
+
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  &:active,
+  &.active:not(:hover) {
+    &::after {
+      opacity: 1;
+      box-shadow: none;
+    }
+  }
+}

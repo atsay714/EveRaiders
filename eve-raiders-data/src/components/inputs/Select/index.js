@@ -69,7 +69,11 @@ const Select = ({
         {...getToggleButtonProps()}
       >
         {(ref) => (
-          <button ref={ref} className={styles.input} type="button">
+          <button
+            ref={ref}
+            className={classNames(styles.input, { [styles.noLabel]: !label })}
+            type="button"
+          >
             {selectedItem || (
               <span className={styles.placeholder}>{placeholder}</span>
             )}

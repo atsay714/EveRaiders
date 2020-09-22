@@ -44,10 +44,6 @@ const Prices = () => {
                 needed: tax === 10,
               })),
             ],
-            taxSellBase: 0,
-            taxSellNeeded: 0,
-            taxBuyBase: 0,
-            taxBuyNeeded: 0,
           }}
           onSubmit={(values) =>
             mutate(

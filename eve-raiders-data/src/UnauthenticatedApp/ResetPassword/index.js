@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { resetPassword } from "api/auth";
-import Password from "components/inputs/Password";
+import { PasswordField } from "components/inputs";
 import Button from "components/inputs/Button";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import { MdErrorOutline } from "react-icons/md";
 import * as Yup from "yup";
 import { useHistory } from "react-router";
@@ -52,7 +52,7 @@ const ResetPassword = () => {
       }}
       onSubmit={handleResetPassword}
     >
-      {({ errors, touched, isSubmitting }) => (
+      {({ isSubmitting }) => (
         <Form className={styles.form}>
           {registerError && (
             <div className={styles.errorMessage}>
@@ -61,18 +61,11 @@ const ResetPassword = () => {
             </div>
           )}
           <h3 className={styles.header}>Reset Password</h3>
-          <Field name={"password"}>
-            {({ field }) => {
-              return (
-                <Password
-                  className={styles.field}
-                  label={"Password"}
-                  error={touched["password"] && errors["password"]}
-                  {...field}
-                />
-              );
-            }}
-          </Field>
+          <PasswordField
+            name={"password"}
+            className={styles.field}
+            label={"Password"}
+          />
           <div className={styles.buttons}>
             <Button
               className={styles.button}
