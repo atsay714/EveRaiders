@@ -40,3 +40,26 @@ export const updatePrices = async (prices) => {
     return [];
   }
 };
+
+export const getTaxes = async () => {
+  try {
+    const res = await instance.get("/api/administration/prices/taxes");
+    return res.data;
+  } catch (e) {
+    return [];
+  }
+};
+
+export const updateTaxes = async (taxes) => {
+  try {
+    const res = await Promise.all(
+      taxes.map(
+        async (tax) =>
+          (await instance.put("/api/administration/prices/taxes", tax)).data
+      )
+    );
+    return res;
+  } catch (e) {
+    return [];
+  }
+};

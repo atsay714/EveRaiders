@@ -1,9 +1,30 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px;
+}
+
 .field {
   margin: 10px;
+  width: 60px;
+}
+
+.label {
+  margin-top: 20px;
 }
 
 .sell,
 .buy {
   display: flex;
-  align-items: center;
+}
+
+.submitBtn {
+  margin: 10px 0 10px;
+  width: 100%;
+}
+
+@media screen and (max-width: 672px) {
+  .submitBtn {
+    margin: 10px 0 20px;
+  }
 }

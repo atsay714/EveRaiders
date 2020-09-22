@@ -4,52 +4,16 @@
   width: 100%;
 }
 
-.form {
+.forms {
   display: flex;
-  align-items: flex-start;
+  justify-content: center;
   max-width: 672px;
   margin: 0 auto;
-  height: 100%;
-}
-
-.field {
-  margin: 10px;
-}
-
-.neededLabel {
-  text-align: right;
-}
-
-.neededCheckbox {
-  margin-left: 25px;
-}
-
-.resources {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-}
-
-.record {
-  display: flex;
-  align-items: center;
 }
 
 @media screen and (max-width: 672px) {
-  .prices {
-    .form {
-      flex-direction: column;
-      width: 270px;
-    }
-
-    .submitBtn {
-      width: calc(100% - 24px);
-      margin-bottom: 20px;
-    }
+  .forms {
+    flex-direction: column;
+    max-width: 268px;
   }
-}
-
-.submitBtn {
-  margin: 20px 12px 0;
-  min-width: 100px;
 }
