@@ -61,6 +61,17 @@ const piPerUnit = {
   "Toxic Metals": 0.04,
 };
 
+const mineralsPerUnit = {
+  Tritanium: 0.01,
+  Pyerite: 0.01,
+  Mexallon: 0.01,
+  Isogen: 0.01,
+  Nocxium: 0.01,
+  Zydrine: 0.01,
+  Megacyte: 0.01,
+  Morphite: 0.01,
+};
+
 const MiningIskEfficiency = () => {
   const [units, setUnits] = useState("ISK per m3"); // m3 or unit
   const [resource, setResource] = useState("Ore"); // Ore or PI
@@ -74,7 +85,7 @@ const MiningIskEfficiency = () => {
       {
         Header: (
           <Select
-            items={["Ore", "PI"]}
+            items={["Ore", "PI", "Minerals"]}
             onChange={setResource}
             value={resource}
           />
@@ -123,13 +134,27 @@ const MiningIskEfficiency = () => {
     }))
     .sort((a, b) => b.pricePerUnit - a.pricePerUnit);
 
+  const minerals = data
+    .filter((resource) => mineralsPerUnit[resource.name])
+    .map((pi) => ({
+      name: pi.name,
+      pricePerUnit:
+        units === "ISK per m3"
+          ? (1 / mineralsPerUnit[pi.name]) * pi.price
+          : pi.price,
+    }))
+    .sort((a, b) => b.pricePerUnit - a.pricePerUnit);
+
+  const dataMap = {
+    Ore: ores,
+    PI: planetaryMaterial,
+    Minerals: minerals,
+  };
+
   return (
     <div className={styles.iskEfficiency}>
       <h3 className={styles.header}>What is selling for the most?</h3>
-      <Table
-        data={resource === "Ore" ? ores : planetaryMaterial}
-        columns={columns}
-      />
+      <Table data={dataMap[resource]} columns={columns} />
     </div>
   );
 };
