@@ -22,6 +22,7 @@ namespace EveRaiders.Data
         public DbSet<BuybackRequest> BuyBackRequests { get; set; }
         public DbSet<Participation> Participation { get; set; }
         public DbSet<ParticipationTokens> ParticipationTokens { get; set; }
+        public DbSet<Tax> Taxes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -6,6 +6,7 @@ using EveRaiders.Data;
 using EveRaiders.Data.Authentication;
 using EveRaiders.Data.Enums;
 using EveRaiders.Data.Models;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
 
 namespace EveRaiders.Services
@@ -59,6 +60,41 @@ namespace EveRaiders.Services
             await _db.SaveChangesAsync();
 
             return request;
+        }
+        public async Task<Tax> UpdateTax(Tax tax)
+        {
+            var taxObj = await _db.Taxes
+                .FirstOrDefaultAsync(s => s.Name == tax.Name);
+
+            if (taxObj == null)
+            {
+                throw new NoMatchFoundException("No tax by that name found");
+            }
+
+            //update tax
+            taxObj.BuyTax = tax.BuyTax;
+            taxObj.SellTax = tax.SellTax;
+            taxObj.Name = tax.Name;
+
+            await _db.SaveChangesAsync();
+
+            return taxObj;
+        }
+        public async Task<Tax> CreateTax(Tax tax)
+        {
+            var taxObj = new Tax()
+            {
+                Name = tax.Name,
+                BuyTax = tax.BuyTax,
+                SellTax = tax.SellTax
+            };
+
+            //Add new tax entry
+            await _db.Taxes.AddAsync(taxObj);
+
+            await _db.SaveChangesAsync();
+
+            return taxObj;
         }
     }
 }
