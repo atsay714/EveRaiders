@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore.Internal;
+using EveRaiders.Web.Api.ViewModels;
 
 namespace EveRaiders.Web.Api.Controllers
 {
@@ -109,7 +111,18 @@ namespace EveRaiders.Web.Api.Controllers
         [HttpGet("prices/resources")]
         public async Task<IActionResult> GetResourcePrices()
         {
-            var resources = await _db.Resources.AsAsyncEnumerable().ToListAsync();
+            var resources = _db.Resources.AsQueryable()
+                        .Join(_db.Taxes,
+                              p => p.TaxId,
+                              e => e.Id,
+                              (p, e) => new ResourceViewModel
+                              {
+                                  Id = p.Id,
+                                  Name = p.Name,
+                                  Price = p.Price,
+                                  TaxId = p.TaxId,
+                                  TaxName = e.Name
+                              }).ToList();
 
             return Ok(resources);
         }
@@ -127,6 +140,48 @@ namespace EveRaiders.Web.Api.Controllers
             return Ok(resources);
         }
 
+        [HttpPut("prices/taxes")]
+        public async Task<IActionResult> UpdateTax([FromBody] Tax tax)
+        {
+            string error = "";
+            Tax updatedTax = null;
+            try
+            {
+                updatedTax = await _corporationServices.UpdateTax(tax);
+            }
+            catch (Exception e)
+            {
+                error = e.Message;
+            }
+            await _db.SaveChangesAsync();
 
+            return Ok(updatedTax);
+        }
+
+        [HttpPost("prices/taxes")]
+        public async Task<IActionResult> CreateNewTax([FromBody] Tax tax)
+        {
+            string error = "";
+            Tax createdTax = null;
+            try
+            {
+                createdTax = await _corporationServices.CreateTax(tax);
+            }
+            catch (Exception e)
+            {
+                error = e.Message;
+            }
+            await _db.SaveChangesAsync();
+
+            return Ok(createdTax);
+        }
+
+        [HttpGet("prices/taxes")]
+        public async Task<IActionResult> GetTaxes()
+        {
+            var taxes = await _db.Taxes.AsAsyncEnumerable().ToListAsync();
+
+            return Ok(taxes);
+        }
     }
 }

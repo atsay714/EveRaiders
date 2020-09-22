@@ -11,5 +11,7 @@ namespace EveRaiders.Web.Api.ViewModels
         public string Name { get; set; }
         public double Price { get; set; }
         public double Quantity { get; set; }
+        public int? TaxId { get; set; }
+        public string? TaxName { get; set; }
     }
 }
