@@ -36,16 +36,17 @@ const Prices = () => {
       <Formik
         validationSchema={ResourcePricesSchema}
         initialValues={{ prices }}
-        onSubmit={(values) =>
-          mutate(
+        onSubmit={async (values, { setSubmitting }) => {
+          await mutate(
             values.prices.map(({ needed, ...rest }) => ({
               ...rest,
               tax: needed ? 10 : 15,
             }))
-          )
-        }
+          );
+          setSubmitting(false);
+        }}
       >
-        {({ values, errors, setFieldValue }) => (
+        {({ values, errors, setFieldValue, isSubmitting }) => (
           <Form className={styles.form}>
             <Fieldset label={"Resources"}>
               <div className={styles.neededLabel}>Needed?</div>
@@ -95,7 +96,7 @@ const Prices = () => {
             <Button
               className={styles.submitBtn}
               type="submit"
-              disabled={loading}
+              loading={isSubmitting}
             >
               Update Prices
             </Button>

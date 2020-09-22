@@ -57,7 +57,7 @@ const Taxes = () => {
           baseBuy: baseTax?.buyTax ?? 0,
           neededBuy: neededTax?.buyTax ?? 0,
         }}
-        onSubmit={(values) => {
+        onSubmit={async (values, { setSubmitting }) => {
           const newBaseTax = {
             ...baseTax,
             buyTax: values.baseBuy,
@@ -70,10 +70,11 @@ const Taxes = () => {
             sellTax: values.neededSell,
           };
 
-          mutate([newBaseTax, newNeededTax]);
+          await mutate([newBaseTax, newNeededTax]);
+          setSubmitting(false);
         }}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, isSubmitting }) => (
           <Form className={styles.form}>
             <Fieldset label={"Taxes"}>
               <div className={styles.sell}>
@@ -130,7 +131,7 @@ const Taxes = () => {
             <Button
               className={styles.submitBtn}
               type="submit"
-              disabled={loading}
+              loading={isSubmitting}
             >
               Update Taxes
             </Button>
