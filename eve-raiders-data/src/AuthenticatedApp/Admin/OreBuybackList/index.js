@@ -29,7 +29,7 @@ const OreBuybackList = () => {
   const activeOrders = useMemo(
     () =>
       data
-        .filter((x) => x.status !== "Closed")
+        .filter(({ status }) => status === "Created")
         .sort((a, b) => Date.parse(a.requestedAt) - Date.parse(b.requestedAt)),
     [data]
   );
@@ -37,7 +37,7 @@ const OreBuybackList = () => {
   const inactiveOrders = useMemo(
     () =>
       data
-        .filter((x) => x.pilot && x.total > 0 && x.status === "Closed")
+        .filter((x) => x.pilot && x.total > 0 && x.status !== "Created")
         .sort((a, b) => Date.parse(b.requestedAt) - Date.parse(a.requestedAt)),
 
     [data]
