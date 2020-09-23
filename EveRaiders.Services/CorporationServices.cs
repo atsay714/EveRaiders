@@ -23,13 +23,21 @@ namespace EveRaiders.Services
         public async Task<BuybackRequest> CreateBuyBackRequest(List<ResourceOrder> resources, int pilotId)
         {
             double total = 0;
+            var taxList = await _db.Taxes.ToDictionaryAsync(x => x.Id, y => y.BuyTax);
+            double taxPercent = 0;
             foreach (var resource in resources)
             {
                 var dbResource = await _db.Resources.FirstOrDefaultAsync(s => s.Id == resource.ResourceId);
+                int taxId = dbResource.TaxId ?? 0;
+                if(taxId != 0 && taxList.ContainsKey(taxId))
+                {
+                    taxPercent = taxList[taxId] ?? 0;
+                }
+
                 if (dbResource == null)
                     continue;
 
-                total += resource.Quantity * dbResource.Price * ((float)(100 - dbResource.Tax)/100);
+                total += resource.Quantity * dbResource.Price * ((float)(100 - taxPercent) /100);
             }
 
             var pilot = await _db.PilotNames.FirstOrDefaultAsync(s => s.Id == pilotId);
