@@ -86,12 +86,25 @@ namespace EveRaiders.Web.Api.Controllers
         [Authorize(Policy = "Members")]
         public async Task<IActionResult> GetOrders()
         {
+            //var user = await _userManager.FindByNameAsync("atsay714");
             var user = await _userManager.FindByIdAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
             var request = await _db.BuyBackRequests.Include(i => i.Resources).ThenInclude(i => i.Resource).Include(i => i.Pilot).ThenInclude(i => i.User).Where(s => s.Pilot.User.Id == user.Id)
                 .AsAsyncEnumerable().ToListAsync();
 
             var mappedRequest = _mapper.Map<List<BuyBackRequestViewModel>>(request);
+
+
+            var taxList = await _db.Taxes.AsQueryable().ToDictionaryAsync(x => x.Id, y => y.Name);
+            taxList[0] = null;
+            foreach (var buyBack in mappedRequest)
+            {
+                foreach(var resource in buyBack.Resources)
+                {
+                    resource.TaxName = taxList[resource.TaxId ?? 0];
+                }
+                //buyBack.Res = ((double)(100 - (taxList[resource.TaxId ?? 0] ?? 0)) / 100) * resource.Price;
+            }
 
             return Ok(mappedRequest);
         }

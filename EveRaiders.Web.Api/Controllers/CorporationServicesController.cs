@@ -58,9 +58,6 @@ namespace EveRaiders.Web.Api.Controllers
         [HttpGet("resources")]
         public async Task<IActionResult> GetResources()
         {
-            var taxList = await _db.Taxes.ToDictionaryAsync(x => x.Id, y => y.SellTax);
-            taxList[0] = 0;
-            double taxPercent = 0;
             var resources = _db.Resources.AsQueryable()
                         .Join(_db.Taxes,
                               p => p.TaxId,
@@ -74,9 +71,11 @@ namespace EveRaiders.Web.Api.Controllers
                                   TaxName = e.Name
                               }).ToList();
 
-            foreach(var resource in resources)
+            var taxList = await _db.Taxes.ToDictionaryAsync(x => x.Id, y => y.SellTax);
+            taxList[0] = 0;
+            foreach (var resource in resources)
             {
-                resource.Price = ((float)(100 - (taxList[resource.TaxId ?? 0] ?? 0)) / 100) * resource.Price;
+                resource.Price = ((double)(100 - (taxList[resource.TaxId ?? 0] ?? 0)) / 100) * resource.Price;
             }
 
             //var mappedResources = _mapper.Map<List<ResourceViewModel>>(resources);

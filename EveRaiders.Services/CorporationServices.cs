@@ -23,7 +23,7 @@ namespace EveRaiders.Services
         public async Task<BuybackRequest> CreateBuyBackRequest(List<ResourceOrder> resources, int pilotId)
         {
             double total = 0;
-            var taxList = await _db.Taxes.ToDictionaryAsync(x => x.Id, y => y.BuyTax);
+            var taxList = await _db.Taxes.ToDictionaryAsync(x => x.Id, y => y.SellTax);
             double taxPercent = 0;
             foreach (var resource in resources)
             {
